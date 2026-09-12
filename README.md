@@ -30,17 +30,20 @@ python -m http.server 8000
 
 ### GitHub Pages
 
-仓库已启用 Pages（分支 `main` / 根目录）。推送到 `main` 后自动发布，地址形如：
+仓库已启用 Pages（分支 `main` / 根目录），推送到 `main` 后自动重新发布：
 
 ```
-https://<用户名>.github.io/tianma-data-recovery/
+https://ganyi1598-glitch.github.io/tianma-data-recovery/
 ```
 
 ### EdgeOne Makers
 
-同一份代码也已部署在腾讯 EdgeOne Makers，项目名 `tianma-data-recovery`。
+同一份代码同步部署在腾讯 EdgeOne Makers（项目名 `tianma-data-recovery`）。
+
+GitHub 版本已剥离 EdgeOne Pages 平台注入脚本 `unified.js`，其余内容与线上一字不差。
 
 ## 联系
 
-- 到店：武汉市江汉区民主一街 177 号 新星电脑城二楼
-- 电话：186 9612 8515
+- 到店：武汉市江汉区民主一街 177 号 · 新星电脑城二楼
+- 电话：184 0271 8242
+- 营业时间：周一至周日 10:00 — 18:00
