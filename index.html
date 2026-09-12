@@ -175,6 +175,12 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .brand-strip>span:hover{border-color:var(--line-2);box-shadow:var(--shadow-sm);transform:translateY(-1px)}
 .brand-strip>span b{color:var(--ink);font-weight:600;font-size:13px;letter-spacing:.01em}
 .brand-strip>span i{font-style:normal;color:var(--ink-3);font-family:var(--tnum);font-size:11px;letter-spacing:.08em;font-weight:500}
+@media (max-width:680px){
+  .brand-strip{margin-top:40px;padding-top:20px;gap:8px}
+  .brand-strip>b{margin-right:0;margin-bottom:2px}
+  .brand-strip>span{font-size:12px;padding:6px 11px}
+  .brand-strip>span i{font-size:10px}
+}
 
 .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:980px){.pricing{grid-template-columns:repeat(2,1fr)}}
@@ -210,7 +216,7 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .ptable tr:last-child td{border-bottom:0}
 .ptable tbody tr{transition:background .2s var(--ease)}
 .ptable tbody tr:hover{background:var(--accent-soft)}
-.ptable td.cap{color:var(--ink);font-weight:500;white-space:nowrap}
+.ptable td.cap{color:var(--ink);font-weight:500;white-space:normal;overflow-wrap:anywhere}
 .ptable td.price{font-family:var(--tnum);color:var(--ink);font-weight:600;white-space:nowrap}
 .ptable td.price.muted{font-weight:400}
 .ptable-foot{padding:10px 20px;border-top:1px solid var(--line);font-family:var(--tnum);font-size:10.5px;color:var(--ink-3);letter-spacing:.1em;background:var(--bg)}
@@ -270,6 +276,12 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .qr-lightbox-inner{display:flex;flex-direction:column;align-items:center;gap:18px}
 .qr-lightbox img{width:min(78vw,420px);max-width:100%;max-height:66vh;object-fit:contain;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
 .qr-lightbox p{color:#E2E8F0;font-size:13px;font-family:var(--tnum);letter-spacing:.06em;margin:0;text-align:center}
+.qr-lightbox p.qr-tip{color:#E2E8F0;font-size:13px;max-width:30ch;line-height:1.5}
+.qr-lightbox p.qr-id{color:#fff;font-family:var(--tnum);font-size:13px;letter-spacing:.08em;background:rgba(255,255,255,.08);padding:6px 14px;border-radius:999px;margin-top:2px}
+.qr-deeplink{color:#fff;background:var(--accent);padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 10px 28px rgba(37,99,235,.45);transition:transform .15s var(--ease),box-shadow .15s var(--ease);text-align:center}
+.qr-deeplink:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(37,99,235,.55)}
+.qr-close{color:#E2E8F0;background:transparent;border:1px solid rgba(255,255,255,.25);padding:9px 24px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color .15s var(--ease),color .15s var(--ease)}
+.qr-close:hover{border-color:#fff;color:#fff}
 
 /* 悬浮咨询 */
 .fab{position:fixed;right:18px;bottom:22px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px;transition:opacity .25s var(--ease),transform .25s var(--ease)}
@@ -279,7 +291,7 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .fab-main svg{width:16px;height:16px}
 .fab-menu{display:none;flex-direction:column;gap:10px;align-items:flex-end;animation:fabPop .22s var(--ease)}
 .fab.open .fab-menu{display:flex}
-.fab-item{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:11px 18px;font-size:14px;font-weight:500;box-shadow:var(--shadow-md);display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:transform .15s var(--ease),border-color .15s var(--ease);white-space:nowrap}
+.fab-item{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:11px 18px;font-size:14px;font-weight:500;box-shadow:var(--shadow-md);display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:transform .15s var(--ease),border-color .15s var(--ease);white-space:nowrap;font-family:inherit}
 .fab-item:hover{transform:translateY(-1px);border-color:var(--accent)}
 .fab-item svg{width:15px;height:15px;color:var(--accent);flex:0 0 auto}
 @keyframes fabPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -1220,7 +1232,10 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 <div class="qr-lightbox" id="qrLightbox" role="dialog" aria-label="微信二维码大图">
   <div class="qr-lightbox-inner">
     <img src="wechat-qr.jpg" alt="微信好友码大图"/>
-    <p>长按图片保存到手机 · 点击空白处关闭</p>
+    <p class="qr-tip">长按二维码 · 在微信中「识别」即可发送好友申请</p>
+    <p class="qr-id">微信号：TianmaDataLab</p>
+    <a class="qr-deeplink" id="qrDeeplink" href="weixin://contacts/profile/TianmaDataLab">已安装微信？点此直接打开</a>
+    <button class="qr-close" type="button" id="qrClose">关闭</button>
   </div>
 </div>
 
@@ -1231,10 +1246,10 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
     立即咨询
   </button>
   <div class="fab-menu" id="fabMenu">
-    <a class="fab-item" href="weixin://contacts/profile/TianmaDataLab" data-fab-addfriend>
+    <button class="fab-item" type="button" data-fab-addfriend data-weixin="weixin://contacts/profile/TianmaDataLab">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       微信加好友 · 立即聊
-    </a>
+    </button>
     <a class="fab-item" href="tel:18402718242">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       电话 184 0271 8242
@@ -2070,6 +2085,8 @@ window.copyReport = copyReport;
   const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
   document.getElementById('qrThumb').addEventListener('click', open);
   lb.addEventListener('click', e => { if(e.target === lb) close(); });
+  const closeBtn = document.getElementById('qrClose');
+  if (closeBtn) closeBtn.addEventListener('click', close);
   document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
 })();
 
@@ -2087,23 +2104,8 @@ window.copyReport = copyReport;
   fab.addEventListener('click', e => e.stopPropagation());
   fab.querySelectorAll('[data-fab-addfriend]').forEach(b => b.addEventListener('click', () => {
     setOpen(false);
-    const href = b.getAttribute('href') || '';
-    const hasRealId = /\/[^/]+$/.test(href) && !/WECHAT_ID_HERE/i.test(href);
-    // 占位时直接显示二维码；真实 ID 时尝试 weixin:// 跳转，1.2s 内页面未隐藏则降级到二维码
-    if (!hasRealId) {
-      if (lb) { lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-      return;
-    }
-    let hidden = false;
-    const onVis = () => { hidden = true; };
-    document.addEventListener('visibilitychange', onVis);
-    setTimeout(() => {
-      document.removeEventListener('visibilitychange', onVis);
-      if (!hidden && lb) {
-        lb.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-    }, 1200);
+    // 优先展示二维码：长按识别 → 微信好友申请（最可靠、能直达加好友步骤的路径）
+    if (lb) { lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
   }));
   // 二维码灯箱手动触发入口（如 contact 区"点击放大"已经被原 IIFE 处理）
   fab.querySelectorAll('[data-fab-qr]').forEach(b => b.addEventListener('click', () => {
