@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>天马一站式数据服务中心 · 武汉专业数据恢复</title>
+<meta name="description" content="武汉天马专业数据恢复中心：硬盘/SSD、RAID/服务器、U盘/内存卡、手机、开盘、监控录像恢复。先免费检测，报价透明，恢复成功才收费。" />
+<style>
+  :root{
+    --bg:#0a1426; --bg2:#0e1c36; --panel:#11203c; --panel2:#16294b;
+    --line:rgba(120,170,255,.16); --line2:rgba(120,170,255,.28);
+    --txt:#eaf1ff; --muted:#9fb2d4; --dim:#6f84a8;
+    --accent:#22d3ee; --accent2:#3b82f6; --ok:#34d399;
+    --radius:16px; --shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,rgba(34,211,238,.12),transparent 60%),
+               radial-gradient(900px 600px at -10% 20%,rgba(59,130,246,.14),transparent 55%),
+               var(--bg);
+    color:var(--txt); line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+  /* Header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+    background:rgba(10,20,38,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#04121f;font-weight:800;font-size:18px}
+  .brand .name{font-weight:700;font-size:17px;letter-spacing:.3px}
+  .brand .sub{font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+  nav ul{display:flex;gap:26px;list-style:none;font-size:15px;color:var(--muted)}
+  nav ul a:hover{color:var(--accent)}
+  .cta{padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#04121f;font-weight:700;font-size:14px;white-space:nowrap}
+  .cta:hover{filter:brightness(1.08)}
+  .menu-btn{display:none}
+  /* Hero */
+  .hero{padding:64px 0 56px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:40px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--accent);
+    border:1px solid var(--line2);padding:6px 12px;border-radius:999px;background:rgba(34,211,238,.06)}
+  h1{font-size:42px;line-height:1.25;margin:18px 0 16px;font-weight:800;letter-spacing:.5px}
+  h1 .hi{background:linear-gradient(135deg,var(--accent),#7dd3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);font-size:17px;max-width:520px}
+  .btns{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+  .btn{padding:14px 24px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;border:1px solid transparent}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#04121f}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{border-color:var(--line2);color:var(--txt);background:rgba(255,255,255,.02)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  /* Contact card */
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line2);
+    border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+  .card h3{font-size:18px;margin-bottom:4px}
+  .card .csub{color:var(--dim);font-size:13px;margin-bottom:18px}
+  .row{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-top:1px dashed var(--line)}
+  .row:first-of-type{border-top:none}
+  .row .k{font-size:12px;color:var(--dim);letter-spacing:.5px}
+  .row .v{font-size:16px;font-weight:600}
+  .row .v small{font-weight:400;color:var(--muted);font-size:13px}
+  .v a{color:var(--accent)}
+  .qr{margin-top:18px;display:flex;gap:14px;align-items:center;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .qr .box{width:74px;height:74px;border-radius:10px;background:
+    repeating-conic-gradient(#0a1426 0 25%,#eaf1ff 0 50%) 50%/14px 14px;
+    border:3px solid #fff;flex:none}
+  .qr .qt{font-size:13px;color:var(--muted)}
+  .qr .qt b{color:var(--txt)}
+  /* Sections */
+  section{padding:54px 0}
+  .sec-title{font-size:28px;font-weight:800;margin-bottom:6px}
+  .sec-sub{color:var(--muted);margin-bottom:30px}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .tile h4{font-size:17px;margin-bottom:8px}
+  .tile p{color:var(--muted);font-size:14px}
+  .steps{counter-reset:s}
+  .step{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:none}
+  .step .n{counter-increment:s;flex:none;width:34px;height:34px;border-radius:50%;
+    display:grid;place-items:center;font-weight:800;color:#04121f;
+    background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .step .n::before{content:counter(s)}
+  .step h4{font-size:16px;margin-bottom:2px}
+  .step p{color:var(--muted);font-size:14px}
+  .case{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .case .tag{display:inline-block;font-size:12px;color:var(--accent);border:1px solid var(--line2);
+    padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .case h4{font-size:16px;margin-bottom:6px}
+  .case p{color:var(--muted);font-size:14px}
+  .faq .q{padding:16px 0;border-top:1px solid var(--line)}
+  .faq .q:first-child{border-top:none}
+  .faq .q b{display:block;font-size:16px;margin-bottom:4px}
+  .faq .q span{color:var(--muted);font-size:14px}
+  .notice{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line2);
+    border-radius:var(--radius);padding:26px 28px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+  .notice h3{font-size:20px}
+  .notice p{color:var(--muted);font-size:14px;margin-top:4px}
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--dim);font-size:13px;text-align:center}
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr}
+    .g3,.g2{grid-template-columns:1fr}
+    nav ul,.cta{display:none}
+    .menu-btn{display:inline-grid;place-items:center;width:42px;height:42px;border:1px solid var(--line2);border-radius:10px;background:transparent;color:var(--txt);font-size:20px}
+    h1{font-size:32px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <div class="logo">天</div>
+      <div>
+        <div class="name">天马一站式数据服务中心</div>
+        <div class="sub">Data Recovery Lab · Wuhan</div>
+      </div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#services">服务范围</a></li>
+        <li><a href="#pricing">报价</a></li>
+        <li><a href="#process">流程</a></li>
+        <li><a href="#cases">案例</a></li>
+        <li><a href="#faq">常见问题</a></li>
+      </ul>
+    </nav>
+    <a class="cta" href="#contact">开始故障自检</a>
+    <button class="menu-btn" aria-label="菜单">≡</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">● 武汉 · 专业数据恢复</span>
+        <h1>不确定下一步？<br><span class="hi">把现场交给我们。</span></h1>
+        <p class="lead">把设备型号、故障表现、以及你已经做过的操作说清楚，剩下的交给我们判断。先免费检测、报价透明，恢复成功才收费。</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#process">先做完自检</a>
+          <a class="btn btn-ghost" href="tel:18696128515">直接电话</a>
+        </div>
+      </div>
+
+      <aside class="card" id="contact">
+        <h3>联系我们 · 直连工程师</h3>
+        <div class="csub">工作日 10:00–18:00 在线，紧急情况可电话</div>
+
+        <div class="row">
+          <span class="k">电话</span>
+          <span class="v">程 186 9612 8515 / 130 0618 4912 <small>（微信同号）</small></span>
+        </div>
+        <div class="row">
+          <span class="k">备用线路</span>
+          <span class="v">王 184 0271 8242 <small>（微信同号）</small> / 甘 132 9414 6310 <small>（微信同号）</small></span>
+        </div>
+        <div class="row">
+          <span class="k">微信号</span>
+          <span class="v"><a href="weixin://contacts/profile/TianmaDataLab">TianmaDataLab</a></span>
+        </div>
+        <div class="row">
+          <span class="k">到店地址</span>
+          <span class="v">湖北省武汉市江汉区民主一街177号<br>新星电脑城二楼 · 天马专业数据恢复中心</span>
+        </div>
+        <div class="row">
+          <span class="k">营业时间</span>
+          <span class="v">周一至周日 10:00 — 18:00</span>
+        </div>
+
+        <div class="qr">
+          <div class="box"></div>
+          <div class="qt"><b>预约加微信</b><br>扫码添加好友，发送设备照片与故障描述，工程师一对一对接。</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-title">服务范围</div>
+      <div class="sec-sub">覆盖个人与企业的常见数据丢失场景</div>
+      <div class="grid g3">
+        <div class="tile"><h4>硬盘 / SSD 恢复</h4><p>机械硬盘坏道、固件损坏、SSD 掉盘与主控故障的逻辑与物理恢复。</p></div>
+        <div class="tile"><h4>RAID / 服务器</h4><p>磁盘阵列掉盘、阵列卡损坏、重组失效后的数据提取与重建。</p></div>
+        <div class="tile"><h4>U盘 / 内存卡</h4><p>U盘、SD/TF 卡、移动硬盘无法识别、提示格式化后的数据救援。</p></div>
+        <div class="tile"><h4>手机 / 苹果</h4><p>误删、进水、刷机失败等场景下的照片、通讯录与文档恢复。</p></div>
+        <div class="tile"><h4>开盘恢复</h4><p>磁头损坏、盘片划伤等在百级无尘环境下进行的物理级开盘。</p></div>
+        <div class="tile"><h4>监控录像</h4><p>海康、大华等监控硬盘覆盖、损坏后的关键录像片段提取。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sec-title">报价</div>
+      <div class="sec-sub">透明、先检后报，不成功不收费</div>
+      <div class="notice">
+        <div>
+          <h3>先免费检测，再报价</h3>
+          <p>初步检测与故障判断免费；确认方案与价格后你再决定是否恢复，恢复成功才收费，过程全程可查。</p>
+        </div>
+        <a class="btn btn-primary" href="#contact">免费咨询</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-title">服务流程</div>
+      <div class="sec-sub">四步把数据安全带回来</div>
+      <div class="steps">
+        <div class="step"><div class="n"></div><div><h4>免费咨询与初检</h4><p>描述设备与故障，工程师做初步判断与风险说明。</p></div></div>
+        <div class="step"><div class="n"></div><div><h4>报价确认</h4><p>检测后给出明确方案与价格，你确认后再进行恢复。</p></div></div>
+        <div class="step"><div class="n"></div><div><h4>无尘开盘 / 逻辑恢复</h4><p>按方案在百级无尘环境或逻辑层进行恢复操作。</p></div></div>
+        <div class="step"><div class="n"></div><div><h4>数据验证与交付</h4><p>恢复完成后验证数据完整性，确认无误再交付。</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="wrap">
+      <div class="sec-title">案例</div>
+      <div class="sec-sub">部分可公开脱敏的恢复实例</div>
+      <div class="grid g3">
+        <div class="case"><span class="tag">RAID</span><h4>四盘位 NAS 两盘掉线</h4><p>阵列重组后提取企业财务与项目资料，数据完整交付。</p></div>
+        <div class="case"><span class="tag">开盘</span><h4>笔记本硬盘异响</h4><p>百级无尘环境更换磁头，成功镜像并恢复用户照片与文档。</p></div>
+        <div class="case"><span class="tag">监控</span><h4>店铺监控关键时段丢失</h4><p>从覆盖硬盘中提取指定日期录像片段，用于纠纷取证。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-title">常见问题</div>
+      <div class="sec-sub">恢复前你最关心的几件事</div>
+      <div class="faq">
+        <div class="q"><b>数据恢复要多久？</b><span>逻辑恢复通常当天可出结果；物理开盘视盘况一般 1–3 个工作日。</span></div>
+        <div class="q"><b>恢复不成功收费吗？</b><span>不成功不收费。检测与报价阶段均透明，确认后才进行付费恢复。</span></div>
+        <div class="q"><b>数据会泄露吗？</b><span>恢复在隔离环境进行，交付后按约定处理镜像，保障隐私与商业机密。</span></div>
+        <div class="q"><b>设备损坏还能恢复吗？</b><span>多数情况下可以。先不要反复通电或写入，尽快联系工程师评估。</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 天马一站式数据服务中心 · 武汉 · 数据恢复实验室　|　到店：武汉市江汉区民主一街177号 新星电脑城二楼</div>
+</footer>
+</body>
+</html>

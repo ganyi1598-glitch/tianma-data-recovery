@@ -1,0 +1,12 @@
+# EdgeOne Makers 本地元数据
+.edgeone/
+
+# 环境变量
+.env
+.env.*
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
