@@ -1,0 +1,32 @@
+{
+  "name": "中天数据处理服务中心 · 天马一站式数据服务中心",
+  "short_name": "中天数据处理",
+  "description": "武汉本地数据恢复：硬盘、SSD、存储卡、U 盘、手机与 NAS。检测免费，恢复不成功不收费。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAFBFC",
+  "theme_color": "#FAFBFC",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -7,6 +7,11 @@
 <title>中天数据处理服务中心 - 天马一站式数据服务中心 · 武汉本地数据恢复</title>
 <meta name="description" content="武汉本地数据恢复，覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。先保护现场，再谈恢复结果。" />
 <link rel="icon" type="image/svg+xml" href="logo.svg" />
+<!-- 添加到主屏幕（PWA） -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
 <!-- 微信分享 / Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="中天数据处理服务中心" />
@@ -19,8 +24,11 @@
 <meta name="twitter:title" content="中天数据处理服务中心 - 天马一站式数据服务中心 · 武汉本地数据恢复" />
 <meta name="twitter:description" content="覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。检测免费，恢复不成功不收费。" />
 <meta name="twitter:image" content="og-cover.jpg" />
-<!-- Safari -->
+<!-- Safari / 添加到主屏幕 -->
 <meta name="apple-mobile-web-app-title" content="中天数据处理" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="format-detection" content="telephone=no" />
 <script>
   // 把 og:image / og:url 修正为绝对地址，便于微信/Twitter 抓取
@@ -2267,6 +2275,14 @@ window.copyReport = copyReport;
   if(document.fonts && document.fonts.ready){ document.fonts.ready.then(start); }
   else { start(); }
 })();
+</script>
+<script>
+  // 注册 Service Worker：让「添加到主屏幕」的图标以独立窗口运行，并支持断网打开
+  if ('serviceWorker' in navigator) {
+    addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>

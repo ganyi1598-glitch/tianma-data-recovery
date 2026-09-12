@@ -9,10 +9,16 @@
 
 ```
 .
-├── index.html      # 整站页面（内联 CSS / JS，无构建依赖）
-├── logo.svg        # 站点图标 favicon
-├── og-cover.jpg    # 社交平台分享封面
-├── wechat-qr.jpg   # 微信好友码
+├── index.html            # 整站页面（内联 CSS / JS，无构建依赖）
+├── logo.svg              # 矢量 logo（浏览器标签页图标）
+├── og-cover.jpg          # 社交平台分享封面
+├── wechat-qr.jpg         # 微信好友码
+├── icon-192.png          # 桌面图标 192×192
+├── icon-512.png          # 桌面图标 512×512
+├── apple-touch-icon.png  # 桌面图标 180×180（iOS 专用）
+├── manifest.webmanifest  # PWA 清单
+├── sw.js                 # Service Worker（network-first）
+├── tools/gen-icons.js    # 由 logo.svg 生成上述 PNG 图标
 ├── .gitignore
 └── README.md
 ```
@@ -41,6 +47,24 @@ https://ganyi1598-glitch.github.io/tianma-data-recovery/
 同一份代码同步部署在腾讯 EdgeOne Makers（项目名 `tianma-data-recovery`）。
 
 GitHub 版本已剥离 EdgeOne Pages 平台注入脚本 `unified.js`，其余内容与线上一字不差。
+
+## 添加到手机桌面
+
+本站已配置为可安装的 Web App（PWA），桌面图标由 `logo.svg` 光栅化而来。
+
+- **iPhone / iPad**：用 **Safari** 打开网址 → 底部分享按钮 → 「添加到主屏幕」
+- **Android**：用 **Chrome** 打开网址 → 右上角 ⋮ → 「安装应用」/「添加到主屏幕」
+- **国产浏览器**（华为 / 小米 / QQ 等）：菜单里的「添加到桌面」
+
+> ⚠️ 微信、QQ 等**内置浏览器不支持**添加到桌面，必须用系统浏览器打开。
+> 添加后点击图标会以独立窗口运行，不显示浏览器地址栏。
+
+### 换了 logo 之后重新生成图标
+
+```bash
+npm i @resvg/resvg-js
+node tools/gen-icons.js
+```
 
 ## 联系
 
