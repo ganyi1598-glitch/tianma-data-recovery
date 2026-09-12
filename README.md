@@ -9,7 +9,10 @@
 
 ```
 .
-├── index.html      # 整站（内联 CSS，无外部依赖）
+├── index.html      # 整站页面（内联 CSS / JS，无构建依赖）
+├── logo.svg        # 站点图标 favicon
+├── og-cover.jpg    # 社交平台分享封面
+├── wechat-qr.jpg   # 微信好友码
 ├── .gitignore
 └── README.md
 ```
