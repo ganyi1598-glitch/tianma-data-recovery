@@ -223,7 +223,10 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .onsite-note{margin-top:18px;padding:14px 18px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:14px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
 .onsite-note b{color:var(--ink);font-weight:600}
 .pricing-2col{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.pricing-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:980px){.pricing-3col{grid-template-columns:1fr}}
 @media (max-width:760px){.pricing-2col{grid-template-columns:1fr}}
+.ptable-sub{margin:5px 0 0;font-size:12px;color:var(--ink-3);font-weight:400;line-height:1.5;letter-spacing:.02em}
 
 .filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
 .filter button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg-2);font-size:12px;color:var(--ink-2);transition:all .25s var(--ease);font-family:var(--tnum);letter-spacing:.04em}
@@ -686,7 +689,7 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
         </div>
         <div>
           <h3>NAS / RAID</h3>
-          <p>掉盘、降级、阵列参数采集和后续重组评估。</p>
+          <p>网络存储（NAS）与磁盘阵列（RAID）的掉盘、降级、参数采集与重组评估。</p>
         </div>
         <div class="more">查看服务 →</div>
       </div>
@@ -773,7 +776,7 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
       </div>
     </div>
 
-    <div class="pricing-2col" data-reveal data-stagger>
+    <div class="pricing-3col" data-reveal data-stagger>
       <div class="ptable" id="pt-mobile">
         <div class="ptable-head"><h3>手机内容恢复</h3><span>MOBILE</span></div>
         <table>
@@ -788,7 +791,13 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
       </div>
 
       <div class="ptable" id="pt-nas">
-        <div class="ptable-head"><h3>NAS / RAID 阵列恢复</h3><span>RAID</span></div>
+        <div class="ptable-head">
+          <div>
+            <h3>NAS / RAID 阵列恢复</h3>
+            <p class="ptable-sub">网络存储 · 磁盘阵列</p>
+          </div>
+          <span>RAID</span>
+        </div>
         <table>
           <thead><tr><th>类型</th><th>参考价</th></tr></thead>
           <tbody>
@@ -797,6 +806,25 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
           </tbody>
         </table>
         <div class="ptable-foot">常规周期：预计 5-12 工作日</div>
+        <div class="ptable-foot">以实际检测后方案为准</div>
+      </div>
+
+      <div class="ptable" id="pt-db">
+        <div class="ptable-head">
+          <div>
+            <h3>数据库恢复</h3>
+            <p class="ptable-sub">MySQL · SQL Server · Oracle · SQLite</p>
+          </div>
+          <span>DATABASE</span>
+        </div>
+        <table>
+          <thead><tr><th>类型</th><th>参考价</th></tr></thead>
+          <tbody>
+            <tr><td class="cap">库文件损坏 / 误删 / 服务起不来（按库大小与类型）</td><td class="price">¥800 起</td></tr>
+            <tr><td class="cap">只读镜像 / 副本内操作</td><td class="price">含在内</td></tr>
+          </tbody>
+        </table>
+        <div class="ptable-foot">常规周期：预计 3-7 工作日</div>
         <div class="ptable-foot">以实际检测后方案为准</div>
       </div>
     </div>
