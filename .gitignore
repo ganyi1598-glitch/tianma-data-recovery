@@ -13,3 +13,9 @@ Thumbs.db
 
 # 内部运维文档（含服务器信息，不纳入版本管理与站点部署）
 docs/
+
+# 备份/临时文件（勿提交、勿部署到站点）
+*.bak
+*.bak.*
+index.polluted*
+*.tmp.html
