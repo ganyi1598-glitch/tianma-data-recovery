@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#FAFBFC" />
+<title>免费磁盘检测工具下载 | 天马一站式磁盘检测工具 v1.8.11 - 只读体检</title>
+<meta name="description" content="天马一站式磁盘检测工具 v1.8.11 免费下载（Windows 10/11 x64）。只读检测：SMART 健康概览、坏道扫描、读取速度测试、检测报告导出。不写盘、不上传、不做数据恢复。含使用说明与 SHA-256 校验值。" />
+<link rel="canonical" href="https://tianmahuifu.cn/tools.html" />
+<link rel="icon" type="image/svg+xml" href="logo.svg" />
+<!-- 添加到主屏幕（PWA） -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+<!-- 微信分享 / Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="中天数据处理服务中心" />
+<meta property="og:title" content="免费磁盘检测工具下载 | 天马一站式磁盘检测工具 v1.8.11" />
+<meta property="og:description" content="只读磁盘体检工具，免费下载：SMART 健康概览、坏道扫描、读取速度测试、检测报告导出。不写盘、不上传、不做数据恢复。" />
+<meta property="og:image" content="og-cover.jpg" />
+<meta property="og:locale" content="zh_CN" />
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="免费磁盘检测工具下载 | 天马一站式磁盘检测工具 v1.8.11" />
+<meta name="twitter:description" content="只读磁盘体检工具，免费下载：SMART 健康概览、坏道扫描、读取速度测试、检测报告导出。不写盘、不上传、不做数据恢复。" />
+<meta name="twitter:image" content="og-cover.jpg" />
+<!-- Safari / 添加到主屏幕 -->
+<meta name="apple-mobile-web-app-title" content="中天数据处理" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="format-detection" content="telephone=no" />
+<script>
+  // 把 og:image / og:url 修正为绝对地址，便于微信/Twitter 抓取
+  (function(){
+    ['og:image','twitter:image'].forEach(function(k){
+      var m=document.querySelector('meta[property="'+k+'"]')||document.querySelector('meta[name="'+k+'"]');
+      if(m && m.content && !/^https?:/.test(m.content)) m.content=location.origin+'/'+m.content;
+    });
+    var u=document.querySelector('meta[property="og:url"]');
+    if(!u){ u=document.createElement('meta'); u.setAttribute('property','og:url'); document.head.appendChild(u); }
+    u.content=location.origin+location.pathname;
+  })();
+</script>
+<script>
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  addEventListener('pageshow', function(){ if (!location.hash) window.scrollTo(0, 0); });
+</script>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body data-page="tools">
+
+<!-- NAV:START -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="天马一站式数据服务中心">
+      <span class="brand-mark">
+        <svg viewBox="0 0 613.51 626.88" fill="currentColor"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>
+      </span>
+      <div>
+        <div>天马一站式数据服务中心</div>
+        <div class="brand-sub">Data Recovery Lab · 武汉</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="services.html">服务范围</a>
+      <a href="pricing.html">报价</a>
+      <a href="process.html">流程</a>
+      <a href="cases.html">案例</a>
+      <a href="faq.html">常见问题</a>
+      <a href="tools.html">工具下载</a>
+      <a href="about.html">关于我们</a>
+    </div>
+    <a class="cta primary" href="check.html">
+      <span class="dot"></span>
+      开始故障自检
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html">服务范围</a>
+  <a href="pricing.html">报价</a>
+  <a href="process.html">流程</a>
+  <a href="cases.html">案例</a>
+  <a href="faq.html">常见问题</a>
+  <a href="tools.html">工具下载</a>
+  <a href="about.html">关于我们</a>
+  <a href="contact.html">联系我们</a>
+  <a href="visit.html">到店怎么走</a>
+  <a href="check.html" class="mm-cta">开始故障自检 →</a>
+</div>
+<!-- NAV:END -->
+
+<header id="top" class="hero" style="padding-bottom:12px">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0">
+      <div>
+        <span class="eyebrow" data-reveal>07 / 工具下载</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          我们自己用的工具，<br/><span class="muted">免费拿走用。</span>
+        </h2>
+      </div>
+      <div data-reveal data-reveal-delay="2">
+        <p style="max-width:48ch">
+          下面这一页放的是我们日常在店里用的工具中、能独立跑起来的部分。全部只读、不写盘、不上传你的文件。
+          有源码和开源许可，随便用 —— 也不要求你找我们修任何东西。
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 01 工具列表 ============ -->
+<section id="tools" style="border-top:0">
+  <div class="wrap">
+    <!--
+      ★ 新增工具时改这里：复制一个 <article class="tool-card"> 整体，改版本号 / 说明 /
+      下载链接 / SHA-256 / 大小。所有下载都在同一个 GitHub Releases 下：
+        https://github.com/ganyi1598-glitch/tianma-data-recovery/releases
+      直链格式（注意 tag 与文件名都要换）：
+        https://github.com/ganyi1598-glitch/tianma-data-recovery/releases/download/<tag>/<文件名>
+      改完记得同步本页 script 里的 data-ver（自动更新页脚版本号用不上，但保持可读）。
+    -->
+    <div class="tool-list">
+
+      <!-- ---------- 工具 1 ---------- -->
+      <article class="tool-card" data-reveal>
+        <div class="tool-top">
+          <div class="tool-id">
+            <span class="tool-ic" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="7" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                <rect x="3" y="14" width="18" height="6" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                <circle cx="7" cy="7.5" r="1.2" fill="currentColor"/>
+                <circle cx="7" cy="17" r="1.2" fill="currentColor"/>
+              </svg>
+            </span>
+            <div>
+              <span class="tool-ver">v1.8.11 · 发布于 2026-10-15</span>
+              <h3>天马一站式磁盘检测工具</h3>
+              <p class="tool-sub">
+                Windows 上的<strong>只读</strong>磁盘体检工具：看清楚一块盘现在什么状态、读得动读不动，
+                然后导出一张报告卡。不写盘，也不做数据恢复。
+              </p>
+              <div class="tool-tags">
+                <span class="tool-tag ok">免费</span>
+                <span class="tool-tag">Windows 10 / 11 x64</span>
+                <span class="tool-tag">约 4.75 MB</span>
+                <span class="tool-tag">只读检测</span>
+                <span class="tool-tag">含源码与开源许可</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-dl">
+            <a class="dl-btn" href="https://github.com/ganyi1598-glitch/tianma-data-recovery/releases/download/v1.8.11/tianma-disk-tool-v1.8.11-setup.exe" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              下载安装包
+            </a>
+            <a class="dl-btn alt" href="guide/tool-guide.html" target="_blank" rel="noopener">
+              网页版使用说明书（12 页）
+            </a>
+            <a class="dl-btn alt" href="guide/tool-guide.pdf" target="_blank" rel="noopener">说明书 PDF 版</a>
+            <p class="dl-meta">
+              下载走 GitHub Releases · 可查历史版本<br/>
+              <a href="https://github.com/ganyi1598-glitch/tianma-data-recovery/releases" target="_blank" rel="noopener noreferrer" class="accent">查看全部版本 →</a>
+            </p>
+          </div>
+        </div>
+
+        <ul class="tool-feats">
+          <li><span><b>健康概览</b>　SMART 读数、通电时长、温度、综合检测评分，并列出扣分依据</span></li>
+          <li><span><b>坏道扫描</b>　按读取区域聚合的网格，标出读取中 / 读取错误 / 未完成区域</span></li>
+          <li><span><b>速度概览</b>　顺序读取曲线、平均与区间峰值、随机 4K 读取结果</span></li>
+          <li><span><b>扇区查看</b>　只读取原始扇区内容，按 LBA 跳转、逐范围翻页</span></li>
+          <li><span><b>报告导出</b>　复制文本 / 导出 JPEG 报告卡 / 导出网页报告</span></li>
+          <li><span><b>托盘监控</b>　每块盘一个温度图标，SMART 异常弹系统通知</span></li>
+        </ul>
+
+        <div class="dl-hash">
+          <b>安装包 SHA-256</b>（下载后可核对文件是否被改动）<br/>
+          d1f7bd12ab40659ae4c9f251f4f31466811120ffb64c2dc425d46e535d5cc7b9
+        </div>
+      </article>
+
+      <!-- ---------- 占位：后续工具 ---------- -->
+      <article class="tool-card is-soon" data-reveal>
+        <div class="tool-top">
+          <div class="tool-id">
+            <span class="tool-ic" aria-hidden="true" style="background:var(--bg);border-color:var(--line);color:var(--ink-3)">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <div>
+              <span class="tool-ver">后续</span>
+              <h3>我们的工具会陆续放在这一页</h3>
+              <p class="tool-sub">
+                这一页是工具的统一入口，新工具做出来就加在这里，下载都走同一个 GitHub Releases，
+                所以「看全部版本」那个链接永远是最新的。
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="spec-grid" data-reveal>
+      <div class="spec">
+        <small>系统要求</small>
+        <b>Windows 10 / 11 x64</b>
+        <span>macOS 与 Linux 版本尚未发布</span>
+      </div>
+      <div class="spec">
+        <small>安装包大小</small>
+        <b>4,980,342 字节</b>
+        <span>约 4.75 MB，含 SMART 运行引擎</span>
+      </div>
+      <div class="spec">
+        <small>是否写入磁盘</small>
+        <b>不写入</b>
+        <span>常规检测、坏道、测速全部只读</span>
+      </div>
+      <div class="spec">
+        <small>版本更新</small>
+        <b>程序内自查</b>
+        <span>核对签名清单与 SHA-256 后再装</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 怎么用 ============ -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>怎么用</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          五步，<br/><span class="muted">从下载到拿到报告。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        整个过程只读，不写盘、不格式化、不修复。有拿不准的地方，先把报告导出来发我们看。
+      </p>
+    </div>
+
+    <div class="steps-mini" data-stagger data-reveal>
+      <div class="sm">
+        <span class="sm-n">STEP 01</span>
+        <h4>下载并安装</h4>
+        <p>按向导选择安装盘符与目录。安装前先从旧版托盘的右键菜单选「退出程序」，运行中的旧版会被安装器拦下。</p>
+      </div>
+      <div class="sm">
+        <span class="sm-n">STEP 02</span>
+        <h4>允许底层访问</h4>
+        <p>普通用户可先正常打开界面；开始需要底层设备访问的检测时，按程序提示通过 UAC 授权重启。</p>
+      </div>
+      <div class="sm">
+        <span class="sm-n">STEP 03</span>
+        <h4>常规检测</h4>
+        <p>选「全部磁盘」或指定某一块，看综合评分、SMART 读数与技术细节。不确定就先跑这一遍。</p>
+      </div>
+      <div class="sm">
+        <span class="sm-n">STEP 04</span>
+        <h4>扫描坏道 / 测速</h4>
+        <p>在<strong>同一个窗口</strong>的「坏道扫描」「速度概览」页签里看网格和曲线，不会另弹窗口。</p>
+      </div>
+      <div class="sm">
+        <span class="sm-n">STEP 05</span>
+        <h4>导出报告</h4>
+        <p>在「检测报告」页导出 JPEG 报告卡或网页报告 —— 存在手机里，直接发给我们就能人工核对。</p>
+      </div>
+    </div>
+
+    <div class="pricing-notes" style="margin-top:26px" data-reveal>
+      <span class="note-chip"><b>只读</b>　不创建测试文件、不修改数据、不格式化</span>
+      <span class="note-chip"><b>不上传</b>　默认不开机自启，不替你把报告传到任何地方</span>
+      <span class="note-chip dim">同一个窗口内切页签，不会自动结束正在跑的任务</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 边界 ============ -->
+<section id="scope">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>工具的边界</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          它是体检仪，<br/><span class="muted">不是手术刀。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        这一条比功能介绍更重要：先说清楚它<strong>不做什么</strong>，你才不会把希望押错地方。
+      </p>
+    </div>
+
+    <div class="bound" data-stagger data-reveal>
+      <div class="bound-col yes">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          它会做
+        </h3>
+        <ul>
+          <li><span><b>读</b>　把设备自己上报的 SMART、温度、通电时长、已用耐久读出来</span></li>
+          <li><span><b>看</b>　只读扫一遍读取区域，标出读不动的地址区间</span></li>
+          <li><span><b>测</b>　只读抽样顺序读取速度与随机 4K 速度</span></li>
+          <li><span><b>出示证据</b>　把读数、扣分依据、异常位置整理成一张能带走的报告</span></li>
+        </ul>
+      </div>
+
+      <div class="bound-col no">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M9 9l6 6m0-6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          它不做
+        </h3>
+        <ul>
+          <li><span><b>不做数据恢复</b>　不扫描文件系统找文件、不恢复删除的照片，那是我们门店的业务，不是这个工具</span></li>
+          <li><span><b>不给寿命预测</b>　机械盘通常没有 SSD 那种耐久百分比，我们不会按通电小时推算「还能用多久」</span></li>
+          <li><span><b>不下"坏 / 没坏"的判决</b>　评分不是性能分、不是寿命分；正常结论只表示这次快速检查没看到异常</span></li>
+          <li><span><b>不写盘、不修复</b>　不修复文件系统、不格式化、不「优化」，也不替你做任何写入决定</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pricing-notes" style="margin-top:32px" data-reveal>
+      <span class="note-chip warn"><b>一次读取错误</b>　不等于已确认物理坏道，要结合具体属性与多次结果复核</span>
+      <span class="note-chip warn"><b>速度数值</b>　会受驱动、接口、权限与设备缓存影响</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 装之前要知道 ============ -->
+<section id="notes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>装之前要知道</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          先说清楚，<br/><span class="muted">省得你装了又后悔。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        下面这些是这个版本<strong>目前还没做到</strong>或<strong>做不到</strong>的地方。我们宁可你没下载，也不想你装完才发现。
+      </p>
+    </div>
+
+    <div class="fine" data-stagger data-reveal>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 4l8.5 15H3.5L12 4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4m0 3v.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div>
+          <h4>安装包没有代码签名，Windows 会提示「未知发布者」</h4>
+          <p>我们没有购买发布者代码签名证书，所以 Windows SmartScreen 可能弹提示。你可以用上面的 SHA-256 核对文件是否与官方一致 —— 一致就说明文件没被中途改过。这不等于我们做过安全认证，只是让你能自己验一下。</p>
+        </div>
+      </div>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div>
+          <h4>没有对真实物理磁盘做过长时间全盘扫描</h4>
+          <p>本版的验证集中在自动化回归、界面预览与隔离环境下的安装卸载流程。真机长时间扫描、各型号硬盘与 USB 桥接芯片的兼容性，还需要更多实际使用来补。</p>
+        </div>
+      </div>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 20h16M7 20V9m5 11V4m5 16v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <div>
+          <h4>安装流程的图形 UAC 路径尚未覆盖</h4>
+          <p>安装器验证走的是当前用户静默模式。默认管理员安装的图形 UAC 交互流程没有完整覆盖，遇到异常请把提示截图发我们。</p>
+        </div>
+      </div>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/></svg></span>
+        <div>
+          <h4>本版是「预览与验收版」，不是正式售卖包</h4>
+          <p>v1.8.11 的编译与安装包载荷哈希已核对，坏道网格与速度仪表盘已嵌入原窗口页签。它面向的是试用与验收，不用于宣称已完成全部实机验证。</p>
+        </div>
+      </div>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.58 7-13a7 7 0 0 0-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg></span>
+        <div>
+          <h4>GitHub 在国内有时打不开或很慢</h4>
+          <p>下载走的是 GitHub Releases，国内网络可能需要多试几次，或换个时间段。实在下不动，直接联系我们，我们发给你。</p>
+        </div>
+      </div>
+      <div class="fine-item">
+        <span class="fi-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 7h16v13H4zM9 7V4h6v3" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div>
+          <h4>报告里可能带设备序列号</h4>
+          <p>报告卡会包含磁盘型号与序列号。公开分享到网上之前，请先把这些信息遮掉。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 常见问题 ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>常见问题</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          装之前最常被问的，<br/><span class="muted">都在这里。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        下面这些问题整理自工具自带的使用说明书与常见问题文档；完整版请直接看 <a href="guide/tool-guide.html" class="accent">网页版说明书</a>。
+      </p>
+    </div>
+
+    <div class="faq" data-reveal>
+      <details><summary>这个工具会写入我的磁盘吗？</summary><p>常规检测、坏道扫描、速度概览<strong>全部只读</strong>，不创建测试文件、不修改数据、不格式化。工具里另有一个「移动存储容量验证」功能需要写入空盘，但那是必须你<strong>显式勾选确认</strong>才会启动的独立功能，普通检测不会碰到它。</p></details>
+
+      <details><summary>Windows 提示「未知发布者」，是病毒吗？</summary><p>不是病毒提示，是<strong>没有代码签名证书</strong>的正常表现。安装包与主程序都还没做发布者签名，所以 Windows 按未知发布者提示。你可以按页面上的 SHA-256 核对文件是否与官方一致；核对一致只能证明文件没被中途改过，不代表我们做过安全认证。</p></details>
+
+      <details><summary>会不会偷偷开机自启、上传我的数据？</summary><p>默认<strong>不开机自启</strong>，也<strong>不替用户上传任何报告</strong>。开机自启的开关在首页右上方，由你自己切换，关掉会删除本程序的启动项。联网只用在一件事上：你在程序里点「检查新版本」时访问 GitHub Releases。</p></details>
+
+      <details><summary>机械盘为什么没有「耐久剩余」？</summary><p>机械盘通常没有 SSD 那种标准耐久百分比。识别为机械盘时，程序把 SSD 耐久字段标为「机械盘不适用」，温度、通电时长和错误指标仍然可以看，取决于设备与连接方式。其他软件显示的「预计剩余寿命 &gt;1000 日」属于它自己的模型估算，不是所有硬盘都能直接读出的标准字段，我们不会把这种估算冒充设备读数。</p></details>
+
+      <details><summary>「耐久剩余 98%」和「综合评分 100 分」矛盾吗？</summary><p>不矛盾。耐久剩余是按设备上报的已用值换算的（例如已用 2% 就显示剩余 98%）；综合检测评分是把 SMART 异常、底层读取和文件系统检查合成分值，并列出扣分依据。它<strong>不是性能评分，也不是寿命百分比</strong>。轻微正常磨损不等于故障，所以两个数字可以同时成立；100 分也不等于全新，或者以后一定不坏。</p></details>
+
+      <details><summary>我是管理员运行的，为什么还是没有温度？</summary><p>管理员权限只是访问条件之一，系统或驱动仍可能限制访问，USB 桥接芯片也可能根本不提供 SMART 通道。普通 U 盘往往没有温度与寿命数据。程序不会把读不到的字段补成 0 或估算值，而是保留「未读取到」。这既不等于硬盘损坏，也不等于你没用管理员启动。</p></details>
+
+      <details><summary>8GB 扩容成 128GB 的假 U 盘，能查出来吗？</summary><p>可以走「完整容量验证」，但它<strong>需要空盘</strong>：程序向可用空间写入带位置信息的校验数据，全部写完之后再完整读回比对，才能暴露地址回绕、丢写这类问题。如果盘里已经有照片，只能先做「只读初筛」看容量和文件系统 —— 而只读初筛<strong>不能确认真实容量</strong>。另外扩容控制器可能让新写入覆盖你原有的文件，所以完整验证前必须先把文件备份到另一块可靠的盘上。</p></details>
+
+      <details><summary>完整容量验证要测多久？</summary><p>至少要写一遍、读一遍，时间约等于「容量 ÷ 持续写速 + 容量 ÷ 持续读速」。参考量级：128GB 在写 10MB/s、读 30MB/s 的情况下约 4 小时 45 分；写 80MB/s、读 150MB/s 约 40 分钟；1TB 在读写各 100MB/s 时约 5.5 小时。刚开始的缓存峰值速度不能用来推断整盘耗时，取消或只完成部分读取都不算通过。</p></details>
+
+      <details><summary>显示「读取错误」是不是就说明有坏道了？</summary><p>不是。单次读取错误<strong>不等于已确认物理坏道</strong>。坏道扫描页显示的是按实际读取地址聚合的区域网格，每格代表一段地址而不是一个物理扇区；读取错误只说明这次读没成功。可以结合具体 SMART 属性和多次结果复核，也可以把报告发给我们一起看。</p></details>
+
+      <details><summary>报告里的序列号能公开吗？</summary><p>不建议。报告会包含磁盘型号与序列号，公开分享到论坛或社交平台前请先遮掉这些信息。发给我们可以不遮，但请通过微信或当面发送。</p></details>
+
+      <details><summary>卸载之后我导出的报告会丢吗？</summary><p>不会。卸载请用 Windows「已安装的应用」或开始菜单入口，卸载<strong>不会</strong>主动递归删除你自己另存的报告文件。建议把报告存在「文档」这类个人目录里。</p></details>
+
+      <details><summary>用这个工具能恢复我删掉的照片吗？</summary><p>不能，这是刻意划开的边界。它是体检工具，不做数据恢复 —— 不扫描文件系统找文件、不重建分区表、不导出数据。如果数据已经丢了，别在这个工具上耗时间，也别自己反复通电试：先做<a href="check.html" class="accent">故障自检</a>，然后联系我们。</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 开源与许可 ============ -->
+<section id="license">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>开源与许可</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          用了谁的东西，<br/><span class="muted">就写谁的名字。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        安装器里随包保留了这些组件的许可证与适用源码。安装后请不要删除安装目录中的许可与源码文件。
+      </p>
+    </div>
+
+    <div class="lic" data-reveal>
+      <span class="lic-chip"><b>smartmontools</b> 7.5 <i>GPL-2.0-or-later</i></span>
+      <span class="lic-chip"><b>CrystalDiskInfo</b> <i>MIT</i></span>
+      <span class="lic-chip"><b>nlohmann/json</b> 3.11.3 <i>MIT</i></span>
+    </div>
+
+    <p style="margin-top:22px;font-size:14.5px;max-width:70ch" data-reveal>
+      smartmontools 官方 Windows x64 的 <span class="mono">smartctl</span> 以独立进程方式调用，随包附 COPYING、AUTHORS、drivedb 及对应源码压缩包；
+      CrystalDiskInfo 我们只参考了其实现思路并保留版权与许可证；nlohmann/json 用于清单解析。
+      F3 与 MediaTester 仅作容量检测的设计研究参考，<strong>不是</strong>本程序的运行组件；ValiDrive 与 Hard Disk Sentinel 不随本软件提供。
+      本产品的使用条款不限制上述开源许可证已经授予你的权利。
+    </p>
+
+    <div class="pricing-notes" style="margin-top:26px" data-reveal>
+      <span class="note-chip">安装包与主程序暂无发布者代码签名</span>
+      <span class="note-chip dim">核对方法：<span class="mono">Get-FileHash -Algorithm SHA256 -LiteralPath '.\安装包.exe'</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT-START -->
+<div class="wrap"><div class="next-steps" id="nextSteps" data-reveal></div></div>
+<!-- NEXT-END -->
+
+<!-- CONTACT:START -->
+<!--
+  公共联系方式条（单一来源）
+  改电话 / 微信号只改本文件，然后跑 `node tools/sync-chrome.mjs` 同步到全站。
+  contact.html 与 visit.html 不注入本区块（自带更完整版本）。
+
+  可点击性是硬要求：
+  - 电话用 <a href="tel:+86…">  → 手机点一下直接拨号（href 里不能有空格）
+  - 微信号用 <button data-copy> → 复制到剪贴板（桌面端 weixin:// 不生效，复制最稳）
+  - 地址指向 visit.html 图文导航
+-->
+<section class="cstrip" aria-label="联系方式">
+  <div class="wrap">
+    <div class="cstrip-top">
+      <div>
+        <span class="eyebrow">联系工作室</span>
+        <h3>电话、微信、到店地址</h3>
+      </div>
+      <p class="cstrip-lead">
+        检测免费，恢复不成功不收费（手机内容恢复除外）。<b>不确定的，先做一次自检</b>，把报告发给我们预判。
+      </p>
+    </div>
+
+    <div class="cs-grid">
+      <a class="cs-card" href="tel:+8618696128515">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">程 · 微信同号</span>
+        <b class="cs-v">186 9612 8515</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8613006184912">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">程 · 微信同号</span>
+        <b class="cs-v">130 0618 4912</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8618402718242">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">王 · 微信同号</span>
+        <b class="cs-v">184 0271 8242</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8613294146310">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">甘 · 微信同号</span>
+        <b class="cs-v">132 9414 6310</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <button class="cs-card js-copy" type="button" data-copy="TianmaDataLab" title="复制微信号 TianmaDataLab" aria-label="复制微信号 TianmaDataLab">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9.5 4C5.9 4 3 6.4 3 9.4c0 1.7.9 3.2 2.4 4.2l-.6 1.9 2.2-1.1c.7.2 1.5.3 2.3.3h.4a5 5 0 0 1-.1-1c0-3 2.9-5.4 6.5-5.4h.5C16.2 5.8 13.2 4 9.5 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M21 13.7c0-2.4-2.4-4.4-5.4-4.4s-5.4 2-5.4 4.4 2.4 4.4 5.4 4.4c.7 0 1.3-.1 1.9-.3l1.8.9-.5-1.6c1.4-.8 2.2-2 2.2-3.4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">微信号</span>
+        <b class="cs-v">TianmaDataLab</b>
+        <span class="cs-go">复制微信号</span>
+        <span class="copy-tip">已复制</span>
+      </button>
+
+      <a class="cs-card" href="visit.html">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 0 0-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.7"/></svg></span>
+        <span class="cs-k">到店地址</span>
+        <b class="cs-v">新星电脑城二楼 206 室</b>
+        <span class="cs-go">看图文导航</span>
+      </a>
+    </div>
+
+    <p class="cstrip-foot">
+      营业时间 周一至周日 10:00 — 18:00 · 湖北省武汉市江汉区民主一街 177 号 新星电脑城二楼 206 室 ·
+      <a href="visit.html">地铁 2/6 号线江汉路站 F 出口步行约 8 分钟 →</a>
+    </p>
+  </div>
+</section>
+<!-- CONTACT:END -->
+
+<!-- FOOTER:START -->
+<footer class="wrap foot">
+  <span style="display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 613.51 626.88" fill="currentColor" style="width:16px;height:16px;color:var(--accent)" aria-hidden="true"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>© 2026 天马一站式数据服务中心 · 武汉</span>
+  <span class="muted">检测免费 · 恢复不成功不收费（手机内容恢复除外）</span>
+  <span><a href="https://www.xiaohongshu.com/user/profile/6419c1c6000000000b0143d8" target="_blank" rel="noopener">小红书案例 ↗</a> · <a href="index.html">回到顶部 ↑</a></span>
+  <span style="display:inline-flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Zm-1 6h2v2h-2V7Zm0 4h2v6h-2v-6Z"/></svg>
+      鄂ICP备2026048282号-1
+    </a>
+    <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42010302002996" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5.5v5.9c0 4.9 3.3 9.4 8 10.6 4.7-1.2 8-5.7 8-10.6V5.5L12 2Zm0 3.2 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L12 5.2Z"/></svg>
+      鄂公网安备42010302002996号
+    </a>
+  </span>
+</footer>
+
+<div class="qr-lightbox" id="qrLightbox" role="dialog" aria-label="微信二维码大图">
+  <div class="qr-lightbox-inner">
+    <img src="wechat-qr.jpg" alt="微信好友码大图"/>
+    <p class="qr-tip">长按二维码 · 在微信中「识别」即可发送好友申请</p>
+    <p class="qr-id">微信号：TianmaDataLab</p>
+    <a class="qr-deeplink" id="qrDeeplink" href="weixin://contacts/profile/TianmaDataLab">已安装微信？点此直接打开</a>
+    <button class="qr-close" type="button" id="qrClose">关闭</button>
+  </div>
+</div>
+
+<div class="fab" id="fab" aria-label="快速咨询">
+  <button class="fab-main" id="fabMain" aria-expanded="false" aria-controls="fabMenu" type="button">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    立即咨询
+  </button>
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-item" type="button" data-fab-addfriend data-weixin="weixin://contacts/profile/TianmaDataLab">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      微信加好友 · 立即聊
+    </button>
+    <a class="fab-item" href="tel:18402718242">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      电话 184 0271 8242
+    </a>
+  </div>
+</div>
+<!-- FOOTER:END -->
+
+<script src="assets/app.js"></script>
+</body>
+</html>

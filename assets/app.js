@@ -1509,6 +1509,7 @@ const SITE_ORDER = [
   ['process.html', '流程'],
   ['about.html',   '关于我们'],
   ['faq.html',     '常见问题'],
+  ['tools.html',   '工具下载'],
   ['check.html',   '故障自检'],
   ['visit.html',   '到店导航'],
   ['contact.html', '联系我们']
@@ -1598,6 +1599,16 @@ const FLOW = {
       { k:'全部联系方式', t:'四个人 + 微信号', d:'电话、微信、营业时间都在联系页。', href:'contact.html' }
     ]
   },
+  // ★ 工具下载页：说明工具是"只读体检"，数据真丢了要转去自检
+  tools: {
+    head: '下载之前 / 之后',
+    sub: '这个工具是只读体检，不做数据恢复。真丢了数据，先自检拿到判断，别在体检工具上耗时间。',
+    cards: [
+      { k:'推荐', t:'数据已经丢了？先做故障自检', d:'体检工具不找文件、不恢复数据。5 步拿到风险指数和下一步动作，关键是先别再反复通电。', href:'check.html', primary:true },
+      { k:'如果最终要送修', t:'看报价表', d:'武汉本地口径：按介质类型、容量和故障复杂程度分档，检测免费。', href:'pricing.html' },
+      { k:'还有疑问', t:'看常见问题', d:'会被看到吗 · 要多久 · 恢复不了怎么办 · 手机为什么先收辛苦费。', href:'faq.html' }
+    ]
+  },
   contact: {
     head: '联系之前 / 之后',
     sub: '不确定要不要送？先做一次免费自检，把报告发过来我们能直接给判断。',
@@ -1612,7 +1623,7 @@ const FLOW = {
 /** data-page → 站点顺序里的名字（用于定位「上一站 / 下一站」） */
 const PAGE_LABEL = {
   home:'首页', services:'服务范围', cases:'案例', pricing:'报价', process:'流程',
-  about:'关于我们', faq:'常见问题', check:'故障自检', visit:'到店导航', contact:'联系我们'
+  about:'关于我们', faq:'常见问题', tools:'工具下载', check:'故障自检', visit:'到店导航', contact:'联系我们'
 };
 
 (() => {
