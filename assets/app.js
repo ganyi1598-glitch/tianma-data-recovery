@@ -1154,20 +1154,50 @@ window.copyReport = copyReport;
   onScroll();
 })();
 
-/* Service cards -> pricing anchors */
+/* Service cards -> pricing anchors
+   ⚠️ 拆页之后的遗留问题：.svc[data-target] 在 services.html，而 #pt-* 表格只在
+   pricing.html 上。原先这里用 document.querySelector 取不到就 `return`，
+   于是 services.html 上那 4 张卡的「查看服务 →」点了毫无反应，
+   而且页面上不会报任何错 —— 属于最难看出来的那种死交互。
+   现在：本页有就滚过去高亮，没有就跨页跳到报价页，由下面的 hash 落地逻辑兜住。 */
 (() => {
+  const flash = (t) => {
+    t.classList.remove('flash'); void t.offsetWidth;
+    t.classList.add('flash');
+    setTimeout(() => t.classList.remove('flash'), 1800);
+  };
+  const scrollToEl = (t, smooth) =>
+    t.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'center' });
+
   document.querySelectorAll('.svc[data-target]').forEach(el => {
     const go = () => {
-      const t = document.querySelector(el.dataset.target);
-      if(!t) return;
-      t.scrollIntoView({behavior:'smooth', block:'center'});
-      t.classList.remove('flash'); void t.offsetWidth;
-      t.classList.add('flash');
-      setTimeout(() => t.classList.remove('flash'), 1800);
+      const target = el.dataset.target;
+      if (!target || target.length < 2 || target[0] !== '#') return;
+      const t = document.getElementById(target.slice(1));
+      if (!t) { location.href = 'pricing.html' + target; return; }
+      scrollToEl(t, true); flash(t);
     };
     el.addEventListener('click', go);
     el.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); }});
   });
+
+  /* 带 hash 落地（含从 services.html 跨页跳来）→ 滚到目标并高亮。
+     用 block:'center' 而不是默认的贴顶，否则会被 64px 固定导航盖住。 */
+  let flashed = false;
+  const land = () => {
+    const h = location.hash;
+    if (!h || h.length < 2) return;
+    const t = document.getElementById(h.slice(1));
+    if (!t) return;
+    scrollToEl(t, false);
+    if (!flashed) { flash(t); flashed = true; }
+  };
+  addEventListener('hashchange', () => { flashed = false; land(); });
+  if (location.hash.length > 1) {
+    land();
+    setTimeout(land, 350);          // 字体/图片撑开高度后再校正一次
+    addEventListener('load', land);
+  }
 })();
 
 /* Metrics count-up */

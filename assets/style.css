@@ -724,3 +724,43 @@ a.num:hover{color:var(--accent);text-decoration:underline;text-underline-offset:
 .shot-lightbox figcaption{color:#E2E8F0;font-size:15px;text-align:center;line-height:1.6}
 .shot-close{position:fixed;top:20px;right:20px;color:#E2E8F0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);padding:9px 22px;border-radius:999px;font-size:14.5px;cursor:pointer;font-family:inherit}
 .shot-close:hover{background:rgba(255,255,255,.16)}
+
+/* ===== ⑥ 报价页 v4：计价说明 / 叠瓦盘 / 整宽与双列表布局 ===== */
+.price-rule{margin-bottom:22px;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--bg-2);box-shadow:var(--shadow-sm)}
+.price-rule h3{margin:0 0 12px;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.price-rule ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+.price-rule li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.65;color:var(--ink-2)}
+.price-rule li::before{content:"";position:absolute;left:2px;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.price-rule li b{color:var(--ink);font-weight:600}
+@media (min-width:721px){.price-rule ul{grid-template-columns:repeat(2,1fr);column-gap:26px}}
+
+.price-wide{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:18px}
+.price-2col{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px}
+@media (max-width:980px){.price-2col{grid-template-columns:1fr}}
+
+.ptable-intro{margin:0;padding:14px 20px 6px;font-size:13.5px;line-height:1.65;color:var(--ink-3)}
+.ptable-intro b{color:var(--ink-2);font-weight:600}
+.ptable td small{display:block;margin-top:3px;font-size:12.5px;font-weight:400;color:var(--ink-3);letter-spacing:.02em;line-height:1.45}
+
+/* 叠瓦盘必须显眼：客户拿 SMR 盘按普通盘报价，一次就亏掉四分之三 */
+.ptable.is-flag{border-color:var(--warn)}
+.ptable.is-flag .ptable-head{background:var(--warn-soft);border-bottom-color:var(--warn)}
+.ptable.is-flag .ptable-head h3{color:var(--warn)}
+.ptable.is-flag .ptable-head span{color:var(--warn)}
+
+/* 表脚注释现在承载完整句子，原先 .1em 字距在中文上很难读 */
+.ptable .ptable-foot{letter-spacing:.03em;line-height:1.6}
+
+/* 窄屏：表格列数一多就被挤扁 —— 实测 390px 下「移动硬盘」那张 4 列表
+   会把容量列压到 50px，"500G" 被拆成 "50 / 0G"，"5T 及以上" 拆成 5 行。
+   解法：收紧左右内边距 + 该表禁止在词内断行 + 该表单独降到 14.5px
+   （14px 偏小、15px 会让「5T 及以上」又换行，14.5px 实测刚好全单行且零溢出）。 */
+@media (max-width:600px){
+  .price-2col .ptable th,
+  .price-2col .ptable td,
+  .price-wide .ptable th,
+  .price-wide .ptable td{padding-left:8px;padding-right:8px}
+  #pt-move table{font-size:14.5px}
+  #pt-move td.price{font-size:14.5px}
+  #pt-move td.cap{overflow-wrap:normal;word-break:keep-all}
+}
