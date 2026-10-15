@@ -49,7 +49,7 @@
 </script>
 <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
+<body data-page="faq">
 
 <!-- NAV:START -->
 <nav class="nav">
@@ -83,11 +83,13 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="services.html">服务范围</a>
-  <a href="pricing.html">服务</a>
+  <a href="pricing.html">报价</a>
   <a href="process.html">流程</a>
   <a href="cases.html">案例</a>
   <a href="faq.html">常见问题</a>
+  <a href="about.html">关于我们</a>
   <a href="contact.html">联系我们</a>
+  <a href="visit.html">到店怎么走</a>
   <a href="check.html" class="mm-cta">开始故障自检 →</a>
 </div>
 <!-- NAV:END -->
@@ -129,6 +131,86 @@
     </div>
   </div>
 </section>
+
+<!-- NEXT-START -->
+<div class="wrap"><div class="next-steps" id="nextSteps" data-reveal></div></div>
+<!-- NEXT-END -->
+
+<!-- CONTACT:START -->
+<!--
+  公共联系方式条（单一来源）
+  改电话 / 微信号只改本文件，然后跑 `node tools/sync-chrome.mjs` 同步到全站。
+  contact.html 与 visit.html 不注入本区块（自带更完整版本）。
+
+  可点击性是硬要求：
+  - 电话用 <a href="tel:+86…">  → 手机点一下直接拨号（href 里不能有空格）
+  - 微信号用 <button data-copy> → 复制到剪贴板（桌面端 weixin:// 不生效，复制最稳）
+  - 地址指向 visit.html 图文导航
+-->
+<section class="cstrip" aria-label="联系方式">
+  <div class="wrap">
+    <div class="cstrip-top">
+      <div>
+        <span class="eyebrow">联系工作室</span>
+        <h3>电话、微信、到店地址</h3>
+      </div>
+      <p class="cstrip-lead">
+        检测免费，恢复不成功不收费。<b>不确定的，先做一次自检</b>，把报告发给我们预判。
+      </p>
+    </div>
+
+    <div class="cs-grid">
+      <a class="cs-card" href="tel:+8618696128515">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">程 · 微信同号</span>
+        <b class="cs-v">186 9612 8515</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8613006184912">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">程 · 微信同号</span>
+        <b class="cs-v">130 0618 4912</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8618402718242">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">王 · 微信同号</span>
+        <b class="cs-v">184 0271 8242</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <a class="cs-card" href="tel:+8613294146310">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">甘 · 微信同号</span>
+        <b class="cs-v">132 9414 6310</b>
+        <span class="cs-go">点此拨号</span>
+      </a>
+
+      <button class="cs-card js-copy" type="button" data-copy="TianmaDataLab" title="复制微信号 TianmaDataLab" aria-label="复制微信号 TianmaDataLab">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M9.5 4C5.9 4 3 6.4 3 9.4c0 1.7.9 3.2 2.4 4.2l-.6 1.9 2.2-1.1c.7.2 1.5.3 2.3.3h.4a5 5 0 0 1-.1-1c0-3 2.9-5.4 6.5-5.4h.5C16.2 5.8 13.2 4 9.5 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M21 13.7c0-2.4-2.4-4.4-5.4-4.4s-5.4 2-5.4 4.4 2.4 4.4 5.4 4.4c.7 0 1.3-.1 1.9-.3l1.8.9-.5-1.6c1.4-.8 2.2-2 2.2-3.4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        <span class="cs-k">微信号</span>
+        <b class="cs-v">TianmaDataLab</b>
+        <span class="cs-go">复制微信号</span>
+        <span class="copy-tip">已复制</span>
+      </button>
+
+      <a class="cs-card" href="visit.html">
+        <span class="cs-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 0 0-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.7"/></svg></span>
+        <span class="cs-k">到店地址</span>
+        <b class="cs-v">新星电脑城二楼 206 室</b>
+        <span class="cs-go">看图文导航</span>
+      </a>
+    </div>
+
+    <p class="cstrip-foot">
+      营业时间 周一至周日 10:00 — 18:00 · 湖北省武汉市江汉区民主一街 177 号 新星电脑城二楼 206 室 ·
+      <a href="visit.html">地铁 2/6 号线江汉路站 F 出口步行约 8 分钟 →</a>
+    </p>
+  </div>
+</section>
+<!-- CONTACT:END -->
 
 <!-- FOOTER:START -->
 <footer class="wrap foot">

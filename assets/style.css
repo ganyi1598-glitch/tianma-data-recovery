@@ -592,3 +592,135 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .xhs-stat b{display:block;font-family:var(--tnum);font-size:22px;font-weight:600;color:var(--ink);line-height:1.2}
 .xhs-stat span{font-size:13px;color:var(--ink-3)}
 @media (max-width:640px){.xhs-card{padding:24px 22px;gap:18px}.xhs-stats{gap:22px}}
+
+/* ============================================================
+   ① 公共联系方式条  chrome/contact-strip.html（全站注入，单一来源）
+   改样式改这里；改电话/微信号改 chrome/contact-strip.html 后跑 sync-chrome.mjs
+   ============================================================ */
+.cstrip{padding:clamp(52px,6vw,86px) 0;border-top:1px solid var(--line);background:var(--bg)}
+.cstrip-top{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:30px}
+.cstrip-top h3{margin-top:16px}
+.cstrip-lead{max-width:48ch;color:var(--ink-2)}
+.cstrip-lead b{color:var(--ink);font-weight:600}
+.cs-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.cs-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:18px 16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-2);box-shadow:var(--shadow-sm);font-family:inherit;transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease)}
+.cs-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.cs-ic{width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:9px}
+.cs-ic svg{width:16px;height:16px}
+.cs-k{font-size:12.5px;color:var(--ink-3);font-family:var(--tnum);letter-spacing:.06em}
+.cs-v{font-size:16px;font-weight:600;color:var(--ink);font-family:var(--tnum);letter-spacing:.2px;font-variant-numeric:tabular-nums;line-height:1.35}
+.cs-go{margin-top:9px;font-size:13px;color:var(--accent);font-weight:600}
+.cs-card .copy-tip{position:absolute;top:14px;right:14px;margin:0}
+.cstrip-foot{margin-top:20px;font-size:13.5px;color:var(--ink-3);line-height:1.7}
+.cstrip-foot a{color:var(--accent);font-weight:600}
+@media (max-width:1080px){.cs-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:620px){
+  .cs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cstrip-top{align-items:flex-start}
+  .cs-card{padding:15px 13px}
+  .cs-v{font-size:15px}
+}
+
+/* ============================================================
+   ② 到店导航页 visit.html
+   ============================================================ */
+.visit-head{max-width:64ch}
+.visit-head p{margin-top:22px;color:var(--ink-2)}
+.visit-route{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.visit-chip{font-family:var(--tnum);font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2)}
+.visit-chip b{color:var(--accent)}
+.visit-timeline{margin-top:52px;display:flex;flex-direction:column;gap:22px}
+.visit-step{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);padding:clamp(18px,2.5vw,28px);box-shadow:var(--shadow-sm)}
+.visit-step:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,430px)}
+.visit-step:nth-child(even) .vshot{order:2}
+.visit-step:nth-child(even) .vbody{order:1}
+.vshot{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:var(--radius-sm);overflow:hidden;position:relative}
+/* ⚠️ 导航照片**绝对不能用 object-fit:cover 裁切** —— 箭头和中文标注都在画面边缘，
+   裁掉就失去了导航意义。这里保持完整比例显示。 */
+.vshot img{display:block;width:100%;height:auto;object-fit:contain;border-radius:var(--radius-sm);background:var(--bg);transition:transform .35s var(--ease)}
+.vshot:hover img{transform:scale(1.025)}
+.vshot::after{content:"点击看大图";position:absolute;right:10px;bottom:10px;font-size:12.5px;color:#fff;background:rgba(10,22,40,.62);padding:4px 10px;border-radius:999px;font-family:var(--tnum);opacity:0;transition:opacity .2s var(--ease)}
+.vshot:hover::after{opacity:1}
+.vnum{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--accent);color:#fff;font-family:var(--tnum);font-size:16px;font-weight:600}
+.vbody h3{font-size:clamp(20px,2.1vw,27px);margin:16px 0 10px;line-height:1.3}
+.vbody p{font-size:15px;color:var(--ink-2);line-height:1.7}
+.visit-landmark{margin-top:14px;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-3);font-family:var(--tnum);border:1px dashed var(--line-2);border-radius:999px;padding:5px 12px}
+@media (max-width:900px){
+  .visit-step,.visit-step:nth-child(even){grid-template-columns:1fr;gap:18px}
+  .visit-step:nth-child(even) .vshot,.visit-step:nth-child(even) .vbody{order:0}
+}
+
+/* ============================================================
+   ③ 「下一步」动线组件（由 assets/app.js 按 data-page 渲染，全站单一来源）
+   ============================================================ */
+.next-steps{margin-top:clamp(40px,5vw,64px);border-top:1px solid var(--line);padding-top:clamp(36px,4vw,52px)}
+.next-steps h4{margin:0;font-family:var(--tnum);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.next-steps .ns-sub{margin-top:12px;font-size:15px;color:var(--ink-2);max-width:56ch}
+.ns-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.ns-card{position:relative;display:flex;flex-direction:column;gap:6px;padding:20px 20px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);box-shadow:var(--shadow-sm);transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease)}
+.ns-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.ns-card.primary{border-color:rgba(37,99,235,.42);background:linear-gradient(135deg,var(--accent-soft),#fff 70%)}
+.ns-card .ns-k{font-family:var(--tnum);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.ns-card .ns-t{font-size:17px;font-weight:600;color:var(--ink);line-height:1.35}
+.ns-card .ns-d{font-size:13.5px;color:var(--ink-3);line-height:1.6}
+.ns-card .ns-go{margin-top:auto;padding-top:12px;font-size:13.5px;font-weight:600;color:var(--accent)}
+.ns-card.primary .ns-go{color:var(--accent-deep)}
+
+/* ============================================================
+   ④ 自检报告页布局修复
+   症状：报告完成后右侧一整块空白。
+   根因：.check-body 是 1.5fr/1fr 两列，报告被塞进左列做 2 列（每列仅 ~285px），
+        而右列 .check-side 内容只有 ~170px 高却被拉伸到整行高 → 下方全白。
+   修法：报告态让 body 变单列 + 隐藏侧栏，报告铺满整宽。
+   ============================================================ */
+.check.is-report .check-body{grid-template-columns:1fr;min-height:0}
+.check.is-report .check-side{display:none}
+.check.is-report .check-main{border-right:0;padding:0}
+.check.is-report .report{grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);padding:clamp(24px,3vw,40px)}
+@media (max-width:900px){
+  .check.is-report .report{grid-template-columns:1fr;gap:30px}
+}
+
+/* 报告里的联系区（补上「少了的电话与微信号」） */
+.report-contact{margin-top:18px;border:1px solid rgba(37,99,235,.28);border-left:4px solid var(--accent);border-radius:var(--radius-sm);background:#fff;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.report-contact .rc-title{font-family:var(--tnum);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:4px}
+.report-contact .rc-lead{font-size:14px;color:var(--ink-3);margin-bottom:14px}
+.rc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.rc-grid{grid-template-columns:1fr}}
+.rc-item{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg-2);transition:border-color .2s var(--ease)}
+.rc-item:hover{border-color:var(--accent)}
+.rc-item small{display:block;font-size:12px;color:var(--ink-3);font-family:var(--tnum);letter-spacing:.06em}
+.rc-item b{display:block;font-size:15.5px;font-weight:600;color:var(--ink);font-family:var(--tnum);font-variant-numeric:tabular-nums}
+.rc-item svg{width:16px;height:16px;color:var(--accent);flex:0 0 auto}
+
+/* ============================================================
+   ⑤ 电话 / 微信号可点击（原先是死的 <b>，点不动）
+   ============================================================ */
+a.num{color:var(--ink);text-decoration:none;transition:color .2s var(--ease)}
+a.num:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.phone-line .num,.phone-line a.num{font-size:15px;font-weight:500;margin:0;font-family:var(--tnum);letter-spacing:.3px}
+.wx-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wx-line .wx-copy{font-size:12.5px;font-weight:600;color:var(--accent);border:1px solid rgba(37,99,235,.35);background:var(--accent-soft);border-radius:7px;padding:4px 10px;cursor:pointer;font-family:inherit;transition:background .2s var(--ease)}
+.wx-line .wx-copy:hover{background:rgba(37,99,235,.16)}
+/* 移动端悬浮咨询条在页脚进入视口时会自动隐藏（见 app.js 的 FAB IntersectionObserver），
+   所以这里只需要一点点额外安全距离，不要给大值——否则页脚会留出难看的空白。 */
+@media (max-width:760px){.foot{padding-bottom:56px}}
+
+/* ===== ③-补：上一站 / 下一站 翻页 ===== */
+.ns-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px;padding-top:22px;border-top:1px dashed var(--line-2)}
+.ns-page{display:flex;flex-direction:column;gap:3px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-2);transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.ns-page:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ns-page.next{text-align:right;align-items:flex-end}
+.ns-page small{font-family:var(--tnum);font-size:12px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase}
+.ns-page b{font-size:16px;font-weight:600;color:var(--ink)}
+.ns-page.disabled{opacity:.45;pointer-events:none}
+@media (max-width:560px){.ns-pager{grid-template-columns:1fr}}
+
+/* ===== 到店导航大图灯箱 ===== */
+.shot-lightbox{position:fixed;inset:0;z-index:120;background:rgba(10,22,40,.92);display:none;place-items:center;padding:22px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:auto}
+.shot-lightbox.open{display:grid}
+.shot-lightbox figure{margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;max-width:min(92vw,760px)}
+.shot-lightbox img{width:100%;height:auto;max-height:78vh;object-fit:contain;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,.5);background:#000}
+.shot-lightbox figcaption{color:#E2E8F0;font-size:15px;text-align:center;line-height:1.6}
+.shot-close{position:fixed;top:20px;right:20px;color:#E2E8F0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);padding:9px 22px;border-radius:999px;font-size:14.5px;cursor:pointer;font-family:inherit}
+.shot-close:hover{background:rgba(255,255,255,.16)}

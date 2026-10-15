@@ -71,6 +71,112 @@ const DYNAMIC = {
   ]
 };
 
+/* ============================================================
+   场景题 × 设备类型 的适配层
+   ------------------------------------------------------------
+   踩过的坑：buildDynamic 原先只按「场景」出题，完全没用「设备类型」，
+   于是选「手机 + 不识别」时会问「BIOS 或磁盘工具里能看到吗」
+   「接入瞬间是否有异响 / 震动（咔哒 / 敲盘声）」——对手机毫无意义。
+   现在按设备类型改写 / 过滤题目。
+   ============================================================ */
+
+/** 只有机械硬盘才有磁头与盘片，「咔哒 / 敲盘」只对它有意义 */
+const MECH_HEADS = new Set(['机械硬盘']);
+
+/** 接电脑的块设备 —— 才谈得上「BIOS / 磁盘工具」「换线换口」「加密盘」 */
+const BLOCK_DEV = new Set(['机械硬盘', '固态硬盘', 'U盘', 'SD卡存储卡']);
+
+/** 手机专属题（替代掉磁盘类问题） */
+const PHONE_Q = {
+  seenOnPc: { key:'seenOnPc', label:'电脑或手机助手（iTunes / 爱思助手）里能看到这台设备吗',
+    options:[['能看到','能看到'],['能看到但读不出','能看到但读不出'],['完全看不到','完全看不到'],['没连过电脑','没连过电脑']] },
+  screen: { key:'screenState', label:'屏幕现在的状态',
+    options:[['正常显示','正常显示'],['黑屏但有背光','黑屏但屏幕亮'],['完全不亮','完全不亮'],['碎裂/漏液','碎裂 / 漏液']] },
+  wet: { key:'wetDrop', label:'是否进过水或摔过',
+    options:[['都没有','都没有'],['进过水','进过水'],['摔过','摔过'],['两者都有','两者都有']] },
+  lock: { key:'lockState', label:'是否启用锁屏密码 / 加密',
+    options:[['知道密码','知道密码'],['不知道密码','不知道密码'],['没有锁屏','没有锁屏']] }
+};
+
+/** 卡 / U 盘：没有「数据线」，要问读卡器与 USB 口 */
+const CARD_SWAP_Q = { key:'sys2', label:'换读卡器 / 换电脑 / 换 USB 口试过吗',
+  options:[['都试过','都试过'],['换读卡器试过','换读卡器试过'],['换电脑试过','换电脑试过'],['都没试过','都没试过']] };
+
+/** NAS「不识别 / 报警」——原本这里只剩 1 题，问不到阵列本身，等于没问 */
+const NAS_UNRECOG_Q = [
+  { key:'disks', label:'总盘数 / 报错盘数',
+    options:[['2/2','2 盘 / 都报'],['4/1','4 盘 / 1 错'],['4/2','4 盘 / 2 错'],['5/1','5 盘 / 1 错'],['6/2','6 盘 / 2 错'],['>8','大于 8 盘'],['不确定','不确定']] },
+  { key:'level', label:'阵列级别',
+    options:[['RAID0','RAID 0'],['RAID1','RAID 1'],['RAID5','RAID 5'],['RAID6','RAID 6'],['RAID10','RAID 10'],['SHR','SHR / 群晖混合'],['JBOD','JBOD / 单盘'],['不知道','不知道']] },
+  { key:'ops', label:'已做操作',
+    options:[['更换过盘','已经更换过报错盘'],['触发了Resync','已触发 resync / rebuild'],['还没动','什么都没动']] }
+];
+
+/**
+ * 按「场景 + 设备类型」算出真正该问的题
+ * @param {string} scenario   场景 key
+ * @param {string} deviceType 设备类型（机械硬盘 / 固态硬盘 / SD卡存储卡 / U盘 / 手机 / NAS）
+ */
+function dynamicFor(scenario, deviceType){
+  const base = DYNAMIC[scenario] || [];
+  const isPhone = deviceType === '手机';
+  const isNas = deviceType === 'NAS';
+  const isCard = deviceType === 'SD卡存储卡' || deviceType === 'U盘';
+  const hasHeads = MECH_HEADS.has(deviceType);
+  const isBlock = BLOCK_DEV.has(deviceType);
+  const out = [];
+
+  // NAS「不识别」：通用那套（换线换口 / BIOS / 加密盘）对阵列没意义，整组替换成阵列题
+  if (isNas && scenario === 'unrecog') return NAS_UNRECOG_Q.slice();
+
+  for (const f of base){
+    // 磁头 / 敲盘类：只对机械硬盘有意义，SSD / 卡 / U 盘 / 手机 / NAS 全部不问
+    if ((f.key === 'sound' || f.key === 'noiseType') && !hasHeads) continue;
+
+    // 是否加密盘：手机上换成「是否启用锁屏密码」；NAS 不问（走阵列题）
+    if (f.key === 'encrypted'){
+      if (isPhone) out.push(PHONE_Q.lock);
+      else if (isBlock) out.push(f);
+      continue;
+    }
+
+    // BIOS / 磁盘工具：手机没有 BIOS，改成「电脑 / 助手能否看到」
+    if (f.key === 'bios'){
+      if (isPhone) out.push(PHONE_Q.seenOnPc);
+      else if (isBlock) out.push(f);
+      continue;
+    }
+
+    // 换电脑 / 换线 / 换口：手机不适用；卡和 U 盘问的是读卡器与 USB 口
+    if (f.key === 'sys2'){
+      if (isPhone) continue;
+      out.push(isCard ? CARD_SWAP_Q : f);
+      continue;
+    }
+
+    out.push(f);
+  }
+
+  // 手机专属补充
+  if (isPhone){
+    if (scenario === 'unrecog'){
+      out.splice(1, 0, PHONE_Q.screen);   // 「助手看不到」之后紧接着问屏幕状态
+      out.push(PHONE_Q.wet);
+    }
+    if (scenario === 'physical' && !out.some(f => f.key === 'lockState')){
+      out.push(PHONE_Q.lock);
+    }
+    // 误删 / 进水这两类也必须确认有没有锁屏 —— 没有密码，手机恢复无从下手
+    if ((scenario === 'deleted' || scenario === 'liquid') && !out.some(f => f.key === 'lockState')){
+      out.push(PHONE_Q.lock);
+    }
+  }
+  return out;
+}
+
+/** 统一入口：任何地方要用「这道题该问什么」都走这里 */
+function dynOf(s){ return dynamicFor(s.scenario, s.deviceType); }
+
 function calcRisk(s){
   // 各场景基准风险（0-100）：逻辑删除最轻，开盘/进水最重
   const base = {deleted:28, unrecog:46, physical:72, liquid:62, nas:56, phone:42}[s.scenario] ?? 42;
@@ -80,9 +186,12 @@ function calcRisk(s){
     '咔哒':15,'尖叫':20,'敲盘':12,'完全看不到':12,'完全不开':12,
     'BitLocker':10,'FileVault':10,'LUKS':10,'海水':18,'污水':14,'含糖':10,
     '曾通电':10,'试过有反应':8,'明显':8,'接口损坏':10,'被压':12,'更高':8,
-    '人高跌落':5,'外壳明显变形':8,'触发':12,'规律':10,'持续':6,'无规律':8
+    '人高跌落':5,'外壳明显变形':8,'触发':12,'规律':10,'持续':6,'无规律':8,
+    // 手机线专属信号（原先把手机当磁盘问，这些永远取不到值）
+    '不知道密码':10,'碎裂':10,'漏液':12,'完全不亮':10,'进过水':12,
+    '摔过':10,'两者都有':18,'没连过电脑':0
   };
-  (DYNAMIC[s.scenario]||[]).forEach(f => {
+  dynOf(s).forEach(f => {
     const v = s[f.key] || '';
     Object.keys(danger).forEach(d => { if(v.includes(d)) score += danger[d]; });
   });
@@ -121,7 +230,7 @@ function estimatePrice(s){
   if(level === 'high') price *= 1.25;
   else if(level === 'low') price *= 0.9;
 
-  const service = {
+  let service = {
     deleted:'逻辑恢复（删除 / 格式化）',
     unrecog:'硬件 / 固件修复恢复',
     physical:'洁净间开盘恢复',
@@ -129,14 +238,16 @@ function estimatePrice(s){
     nas:'阵列重组 / 多盘恢复',
     phone:'内容恢复（照片 / 视频 / 聊天记录等）'
   }[s.scenario] || '综合检测与恢复';
+  // 设备优先：手机不该被判成「硬件 / 固件修复」或「洁净间开盘」
+  if (s.deviceType === '手机') service = '手机内容恢复（照片 / 视频 / 聊天记录等）';
 
   // 加密盘 / 锁屏无凭据提示
   let note = '';
-  (DYNAMIC[s.scenario]||[]).forEach(f => {
+  dynOf(s).forEach(f => {
     const v = s[f.key] || '';
     if(/BitLocker|FileVault|LUKS/.test(v)) note = '加密盘需提供解锁凭据，缺凭据成功率显著下降。';
   });
-  if(s.scenario === 'phone' && s.locked === '不知道密码') note = '锁屏 / 加密且未知密码，成功率受限，需先评估。';
+  if(s.scenario === 'phone' && s.lockState === '不知道密码') note = '锁屏 / 加密且未知密码，成功率受限，需先评估。';
 
   const min = Math.max(200, Math.round(price * 0.85 / 50) * 50);
   const max = Math.round(price * 1.5 / 50) * 50;
@@ -185,6 +296,61 @@ const RECOMMEND = {
   phone: '内容恢复（照片 / 视频 / 聊天记录等）：优先做整机导出；提供锁屏密码可显著提升成功率。'
 };
 
+/**
+ * 「下一步」建议也必须跟设备走。
+ * 原先手机也会被塞进「磁头划伤盘片」「洁净间开盘」这类只有机械盘才成立的话术。
+ */
+const NEXT_STEPS_DEV = {
+  '手机': {
+    unrecog: [
+      '不要再反复插拔数据线，更不要尝试刷机或恢复出厂设置。',
+      '换一根原装数据线和另一台电脑再试 1 次；仍认不到就停手。',
+      '屏幕不亮但机身有震动 / 声音的，仍有较大概率取出数据，尽快送检。'
+    ],
+    physical: [
+      '不要充电、不要开机，避免短路烧毁存储芯片。',
+      '机身保持原样，不要自行拆机或按压屏幕。',
+      '进水 / 重摔后的修复窗口期很短，越早送检越好。'
+    ],
+    liquid: [
+      '立刻断电，不要充电、不要用吹风机吹、不要放米缸。',
+      '不要擦拭内部，保持现状直接送检做板级清洗。',
+      '进水后 48 小时内送检成功率最高。'
+    ],
+    phone: [
+      '不要充电，不要尝试刷机或恢复出厂。',
+      '记录最后一次能正常使用的时间点。',
+      '如启用锁屏且记得密码，请同时准备好密码和 Apple ID。'
+    ]
+  },
+  'SD卡存储卡': {
+    unrecog: [
+      '换一个读卡器和另一个 USB 口再试 1 次，仍不识别就停手。',
+      '不要反复插拔，也不要用磁盘工具格式化。',
+      '卡体若发烫或有烧灼痕迹，立即断电送检。'
+    ]
+  },
+  'U盘': {
+    unrecog: [
+      '换一个 USB 口 / 另一台电脑再试 1 次，仍不识别就停手。',
+      '不要反复插拔，也不要用磁盘工具格式化或量产。',
+      '曾摔过或接口松动的，直接送检，别再通电。'
+    ]
+  },
+  '固态硬盘': {
+    unrecog: [
+      '换一根数据线和另一个接口再试 1 次，仍不识别就停手。',
+      'SSD 掉盘后继续通电可能触发垃圾回收，覆盖掉本可恢复的数据。',
+      '切勿反复上下电或跑修复工具，直接送检做固件层评估。'
+    ]
+  }
+};
+
+function nextStepsFor(s){
+  const byDev = NEXT_STEPS_DEV[s.deviceType];
+  return (byDev && byDev[s.scenario]) || NEXT_STEPS[s.scenario] || [];
+}
+
 const $stage = document.getElementById('stage');
 const $why = document.getElementById('whyText');
 const $tip = document.getElementById('protectTip');
@@ -193,7 +359,14 @@ const $stepLabel = document.getElementById('stepLabel');
 const $resetBtn = document.getElementById('resetBtn');
 
 function gotoStep(n, scroll = true){
+  // ★ 自检模块只在 check.html 上有 DOM。其余页面这里必须直接返回，
+  //   否则 $stepLabel 为 null 会抛错，把本文件后面**所有**代码（手机菜单、
+  //   FAQ 搜索、悬浮咨询、复制按钮、全站动线…）全部炸掉。踩过这个坑。
+  if (!$stage) return;
   SC.step = n;
+  // 报告态：切单列并隐藏侧栏，报告铺满整宽（否则右侧会留一大片空白）
+  const checkEl = document.querySelector('.check');
+  if (checkEl) checkEl.classList.toggle('is-report', n === 5);
   document.querySelectorAll('.step-pane').forEach(p => p.classList.toggle('hide', Number(p.dataset.pane) !== n));
   $stepLabel.textContent = n===5 ? '现场信息 · 报告已生成' : `现场信息 · 第 ${n+1} 步 / 共 5 步`;
   $why.textContent = WHY[n] || '';
@@ -213,7 +386,7 @@ document.querySelectorAll('#scenarios .scenario-card').forEach(c => {
     $tip.innerHTML = PROTECT[SC.data.scenario] || '先选一个场景';
   });
 });
-document.getElementById('nextBtn').addEventListener('click', () => {
+document.getElementById('nextBtn')?.addEventListener('click', () => {
   if(!SC.data.scenario) return;
   gotoStep(1);
   $tip.innerHTML = '<b>提示：</b>机械硬盘与 SSD 是两条完全不同的处理路径，先确认设备类型。';
@@ -250,9 +423,9 @@ function bindOptions(){
 }
 bindOptions();
 
-document.getElementById('brand').addEventListener('input', e => SC.data.brand = e.target.value);
-document.getElementById('notes').addEventListener('input', e => SC.data.notes = e.target.value);
-document.getElementById('urgency').addEventListener('input', e => {
+document.getElementById('brand')?.addEventListener('input', e => SC.data.brand = e.target.value);
+document.getElementById('notes')?.addEventListener('input', e => SC.data.notes = e.target.value);
+document.getElementById('urgency')?.addEventListener('input', e => {
   const labels = ['不急','一周内','3 天内','今日加急'];
   SC.data.urgency = labels[e.target.value];
   document.getElementById('urgencyVal').textContent = SC.data.urgency;
@@ -264,6 +437,7 @@ document.getElementById('urgency').addEventListener('input', e => {
   const dz = document.getElementById('dropzone');
   const fi = document.getElementById('fileInput');
   const th = document.getElementById('thumbs');
+  if (!dz || !fi || !th) return;   // 只在 check.html 上有，其余页面安全跳过
 
   function addFiles(files){
     const room = MAX - SC.data.images.length;
@@ -300,7 +474,7 @@ document.getElementById('urgency').addEventListener('input', e => {
   fi.addEventListener('change', e => { addFiles(e.target.files); fi.value=''; });
 })();
 
-document.getElementById('nextBtn2').addEventListener('click', () => {
+document.getElementById('nextBtn2')?.addEventListener('click', () => {
   if(!SC.data.deviceType){alert('请先选择设备类型'); return}
   buildDynamic(SC.data.scenario);
   $tip.innerHTML = PROTECT[SC.data.scenario] || '请如实回答，这会决定下一步建议';
@@ -317,8 +491,12 @@ const SCENE_DESC = {
 };
 
 function buildDynamic(scenario){
-  const dyn = DYNAMIC[scenario] || [];
-  document.getElementById('dynamicDesc').textContent = SCENE_DESC[scenario] || '请告诉我具体的故障表现。越具体越能给出准确区间。';
+  const dev = SC.data.deviceType;
+  const dyn = dynamicFor(scenario, dev);
+  document.getElementById('dynamicDesc').textContent =
+    (scenario === 'unrecog' && dev === '手机')
+      ? '手机「不识别 / 打不开」要分两层看：电脑能不能认到，屏幕还亮不亮。'
+      : (SCENE_DESC[scenario] || '请告诉我具体的故障表现。越具体越能给出准确区间。');
   const root = document.getElementById('dynamicFields');
   root.innerHTML = '';
   dyn.forEach(f => {
@@ -335,15 +513,15 @@ function buildDynamic(scenario){
   bindOptions();
 }
 
-document.getElementById('nextBtn3').addEventListener('click', () => gotoStep(3));
-document.getElementById('nextBtn4').addEventListener('click', () => gotoStep(4));
+document.getElementById('nextBtn3')?.addEventListener('click', () => gotoStep(3));
+document.getElementById('nextBtn4')?.addEventListener('click', () => gotoStep(4));
 document.addEventListener('click', e => {
   if(e.target.matches('[data-back]')){
     gotoStep(Math.max(0, SC.step-1));
   }
 });
 
-document.getElementById('generateBtn').addEventListener('click', buildReport);
+document.getElementById('generateBtn')?.addEventListener('click', buildReport);
 
 function buildReport(){
   const s = SC.data;
@@ -355,7 +533,7 @@ function buildReport(){
     low:  {label:'低风险', cls:'low',  tip:'常规流程，可到店或寄修检测'}
   };
   const r = riskMap[level];
-  const steps = (NEXT_STEPS[s.scenario] || []).map(x => `<li>${x}</li>`).join('');
+  const steps = nextStepsFor(s).map(x => `<li>${x}</li>`).join('');
   const rec = RECOMMEND[s.scenario] || '现场信息采集与检测，预约后由人工先做风险分级。';
   const quoteHtml = `
     <div class="quote">
@@ -375,10 +553,11 @@ function buildReport(){
   if(s.actions?.includes('自行更换过盘位')) flags.push('自行更换过盘位');
   if(s.actions?.includes('拆开过设备')) flags.push('拆开过设备');
 
-  const dynFields = DYNAMIC[s.scenario] || [];
+  const dynFields = dynOf(s);
+  const FLAG_RE = /咔哒|触发|试过有反应|明显|曾通电|海水|污水|BitLocker|FileVault|LUKS|不知道密码|碎裂|漏液|完全不亮|进过水|两者都有/;
   const dynRows = dynFields.map(f => {
     const v = s[f.key];
-    const cls = v ? (v.includes('咔哒') || v.includes('触发') || v.includes('试过有反应') || v.includes('明显') || v.includes('曾通电') || v.includes('海水') || v.includes('污水') || v.includes('BitLocker') || v.includes('FileVault') || v.includes('LUKS') ? 'flag' : '') : 'muted';
+    const cls = v ? (FLAG_RE.test(v) ? 'flag' : '') : 'muted';
     return `<li class="${cls}"><span>${f.label}</span><b>${v || '未填'}</b></li>`;
   }).join('');
 
@@ -448,16 +627,46 @@ function buildReport(){
           <div>${rec}</div>
         </div>
 
-        <div style="margin-top:22px;display:flex;gap:8px;flex-wrap:wrap">
+        <div class="report-contact">
+          <div class="rc-title">把这份报告发给我们</div>
+          <div class="rc-lead">点「下载报告卡 JPG」保存，再打电话或加微信发过来。四个人都能接，任选一个。</div>
+          <div class="rc-grid">
+            <a class="rc-item" href="tel:+8618696128515">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><small>程 · 微信同号</small><b>186 9612 8515</b></span>
+            </a>
+            <a class="rc-item" href="tel:+8613006184912">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><small>程 · 微信同号</small><b>130 0618 4912</b></span>
+            </a>
+            <a class="rc-item" href="tel:+8618402718242">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><small>王 · 微信同号</small><b>184 0271 8242</b></span>
+            </a>
+            <a class="rc-item" href="tel:+8613294146310">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span><small>甘 · 微信同号</small><b>132 9414 6310</b></span>
+            </a>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button class="wx-copy js-copy" type="button" data-copy="TianmaDataLab">复制微信号 TianmaDataLab</button>
+            <a class="wx-copy" href="visit.html">到店怎么走（12 步图文）→</a>
+            <a class="wx-copy" href="pricing.html">看完整报价表 →</a>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="cta primary" onclick="downloadReportImage()">下载报告卡 JPG</button>
           <button class="cta" onclick="copyReport()">复制报告文本</button>
-          <a class="cta ghost" href="#contact">联系人工 →</a>
+          <a class="cta ghost" href="contact.html">联系人工 →</a>
         </div>
         <p style="margin-top:14px;font-size:13.5px;color:var(--ink-3)">本报告为自检初筛结果，最终方案以实际检测后的评估为准。</p>
       </div>
     </div>
   `;
 
+  const check = document.querySelector('.check');
+  if (check) check.classList.add('is-report');   // ← 关键：报告态切单列，右侧不再留一大片空白
   document.querySelector('[data-pane="5"]').innerHTML = html;
   document.querySelectorAll('.step-pane').forEach(p => p.classList.toggle('hide', Number(p.dataset.pane)!==5));
   $stepLabel.textContent = '现场信息 · 报告已生成';
@@ -483,7 +692,7 @@ function resetCheck(){
   const fi = document.getElementById('fileInput'); if(fi) fi.value = '';
   gotoStep(0, true);
 }
-$resetBtn.addEventListener('click', resetCheck);
+$resetBtn?.addEventListener('click', resetCheck);
 
 function serializeReport(){
   const s = SC.data;
@@ -503,7 +712,7 @@ function serializeReport(){
   lines.push(`系统：${s.system || '-'}`);
   lines.push('');
   lines.push('--- 故障细节 ---');
-  (DYNAMIC[s.scenario]||[]).forEach(f => lines.push(`${f.label}：${s[f.key]||'未填'}`));
+  dynOf(s).forEach(f => lines.push(`${f.label}：${s[f.key]||'未填'}`));
   lines.push('');
   lines.push('--- 已做操作 ---');
   lines.push((s.actions||['未填']).join('、') || '未填');
@@ -529,7 +738,7 @@ function serializeReport(){
   }
   lines.push('');
   lines.push('--- 下一步 ---');
-  (NEXT_STEPS[s.scenario]||[]).forEach(x => lines.push('· '+x));
+  nextStepsFor(s).forEach(x => lines.push('· '+x));
   return lines.join('\n');
 }
 
@@ -558,12 +767,12 @@ async function downloadReportImage(){
   if(s.actions?.includes('拆开过设备')) flags.push('拆开过设备');
 
   const secDev = [['场　　景', s.scenarioText||'-'],['设备类型', s.deviceType||'-'],['品牌型号', s.brand||'未填'],['容　　量', s.capacity||'-'],['系　　统', s.system||'-']];
-  const secFault = (DYNAMIC[s.scenario]||[]).map(f=>[f.label, s[f.key]||'未填']);
+  const secFault = dynOf(s).map(f=>[f.label, s[f.key]||'未填']);
   secFault.push(['已做操作', (s.actions||['未填']).join('、')], ['供电状态', s.power||'-']);
   if(s.notes) secFault.push(['补充说明', s.notes]);
   if(s.images?.length) secFault.push(['附　　图', s.images.length+' 张（已合成进报告卡）']);
   const secData = [['数据类型', (s.dataType||['未填']).join('、')],['数 据 量', s.dataSize||'-'],['备　　份', s.backup||'-'],['紧急程度', s.urgency||'-']];
-  const steps = NEXT_STEPS[s.scenario]||[];
+  const steps = nextStepsFor(s);
   const rec = RECOMMEND[s.scenario]||'';
 
   /* load uploaded photos (for embedding in the report card) */
@@ -824,12 +1033,14 @@ function copyReport(){
 window.downloadReportImage = downloadReportImage;
 window.copyReport = copyReport;
 
-/* QR lightbox */
+/* QR lightbox（#qrThumb 只在 contact.html 上，其余页面必须安全跳过） */
 (() => {
   const lb = document.getElementById('qrLightbox');
+  const thumb = document.getElementById('qrThumb');
+  if (!lb || !thumb) return;
   const open = () => { lb.classList.add('open'); document.body.style.overflow = 'hidden'; };
   const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
-  document.getElementById('qrThumb').addEventListener('click', open);
+  thumb.addEventListener('click', open);
   lb.addEventListener('click', e => { if(e.target === lb) close(); });
   const closeBtn = document.getElementById('qrClose');
   if (closeBtn) closeBtn.addEventListener('click', close);
@@ -883,12 +1094,19 @@ window.copyReport = copyReport;
       return ok;
     }
   };
-  document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+  // 同时覆盖 .copy-btn（小图标版）与 .js-copy（文字按钮版，如联系方式条 / 报告卡里的微信号）
+  document.querySelectorAll('.copy-btn[data-copy], .js-copy[data-copy]').forEach(btn => {
     btn.addEventListener('click', async () => {
-      const ok = await copyText(btn.dataset.copy);
+      await copyText(btn.dataset.copy);
       btn.classList.add('copied');
-      const tip = btn.parentElement.querySelector('.copy-tip');
+      // 先找自己内部（联系方式条把 tip 放在卡片里），再找父级
+      const tip = btn.querySelector('.copy-tip') || btn.parentElement.querySelector('.copy-tip');
       if (tip) { tip.classList.add('show'); setTimeout(() => tip.classList.remove('show'), 1500); }
+      const label = btn.dataset.label || btn.textContent;
+      if (btn.classList.contains('js-copy')) {
+        btn.textContent = '已复制 ✓';
+        setTimeout(() => { btn.textContent = label; }, 1500);
+      }
       setTimeout(() => btn.classList.remove('copied'), 1500);
     });
   });
@@ -1030,3 +1248,186 @@ window.copyReport = copyReport;
       navigator.serviceWorker.register('sw.js').catch(() => {});
     });
   }
+
+/* ============================================================
+   全站动线（Next-step flow）
+   ------------------------------------------------------------
+   症状：拆成多页后每页都是「孤岛」，用户不知道下一步该去哪。
+   做法：全站的「下一步」都在这里定义一次，按 <body data-page="…"> 渲染到
+        每页的 #nextSteps 容器（HTML 里只放一个空 div，内容由本文件生成）。
+        改动线只改这个 FLOW 表，不用碰 10 个页面。
+   ============================================================ */
+
+/** 线性站点顺序 —— 用于「上一站 / 下一站」翻页 */
+const SITE_ORDER = [
+  ['index.html',   '首页'],
+  ['services.html','服务范围'],
+  ['cases.html',   '案例'],
+  ['pricing.html', '报价'],
+  ['process.html', '流程'],
+  ['about.html',   '关于我们'],
+  ['faq.html',     '常见问题'],
+  ['check.html',   '故障自检'],
+  ['visit.html',   '到店导航'],
+  ['contact.html', '联系我们']
+];
+
+/** 每页的「下一步」卡片（3 张最佳；primary 的会被加高亮） */
+const FLOW = {
+  home: {
+    head: '接下来通常这么走',
+    sub: '有故障的，先做自检拿到风险等级和报价区间；只是先了解，就往下看服务范围。',
+    cards: [
+      { k:'推荐', t:'做一次免费自检', d:'5 步问清设备与故障，生成风险指数和报价区间，可下载报告卡。', href:'check.html', primary:true },
+      { k:'先看疗效', t:'看真实恢复案例', d:'按设备类型和故障类型分类，含难度判定与恢复结果。', href:'cases.html' },
+      { k:'先看价格', t:'看报价表', d:'武汉本地口径，按容量逐档细分，含叠瓦盘等特殊情形。', href:'pricing.html' }
+    ]
+  },
+  services: {
+    head: '看完服务范围，下一步',
+    sub: '想知道我们实际能做成什么样，看案例；想知道怎么开始，直接做自检。',
+    cards: [
+      { k:'推荐', t:'看这些故障的实例', d:'同样的故障类型，我们实际处理过什么、结果如何。', href:'cases.html', primary:true },
+      { k:'了解过程', t:'看完整流程与时长', d:'从接机、检测、报价到交付，每一步做什么、要多久。', href:'process.html' },
+      { k:'直接开始', t:'做一次免费自检', d:'不确定属于哪类故障？5 步问清楚，再决定送不送。', href:'check.html' }
+    ]
+  },
+  cases: {
+    head: '看完案例，下一步',
+    sub: '案例里的故障都会落到具体价格档位；也建议先自检确认你属于哪一档。',
+    cards: [
+      { k:'推荐', t:'看这类故障怎么收费', d:'案例对应的容量与故障类型，在报价表里是明码标价的。', href:'pricing.html', primary:true },
+      { k:'了解过程', t:'看完整流程', d:'检测免费、报价确认后才开工，不成功不收费。', href:'process.html' },
+      { k:'或', t:'做一次免费自检', d:'把你的设备和故障填一遍，直接拿到区间。', href:'check.html' }
+    ]
+  },
+  pricing: {
+    head: '看完报价，下一步',
+    sub: '报价是区间，具体到你这一台要看你自检填的信息。先自检，再对号入座。',
+    cards: [
+      { k:'推荐', t:'自检后拿到你的区间', d:'同一档容量、不同故障，价格差别很大。自检能算出你属于哪一档。', href:'check.html', primary:true },
+      { k:'了解过程', t:'看完整流程', d:'先检测出具方案与报价，你确认了才开工。', href:'process.html' },
+      { k:'准备到店', t:'到店怎么走', d:'地铁江汉路站 F 出口，12 步图文导航。', href:'visit.html' }
+    ]
+  },
+  process: {
+    head: '了解流程后，你可以',
+    sub: '流程里最关键的一步是「检测后先报价再开工」，不确认不动手。',
+    cards: [
+      { k:'推荐', t:'到店怎么走（12 步图文）', d:'从地铁江汉路站 F 出口到 206 室，每步都有实拍照片。', href:'visit.html', primary:true },
+      { k:'或', t:'先做一次免费自检', d:'不方便到店的可以寄修，自检报告先发我们预判。', href:'check.html' },
+      { k:'联系方式', t:'电话与微信', d:'四个人 + 微信号，任选一个联系。', href:'contact.html' }
+    ]
+  },
+  about: {
+    head: '了解我们之后，下一步',
+    sub: '设备、洁净间、数据安全做法都在上面这页；接下来就是联系或到店。',
+    cards: [
+      { k:'推荐', t:'联系方式与到店地址', d:'四个电话 + 微信号，营业时间周一至周日 10:00—18:00。', href:'contact.html', primary:true },
+      { k:'准备到店', t:'看 12 步图文导航', d:'地铁江汉路站 F 出口出发，步行约 8 分钟。', href:'visit.html' },
+      { k:'先看价格', t:'看报价表', d:'武汉本地口径，按容量逐档细分。', href:'pricing.html' }
+    ]
+  },
+  faq: {
+    head: '还有疑问？',
+    sub: '常见问题没覆盖到的，直接问最快；也可以先自检，我们会按你的实际情况回答。',
+    cards: [
+      { k:'推荐', t:'直接问我们', d:'电话、微信都在这里，工作日 10:00—18:00 都有人。', href:'contact.html', primary:true },
+      { k:'或', t:'做一次免费自检', d:'填完把报告发我们，回答会更贴合你的设备。', href:'check.html' },
+      { k:'了解我们', t:'设备与洁净间', d:'看看我们用什么设备做开盘、怎么保证数据不外流。', href:'about.html' }
+    ]
+  },
+  // ★ 用户点名要的：做完自检之后要看报价 / 地址
+  check: {
+    head: '报告看完了，按这三步走',
+    sub: '别急着反复通电试。先对照报价心里有数，再决定到店或寄修。',
+    cards: [
+      { k:'第一步', t:'对照报价表看你的档位', d:'同一容量、不同故障价格差别很大，报价表按故障类型分档。', href:'pricing.html', primary:true },
+      { k:'第二步', t:'到店怎么走', d:'地铁江汉路站 F 出口，12 步实拍图文导航。不方便来可以寄修。', href:'visit.html' },
+      { k:'第三步', t:'把报告发给我们', d:'下载报告卡 JPG，再打电话或加微信发过来，我们人工核对。', href:'contact.html' }
+    ]
+  },
+  visit: {
+    head: '到了之后 / 还没到？',
+    sub: '带设备来就行，检测免费。不方便到店可以寄修：我们收到后先检测出方案，你确认了再做，寄回免运费。',
+    cards: [
+      { k:'找不到路 / 到了门口', t:'打电话 184 0271 8242', d:'王 · 微信同号。走岔了或找不到，我们下来接你。', href:'tel:+8618402718242', primary:true },
+      { k:'还没做自检？', t:'先做一次免费自检', d:'5 步生成风险指数与报价区间，到店直接给工程师看。', href:'check.html' },
+      { k:'全部联系方式', t:'四个人 + 微信号', d:'电话、微信、营业时间都在联系页。', href:'contact.html' }
+    ]
+  },
+  contact: {
+    head: '联系之前 / 之后',
+    sub: '不确定要不要送？先做一次免费自检，把报告发过来我们能直接给判断。',
+    cards: [
+      { k:'推荐', t:'做一次免费自检', d:'5 步生成风险指数和报价区间，到店或寄修都省一轮沟通。', href:'check.html', primary:true },
+      { k:'准备到店', t:'看 12 步图文导航', d:'地铁江汉路站 F 出口出发，每步都有实拍照片。', href:'visit.html' },
+      { k:'先看价格', t:'看报价表', d:'武汉本地口径，按容量逐档细分。', href:'pricing.html' }
+    ]
+  }
+};
+
+/** data-page → 站点顺序里的名字（用于定位「上一站 / 下一站」） */
+const PAGE_LABEL = {
+  home:'首页', services:'服务范围', cases:'案例', pricing:'报价', process:'流程',
+  about:'关于我们', faq:'常见问题', check:'故障自检', visit:'到店导航', contact:'联系我们'
+};
+
+(() => {
+  const KEY = document.body.dataset.page;
+  const box = document.getElementById('nextSteps');
+  if (!KEY || !box) return;
+
+  const cfg = FLOW[KEY];
+  const pos = SITE_ORDER.findIndex(([, name]) => name === (PAGE_LABEL[KEY] || ''));
+  const prev = pos > 0 ? SITE_ORDER[pos - 1] : null;
+  const next = pos >= 0 && pos < SITE_ORDER.length - 1 ? SITE_ORDER[pos + 1] : null;
+
+  let html = '';
+  if (cfg) {
+    html += `<h4>${cfg.head}</h4><p class="ns-sub">${cfg.sub}</p><div class="ns-grid">`;
+    html += cfg.cards.map(c => `
+      <a class="ns-card${c.primary ? ' primary' : ''}" href="${c.href}">
+        <span class="ns-k">${c.k}</span>
+        <span class="ns-t">${c.t}</span>
+        <span class="ns-d">${c.d}</span>
+        <span class="ns-go">${c.primary ? '从这里继续' : '去看看'} →</span>
+      </a>`).join('');
+    html += '</div>';
+  }
+  if (prev || next) {
+    html += '<nav class="ns-pager" aria-label="上一站 / 下一站">';
+    html += prev
+      ? `<a class="ns-page" href="${prev[0]}"><small>← 上一站</small><b>${prev[1]}</b></a>`
+      : '<span class="ns-page disabled"><small>← 上一站</small><b>已经是第一页</b></span>';
+    html += next
+      ? `<a class="ns-page next" href="${next[0]}"><small>下一站 →</small><b>${next[1]}</b></a>`
+      : '<span class="ns-page disabled"><small>下一站 →</small><b>已经是最后一页</b></span>';
+    html += '</nav>';
+  }
+  box.innerHTML = html;
+  // 内容后注入 → 需要手动触发显现（IntersectionObserver 已在页面加载时登记过）
+  box.classList.add('in');
+})();
+
+/* 到店导航页：点图看大图 */
+(() => {
+  const shots = document.querySelectorAll('[data-shot]');
+  if (!shots.length) return;
+  const lb = document.createElement('div');
+  lb.className = 'shot-lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-label', '导航大图');
+  lb.innerHTML = '<figure><img alt=""/><figcaption></figcaption></figure><button class="shot-close" type="button" aria-label="关闭">关闭</button>';
+  document.body.appendChild(lb);
+  const img = lb.querySelector('img');
+  const cap = lb.querySelector('figcaption');
+  const open = src => { img.src = src; cap.textContent = ''; lb.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  shots.forEach(b => b.addEventListener('click', () => {
+    open(b.dataset.shot);
+    cap.textContent = b.dataset.shotAlt || '';
+  }));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('shot-close')) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
