@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# 内部运维文档（不部署到站点，这里声明以防万一）
+Disallow: /docs/
+
+Sitemap: https://tianmahuifu.cn/sitemap.xml

@@ -4,8 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 <meta name="theme-color" content="#FAFBFC" />
-<title>中天数据处理服务中心 - 天马一站式数据服务中心 · 武汉本地数据恢复</title>
-<meta name="description" content="武汉本地数据恢复，覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。先保护现场，再谈恢复结果。" />
+<title>武汉数据恢复 | 天马一站式数据服务中心 - 硬盘 / SSD / 开盘恢复</title>
+<meta name="description" content="武汉本地数据恢复，覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。先免费检测，报价透明，恢复成功才收费。" />
+<link rel="canonical" href="https://tianmahuifu.cn/index.html" />
 <link rel="icon" type="image/svg+xml" href="logo.svg" />
 <!-- 添加到主屏幕（PWA） -->
 <link rel="manifest" href="manifest.webmanifest" />
@@ -15,14 +16,14 @@
 <!-- 微信分享 / Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="中天数据处理服务中心" />
-<meta property="og:title" content="中天数据处理服务中心 - 天马一站式数据服务中心 · 武汉本地数据恢复" />
-<meta property="og:description" content="覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。检测免费，恢复不成功不收费。" />
+<meta property="og:title" content="武汉数据恢复 | 天马一站式数据服务中心 - 硬盘 / SSD / 开盘恢复" />
+<meta property="og:description" content="武汉本地数据恢复，覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。先免费检测，报价透明，恢复成功才收费。" />
 <meta property="og:image" content="og-cover.jpg" />
 <meta property="og:locale" content="zh_CN" />
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="中天数据处理服务中心 - 天马一站式数据服务中心 · 武汉本地数据恢复" />
-<meta name="twitter:description" content="覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。检测免费，恢复不成功不收费。" />
+<meta name="twitter:title" content="武汉数据恢复 | 天马一站式数据服务中心 - 硬盘 / SSD / 开盘恢复" />
+<meta name="twitter:description" content="武汉本地数据恢复，覆盖硬盘、SSD、存储卡、U 盘、手机与 NAS。先免费检测，报价透明，恢复成功才收费。" />
 <meta name="twitter:image" content="og-cover.jpg" />
 <!-- Safari / 添加到主屏幕 -->
 <meta name="apple-mobile-web-app-title" content="中天数据处理" />
@@ -33,26 +34,27 @@
 <script>
   // 把 og:image / og:url 修正为绝对地址，便于微信/Twitter 抓取
   (function(){
-    ['og:image','twitter:image'].forEach(k=>{
-      const m=document.querySelector('meta[property="'+k+'"]')||document.querySelector('meta[name="'+k+'"]');
+    ['og:image','twitter:image'].forEach(function(k){
+      var m=document.querySelector('meta[property="'+k+'"]')||document.querySelector('meta[name="'+k+'"]');
       if(m && m.content && !/^https?:/.test(m.content)) m.content=location.origin+'/'+m.content;
     });
-    let u=document.querySelector('meta[property="og:url"]');
+    var u=document.querySelector('meta[property="og:url"]');
     if(!u){ u=document.createElement('meta'); u.setAttribute('property','og:url'); document.head.appendChild(u); }
     u.content=location.origin+location.pathname;
   })();
 </script>
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  addEventListener('pageshow', () => { if (!location.hash) window.scrollTo(0, 0); });
+  addEventListener('pageshow', function(){ if (!location.hash) window.scrollTo(0, 0); });
 </script>
 <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
 
+<!-- NAV:START -->
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a href="#top" class="brand" aria-label="天马一站式数据服务中心">
+    <a href="index.html" class="brand" aria-label="天马一站式数据服务中心">
       <span class="brand-mark">
         <svg viewBox="0 0 613.51 626.88" fill="currentColor"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>
       </span>
@@ -62,13 +64,14 @@
       </div>
     </a>
     <div class="nav-links">
-      <a href="#services">服务范围</a>
-      <a href="#pricing">报价</a>
-      <a href="#process">流程</a>
-      <a href="#cases">案例</a>
-      <a href="#faq">常见问题</a>
+      <a href="services.html">服务范围</a>
+      <a href="pricing.html">报价</a>
+      <a href="process.html">流程</a>
+      <a href="cases.html">案例</a>
+      <a href="faq.html">常见问题</a>
+      <a href="about.html">关于我们</a>
     </div>
-    <a class="cta primary" href="#check">
+    <a class="cta primary" href="check.html">
       <span class="dot"></span>
       开始故障自检
     </a>
@@ -79,14 +82,15 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services">服务范围</a>
-  <a href="#pricing">服务</a>
-  <a href="#process">流程</a>
-  <a href="#cases">案例</a>
-  <a href="#faq">常见问题</a>
-  <a href="#contact">联系我们</a>
-  <a href="#check" class="mm-cta">开始故障自检 →</a>
+  <a href="services.html">服务范围</a>
+  <a href="pricing.html">服务</a>
+  <a href="process.html">流程</a>
+  <a href="cases.html">案例</a>
+  <a href="faq.html">常见问题</a>
+  <a href="contact.html">联系我们</a>
+  <a href="check.html" class="mm-cta">开始故障自检 →</a>
 </div>
+<!-- NAV:END -->
 
 <header id="top" class="hero">
   <div class="wrap">
@@ -128,7 +132,6 @@
     </div>
   </div>
 </header>
-
 <section style="border-top:0">
   <div class="wrap">
     <div class="metrics">
@@ -140,622 +143,78 @@
   </div>
 </section>
 
-<section id="services">
+<section class="hub" style="border-top:0">
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <span class="eyebrow" data-reveal>01 / 服务范围</span>
+        <span class="eyebrow" data-reveal>从这里开始</span>
         <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          我们处理的，<br/><span class="muted">不只是「文件没了」。</span>
-        </h2>
-      </div>
-      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
-        先判断风险、再选择合适的检测路径。每一类介质都有不同的保护动作，
-        错的下一步可能让一次能救的故障变得不可救。
-      </p>
-    </div>
-
-    <div class="svc-grid" data-reveal data-stagger>
-      <div class="svc" data-target="#pt-hdd" role="link" tabindex="0">
-        <div class="svc-num">常见</div>
-        <div class="svc-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="12" r="1.2" fill="currentColor"/></svg>
-        </div>
-        <div>
-          <h3>硬盘与 SSD</h3>
-          <p>误删、格式化、不识别、异响与覆盖风险评估。</p>
-        </div>
-        <div class="more">查看服务 →</div>
-      </div>
-      <div class="svc" data-target="#pt-usb" role="link" tabindex="0">
-        <div class="svc-num">影像</div>
-        <div class="svc-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/></svg>
-        </div>
-        <div>
-          <h3>照片与视频</h3>
-          <p>相机、无人机、SD 卡误删和目录损坏初筛。</p>
-        </div>
-        <div class="more">查看服务 →</div>
-      </div>
-      <div class="svc" data-target="#pt-mobile" role="link" tabindex="0">
-        <div class="svc-num">移动端</div>
-        <div class="svc-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="17.5" r=".8" fill="currentColor"/></svg>
-        </div>
-        <div>
-          <h3>手机内容恢复</h3>
-          <p>照片、视频、聊天记录、通讯录等数据恢复；只接能开机的手机。</p>
-        </div>
-        <div class="more">查看服务 →</div>
-      </div>
-      <div class="svc" data-target="#pt-nas" role="link" tabindex="0">
-        <div class="svc-num">企业</div>
-        <div class="svc-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="7" r=".7" fill="currentColor"/><circle cx="7" cy="17" r=".7" fill="currentColor"/></svg>
-        </div>
-        <div>
-          <h3>NAS / RAID</h3>
-          <p>网络存储（NAS）与磁盘阵列（RAID）的掉盘、降级、参数采集与重组评估。</p>
-        </div>
-        <div class="more">查看服务 →</div>
-      </div>
-    </div>
-
-    <div class="brand-strip">
-      <b>我们处理过的介质</b>
-      <span><b>硬盘</b><i>HDD</i></span>
-      <span><b>固态</b><i>SSD · NVMe</i></span>
-      <span><b>存储卡</b><i>SD · TF · CFexpress</i></span>
-      <span><b>U 盘</b></span>
-      <span><b>iPhone</b></span>
-      <span><b>安卓</b><i>Android</i></span>
-      <span><b>RAID</b><i>0/1/5/6/10</i></span>
-      <span><b>NAS 文件系统</b><i>ZFS · XFS · APFS</i></span>
-      <span><b>加密</b><i>BitLocker · LUKS</i></span>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow" data-reveal>02 / 价格表</span>
-        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          按介质与容量，<br/><span class="muted">价格清晰。</span>
-        </h2>
-      </div>
-      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
-        覆盖常见存储介质与故障类型。检测免费，确认方案后再处理；恢复不成功不收费。
-      </p>
-    </div>
-
-    <div class="pricing-notes" data-reveal>
-      <span class="note-chip"><b>✓</b> 检测免费</span>
-      <span class="note-chip"><b>✓</b> 恢复不成功不收费</span>
-      <span class="note-chip"><b>✓</b> 小红书点赞好评 · 免寄回运费</span>
-      <span class="note-chip dim">· 不包邮</span>
-    </div>
-
-    <div class="price-tables" data-reveal data-stagger>
-      <div class="ptable" id="pt-usb">
-        <div class="ptable-head"><h3>U盘 / SD 卡</h3><span>USB / Flash</span></div>
-        <table>
-          <thead><tr><th>容量</th><th>软件问题</th><th>硬件问题</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">8G 及以下</td><td class="price">¥350 起</td><td class="price">¥350 起</td></tr>
-            <tr><td class="cap">16G — 32G</td><td class="price">¥400 起</td><td class="price">¥500 起</td></tr>
-            <tr><td class="cap">64G 以上</td><td class="price">¥500 起</td><td class="price">¥600 起</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">预估周期：软件 1-2 工作日 · 硬件 2-5 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-
-      <div class="ptable" id="pt-ssd">
-        <div class="ptable-head"><h3>SSD 固态硬盘</h3><span>SSD / NVMe</span></div>
-        <table>
-          <thead><tr><th>容量</th><th>认盘<br>软件</th><th>不认盘<br>硬件</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">64G</td><td class="price">¥400 起</td><td class="price">¥500 起</td></tr>
-            <tr><td class="cap">120 — 128G</td><td class="price">¥500 起</td><td class="price">¥750 起</td></tr>
-            <tr><td class="cap">240 — 256G</td><td class="price">¥600 起</td><td class="price">¥700 起</td></tr>
-            <tr><td class="cap">320G 及以上</td><td class="price" colspan="2">¥800 起</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">预估周期：认盘 1-3 工作日 · 不认盘 3-7 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-
-      <div class="ptable" id="pt-hdd">
-        <div class="ptable-head"><h3>机械硬盘</h3><span>HDD</span></div>
-        <table>
-          <thead><tr><th>容量</th><th>坏道<br>不开盘</th><th>磁头坏<br>开盘</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">320G 及以下</td><td class="price">¥400 起</td><td class="price">¥500 起</td></tr>
-            <tr><td class="cap">500G 及以下</td><td class="price">¥500 起</td><td class="price">¥700 起</td></tr>
-            <tr><td class="cap">1000G 及以上</td><td class="price">¥600 起</td><td class="price">¥800 起</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">预估周期：不开盘 1-3 工作日 · 开盘 3-7 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-    </div>
-
-    <div class="pricing-3col" data-reveal data-stagger>
-      <div class="ptable" id="pt-mobile">
-        <div class="ptable-head"><h3>手机内容恢复</h3><span>MOBILE</span></div>
-        <table>
-          <thead><tr><th>类型</th><th>参考价</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">能开机手机 · 照片 / 视频 / 聊天记录 / 通讯录等</td><td class="price">¥800 起</td></tr>
-            <tr><td class="cap">不开机的手机暂不受理</td><td class="price">—</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">常规周期：预计 2-5 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-
-      <div class="ptable" id="pt-nas">
-        <div class="ptable-head">
-          <div>
-            <h3>NAS / RAID 阵列恢复</h3>
-            <p class="ptable-sub">网络存储 · 磁盘阵列</p>
-          </div>
-          <span>RAID</span>
-        </div>
-        <table>
-          <thead><tr><th>类型</th><th>参考价</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">阵列恢复（按盘数与难度）</td><td class="price">¥2,000 起</td></tr>
-            <tr><td class="cap">盘序采集 / 只读镜像</td><td class="price">含在内</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">常规周期：预计 5-12 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-
-      <div class="ptable" id="pt-db">
-        <div class="ptable-head">
-          <div>
-            <h3>数据库恢复</h3>
-            <p class="ptable-sub">MySQL · SQL Server · Oracle · SQLite</p>
-          </div>
-          <span>DATABASE</span>
-        </div>
-        <table>
-          <thead><tr><th>类型</th><th>参考价</th></tr></thead>
-          <tbody>
-            <tr><td class="cap">库文件损坏 / 误删 / 服务起不来（按库大小与类型）</td><td class="price">¥800 起</td></tr>
-            <tr><td class="cap">只读镜像 / 副本内操作</td><td class="price">含在内</td></tr>
-          </tbody>
-        </table>
-        <div class="ptable-foot">常规周期：预计 3-7 工作日</div>
-        <div class="ptable-foot">以实际检测后方案为准</div>
-      </div>
-    </div>
-
-    <div class="onsite-note" data-reveal>
-      <b>上门服务</b> 武汉市内可上门做数据恢复，<b>上门费 ¥2,000</b>，数据恢复费用另算（以实际无损检测后评估为准）。
-    </div>
-
-    <p class="muted" style="margin-top:18px;font-size:14.5px">※ 以上为常见服务场景参考，最终方案与费用以到店无损检测后的评估为准。检测免费，恢复不成功不收费。</p>
-  </div>
-</section>
-
-<section id="process">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow" data-reveal>03 / 工作流程</span>
-        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          四步，<br/><span class="muted">把不确定变清楚。</span>
-        </h2>
-      </div>
-      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
-        每一步都围绕「保护原始数据」展开，客户在确认方案前不会进入写入操作。
-      </p>
-    </div>
-
-    <div class="process" data-reveal data-stagger>
-      <div class="step">
-        <div class="n">01 <i></i></div>
-        <h3>在线初筛</h3>
-        <p>填写设备与现象，先获得风险等级和紧急动作。</p>
-      </div>
-      <div class="step">
-        <div class="n">02 <i></i></div>
-        <h3>到店 / 寄送</h3>
-        <p>保留原盘序、线材与错误提示，按约定交接设备。</p>
-      </div>
-      <div class="step">
-        <div class="n">03 <i></i></div>
-        <h3>无损检测</h3>
-        <p>只读采集、镜像与结构分析，确认可恢复范围。</p>
-      </div>
-      <div class="step">
-        <div class="n">04 <i></i></div>
-        <h3>预览验收</h3>
-        <p>先预览目录和样本文件，再按确认结果交付。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="cases">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow" data-reveal>04 / 真实案例</span>
-        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          恢复过程，<br/><span class="muted">每一步都能解释。</span>
+          六个入口，<br/><span class="muted">直达你要的那一页。</span>
         </h2>
       </div>
       <div data-reveal data-reveal-delay="2">
-        <p style="max-width:42ch">案例只展示介质、故障和交付结果，不展示任何客户文件。真实结果会因现场状态而异。</p>
+        <p style="max-width:42ch">不确定从哪看起？先做一次免费故障自检，3 分钟拿到初步判断。</p>
       </div>
     </div>
 
-    <a class="cases-cta" data-reveal href="https://www.xiaohongshu.com/user/profile/6419c1c6000000000b0143d8" target="_blank" rel="noopener">
+    <div class="hub-grid" data-stagger>
+      <a class="hub-card" href="services.html">
+        <span class="hub-no">01</span>
+        <h3>服务范围</h3>
+        <p>硬盘 / SSD / U盘存储卡 / 手机 / NAS 阵列 / 数据库</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+      <a class="hub-card" href="pricing.html">
+        <span class="hub-no">02</span>
+        <h3>报价</h3>
+        <p>检测免费，先报价后施工。硬盘 ¥400 起 · 开盘 ¥1,000 起</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+      <a class="hub-card" href="process.html">
+        <span class="hub-no">03</span>
+        <h3>工作流程</h3>
+        <p>接单 → 检测 → 报价 → 恢复 → 验证 → 交付</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+      <a class="hub-card" href="cases.html">
+        <span class="hub-no">04</span>
+        <h3>真实案例</h3>
+        <p>只展示介质、故障与交付结果，不展示任何客户文件</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+      <a class="hub-card" href="about.html">
+        <span class="hub-no">05</span>
+        <h3>关于我们</h3>
+        <p>武汉实体门店 · 无尘操作 · PC-3000 / MRT 设备 · 数据保密</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+      <a class="hub-card" href="faq.html">
+        <span class="hub-no">06</span>
+        <h3>常见问题</h3>
+        <p>会被看到吗 · 要多久 · 多少钱 · 恢复不了怎么办</p>
+        <span class="hub-go">查看 →</span>
+      </a>
+    </div>
+
+    <a class="cases-cta" data-reveal href="check.html" style="margin-top:28px">
       <div class="cases-cta-text">
-        <span class="eyebrow" style="margin-bottom:14px">CASES · 小红书记录</span>
-        <h3>真实恢复案例，都在小红书。</h3>
-        <p>真实恢复案例已同步至小红书：介质、故障、恢复过程与交付结果，每一步都有记录。涉及客户文件的内容一律不展示。</p>
+        <span class="eyebrow" style="margin-bottom:14px">不确定故障？</span>
+        <h3>先做一次免费故障自检。</h3>
+        <p>回答几个问题，3 分钟拿到初步判断与下一步动作 —— 不收费，也不用上传任何文件。</p>
       </div>
       <span class="cases-cta-btn">
-        去小红书看案例
+        开始故障自检
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </a>
   </div>
 </section>
 
-<!-- ============== SELF-CHECK ============== -->
-<section id="check" style="padding-top:64px">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow" data-reveal>05 / 故障自检</span>
-        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          先把现场，<br/><span class="muted">讲清楚。</span>
-        </h2>
-      </div>
-      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
-        先选典型场景，再回答具体问题。<b style="color:var(--ink)">整个过程只在你的浏览器运行，不会上传任何文件。</b>
-        最后会生成结构化报告卡，可直接截图发给我们预判。
-      </p>
-    </div>
-
-    <div class="check" data-reveal>
-      <div class="check-head">
-        <span id="stepLabel">现场信息 · 第 1 步 / 共 5 步</span>
-        <div class="progress" aria-hidden="true"><i id="bar"></i></div>
-        <button class="reset" id="resetBtn" title="从头开始">从头开始</button>
-      </div>
-
-      <div class="check-body">
-        <div class="check-main" id="stage">
-
-          <!-- STEP 0: Scenario -->
-          <div class="step-pane" data-pane="0">
-            <h3>先选个最像的场景</h3>
-            <p class="desc">不同场景下一步动作差别很大；选错了下一步可能让原本能救的故障变得更糟。</p>
-
-            <div class="field">
-              <span class="field-label">场景 <small>· 选 1 个最像的</small></span>
-              <div class="scenario-grid" id="scenarios">
-                <div class="scenario-card" data-val="deleted"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M7 7l1 13a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h6>误删 / 误格式化</h6><p>文件刚不见，没改过设备</p></div></div>
-                <div class="scenario-card" data-val="unrecog"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9 9.5c.5-1.5 1.6-2 3-2 1.7 0 3 1 3 2.5S13 12 13 13.5M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div><div><h6>不识别 / 打不开</h6><p>插上没反应 / 数据打不开</p></div></div>
-                <div class="scenario-card" data-val="physical"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l3 6-3 4-3-4 3-6zM5 14l4 2 1 5M19 14l-4 2-1 5M9 21h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h6>物理损伤 / 异响</h6><p>摔了 / 震动 / 咔哒声</p></div></div>
-                <div class="scenario-card" data-val="liquid"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3c2 4 5 7 5 11a5 5 0 1 1-10 0c0-4 3-7 5-11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div><h6>进水 / 液体</h6><p>咖啡、雨水、海水、汤汁</p></div></div>
-                <div class="scenario-card" data-val="nas"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/></svg></div><div><h6>NAS / RAID 异常</h6><p>降级 / 报警 / 多盘异常</p></div></div>
-                <div class="scenario-card" data-val="phone"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="17.5" r=".8" fill="currentColor"/></svg></div><div><h6>手机特殊问题</h6><p>进水 / 不开机 / 屏幕黑</p></div></div>
-              </div>
-            </div>
-
-            <div class="check-actions">
-              <div class="left muted" style="font-size:13.5px">⌘ 仅保存在本机</div>
-              <div class="right">
-                <button class="cta primary" id="nextBtn" disabled>下一步 · 关于这台设备 →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 1: Device -->
-          <div class="step-pane hide" data-pane="1">
-            <h3>这台设备是什么</h3>
-            <p class="desc">先采集设备物理画像。错的下一步可能让原本能救的故障变得更糟。</p>
-
-            <div class="fields">
-              <div class="field">
-                <span class="field-label">设备类型 <span class="req">*</span></span>
-                <div class="options" data-key="deviceType">
-                  <label class="opt"><input type="radio" name="dt" value="机械硬盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg></div>机械硬盘<div><small>台式机 / 移动硬盘 / 监控盘</small></div></label>
-                  <label class="opt"><input type="radio" name="dt" value="固态硬盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>固态硬盘<div><small>SATA / NVMe / 笔记本内置</small></div></label>
-                  <label class="opt"><input type="radio" name="dt" value="SD卡存储卡"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5h14v14H5z" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8v8H8z" stroke="currentColor" stroke-width="1.4"/></svg></div>SD / 存储卡<div><small>相机 / 手机 / TF 卡</small></div></label>
-                  <label class="opt"><input type="radio" name="dt" value="U盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 4h10v4H7zM7 12h10v8H7z" stroke="currentColor" stroke-width="1.4"/></svg></div>U 盘<div><small>闪存盘 / 加密盘</small></div></label>
-                  <label class="opt"><input type="radio" name="dt" value="手机"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>手机 / 平板<div><small>iPhone 或安卓机</small></div></label>
-                  <label class="opt"><input type="radio" name="dt" value="NAS"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>NAS / 阵列<div><small>多盘位 / RAID</small></div></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">容量 <small>· 选填</small></span>
-                <div class="options cols-2" data-key="capacity">
-                  <label class="opt"><input type="radio" name="cap" value="&lt; 128 GB"/><div class="ico"></div>< 128 GB</label>
-                  <label class="opt"><input type="radio" name="cap" value="128 GB — 500 GB"/><div class="ico"></div>128 GB — 500 GB</label>
-                  <label class="opt"><input type="radio" name="cap" value="500 GB — 2 TB"/><div class="ico"></div>500 GB — 2 TB</label>
-                  <label class="opt"><input type="radio" name="cap" value="&gt; 2 TB"/><div class="ico"></div>> 2 TB</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">品牌型号 <small>· 选填，能让我们更准</small></span>
-                <input class="text-input" id="brand" placeholder="例：三星 980 PRO 1TB / 西部数据 My Passport 4TB / iPhone 13" />
-              </div>
-
-              <div class="field">
-                <span class="field-label">现在接入的设备</span>
-                <div class="options cols-2" data-key="system">
-                  <label class="opt"><input type="radio" name="sys" value="Windows"/><div class="ico"></div>Windows</label>
-                  <label class="opt"><input type="radio" name="sys" value="macOS"/><div class="ico"></div>macOS</label>
-                  <label class="opt"><input type="radio" name="sys" value="Linux"/><div class="ico"></div>Linux</label>
-                  <label class="opt"><input type="radio" name="sys" value="相机/录像机"/><div class="ico"></div>相机 / 录像机</label>
-                  <label class="opt"><input type="radio" name="sys" value="无法连接"/><div class="ico"></div>还没接 / 无法连接</label>
-                  <label class="opt"><input type="radio" name="sys" value="不确定"/><div class="ico"></div>不确定</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="check-actions">
-              <div class="left"><button class="cta" data-back>← 上一步</button></div>
-              <div class="right"><button class="cta primary" id="nextBtn2">下一步 · 故障细节 →</button></div>
-            </div>
-          </div>
-
-          <!-- STEP 2: dynamic -->
-          <div class="step-pane hide" data-pane="2">
-            <h3>发生了什么</h3>
-            <p class="desc" id="dynamicDesc">请告诉我具体的故障表现。越具体越能给出准确区间。</p>
-
-            <div class="fields" id="dynamicFields"></div>
-
-            <div class="check-actions">
-              <div class="left"><button class="cta" data-back>← 上一步</button></div>
-              <div class="right"><button class="cta primary" id="nextBtn3">下一步 · 已经做过的 →</button></div>
-            </div>
-          </div>
-
-          <!-- STEP 3: Actions + images -->
-          <div class="step-pane hide" data-pane="3">
-            <h3>已经做过的事</h3>
-            <p class="desc">这一步决定「下一步还能做什么」和「风险多高」。请如实打勾。</p>
-
-            <div class="fields">
-              <div class="field">
-                <span class="field-label">关于这台设备，你做过 <small>· 可多选</small></span>
-                <div class="options" data-key="actions" data-multi="true">
-                  <label class="opt"><input type="checkbox" name="act" value="继续通电使用过"/><div class="ico"></div>继续通电使用过</label>
-                  <label class="opt"><input type="checkbox" name="act" value="运行过恢复软件"/><div class="ico"></div>运行过恢复软件</label>
-                  <label class="opt"><input type="checkbox" name="act" value="重新格式化过"/><div class="ico"></div>重新格式化 / 重新分区</label>
-                  <label class="opt"><input type="checkbox" name="act" value="换过线/换过接口"/><div class="ico"></div>换过线 / 换过接口</label>
-                  <label class="opt"><input type="checkbox" name="act" value="自行更换过盘位"/><div class="ico"></div>自行更换过盘位（NAS）</label>
-                  <label class="opt"><input type="checkbox" name="act" value="触发过Resync"/><div class="ico"></div>触发过 resync（NAS）</label>
-                  <label class="opt"><input type="checkbox" name="act" value="拆开过设备"/><div class="ico"></div>拆开过设备</label>
-                  <label class="opt"><input type="checkbox" name="act" value="用吹风机烘过"/><div class="ico"></div>用吹风机 / 烘干机处理过</label>
-                  <label class="opt"><input type="checkbox" name="act" value="什么都没做过"/><div class="ico"></div>什么都没做过</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">目前供电状态</span>
-                <div class="options cols-2" data-key="power">
-                  <label class="opt"><input type="radio" name="pwr" value="已断电"/><div class="ico"></div>已经断电保存</label>
-                  <label class="opt"><input type="radio" name="pwr" value="仍在通电"/><div class="ico"></div>仍在通电</label>
-                  <label class="opt"><input type="radio" name="pwr" value="断电困难"/><div class="ico"></div>断电困难（如服务器）</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">附图 <small>· 选填，最多 5 张 · 仅保存在本机，不上传</small></span>
-                <div class="dropzone" id="dropzone">
-                  <input type="file" id="fileInput" accept="image/*" multiple hidden />
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  <p>点击或拖拽图片到此处</p>
-                  <p class="muted">设备外观 / 报错截图 / NAS 盘位照片</p>
-                </div>
-                <div class="thumbs" id="thumbs"></div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">补充情况 <small>· 选填</small></span>
-                <textarea class="textarea" id="notes" placeholder="例如：错误提示截图描述、你的处理顺序、最近备份情况……"></textarea>
-              </div>
-            </div>
-
-            <div class="check-actions">
-              <div class="left"><button class="cta" data-back>← 上一步</button></div>
-              <div class="right"><button class="cta primary" id="nextBtn4">下一步 · 数据重要性 →</button></div>
-            </div>
-          </div>
-
-          <!-- STEP 4: Data -->
-          <div class="step-pane hide" data-pane="4">
-            <h3>这些数据对你多重要</h3>
-            <p class="desc">重要的数据会影响我们的优先级与工位安排。</p>
-
-            <div class="fields">
-              <div class="field">
-                <span class="field-label">数据类型 <small>· 可多选</small></span>
-                <div class="options" data-key="dataType" data-multi="true">
-                  <label class="opt"><input type="checkbox" name="dt2" value="工作文档"/><div class="ico"></div>工作文档 / 合同</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="照片视频"/><div class="ico"></div>照片 / 视频</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="代码"/><div class="ico"></div>代码 / 工程文件</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="数据库"/><div class="ico"></div>数据库 / 业务数据</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="财务"/><div class="ico"></div>财务 / 票据</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="邮件"/><div class="ico"></div>邮件 / 联系人</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="设计素材"/><div class="ico"></div>设计 / 媒体素材</label>
-                  <label class="opt"><input type="checkbox" name="dt2" value="个人记忆"/><div class="ico"></div>个人记忆 / 家庭影像</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">数据量预估</span>
-                <div class="options cols-2" data-key="dataSize">
-                  <label class="opt"><input type="radio" name="dsz" value="< 10 GB"/><div class="ico"></div>< 10 GB</label>
-                  <label class="opt"><input type="radio" name="dsz" value="10 — 100 GB"/><div class="ico"></div>10 — 100 GB</label>
-                  <label class="opt"><input type="radio" name="dsz" value="100 GB — 1 TB"/><div class="ico"></div>100 GB — 1 TB</label>
-                  <label class="opt"><input type="radio" name="dsz" value="> 1 TB"/><div class="ico"></div>> 1 TB</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">备份情况</span>
-                <div class="options cols-2" data-key="backup">
-                  <label class="opt"><input type="radio" name="bk" value="从未备份"/><div class="ico"></div>从未备份</label>
-                  <label class="opt"><input type="radio" name="bk" value="有部分备份"/><div class="ico"></div>有部分备份</label>
-                  <label class="opt"><input type="radio" name="bk" value="已全部备份"/><div class="ico"></div>已全部备份</label>
-                  <label class="opt"><input type="radio" name="bk" value="备份损坏"/><div class="ico"></div>备份损坏 / 同步中</label>
-                </div>
-              </div>
-
-              <div class="field">
-                <span class="field-label">紧急程度</span>
-                <div class="range-row">
-                  <input type="range" min="0" max="3" value="1" id="urgency" />
-                  <span class="range-val" id="urgencyVal">3 天内</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="check-actions">
-              <div class="left"><button class="cta" data-back>← 上一步</button></div>
-              <div class="right"><button class="cta primary" id="generateBtn">生成自检报告 →</button></div>
-            </div>
-          </div>
-
-          <!-- STEP 5: REPORT -->
-          <div class="step-pane hide" data-pane="5"></div>
-
-        </div>
-
-        <aside class="check-side">
-          <h5><span>i</span> 现在为什么问这个</h5>
-          <p id="whyText">先选一个最像的场景，会决定我们下一步问你什么细节。</p>
-
-          <h5 style="margin-top:6px"><span>★</span> 现场保护提示</h5>
-          <div class="tip" id="protectTip">
-            <b>立刻能做：</b>先停止写入操作。拍照记录错误信息。
-          </div>
-
-          <h5 style="margin-top:6px"><span>?</span> 不确定？</h5>
-          <a class="cta ghost" href="#contact" style="font-size:14.5px;padding-left:0">直接联系工作室 →</a>
-        </aside>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow" data-reveal>06 / 常见问题</span>
-        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
-          先把担心的，<br/><span class="muted">问明白。</span>
-        </h2>
-      </div>
-      <p data-reveal data-reveal-delay="2" style="max-width:46ch">按过往案例与行业经验整理，仅供参考；具体方案以实际检测结果为准。</p>
-    </div>
-
-    <div class="faq-search" data-reveal>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <input type="search" id="faqSearch" placeholder="搜索问题，如：异响 / 服务 / 寄修 / 开盘…"/>
-    </div>
-    <div class="faq" data-reveal id="faqList">
-      <details><summary>为什么不建议反复通电？</summary><p>如果设备有异响、进水或识别，反复通电可能让原有故障扩大。先断电并记录现象，比继续尝试更重要。</p></details>
-      <details><summary>可以先自行运行恢复软件吗？</summary><p>不建议把软件安装到原盘，也不要让工具自动修复文件系统。软件扫描会改变现场，建议先做只读镜像。</p></details>
-      <details><summary>网站的方案是怎么确定的？</summary><p>先做无损检测与风险评估，确定可恢复范围后，再给出具体方案与细节。检测评估免费，不成功不收任何费用。</p></details>
-      <details><summary>恢复不成功怎么算？</summary><p>不成功不收取任何费用，检测评估也免费；开盘类如涉及备件成本（如更换磁头），会在动手前单独说明并征得同意。</p></details>
-      <details><summary>寄修包邮吗？</summary><p>不包邮。在小红书点赞好评，可免寄回运费。</p></details>
-      <details><summary>寄送 NAS 需要拆盘吗？</summary><p>请保留原盘序，最好整套设备寄送；如果只能拆盘，请在每块盘上标记原来的槽位。</p></details>
-      <details><summary>数据会被上传到 AI 吗？</summary><p>不会。我们的自检工具只在你的浏览器里运行；恢复过程中也只在本地工作，不会把你的文件传到任何云端 AI。</p></details>
-      <details><summary>多久能开始检测？</summary><p>线下当日可承接（需预约），外地寄修一般在签收次日。RAID 与开盘洁净间需排期。</p></details>
-      <details><summary>检测需要多久？</summary><p>逻辑类故障通常当天出初筛结果；物理 / 开盘类 1-3 个工作日；RAID 与开盘洁净间需排期，送检时会告知预计时间。</p></details>
-      <details><summary>恢复的数据怎么交付？</summary><p>可自备新硬盘 / U 盘拷贝，也可由我们代备介质（按介质成本计费）。先预览目录和样本文件，确认无误后再交付。</p></details>
-      <details><summary>开盘恢复是什么意思？</summary><p>开盘指在洁净间内打开盘腔，更换磁头或处理盘片，只在磁头损坏、主轴卡死等物理故障时才需要。开盘本身不伤数据，但必须在洁净环境由专业人员进行。</p></details>
-      <details><summary>硬盘有异响还能再试试吗？</summary><p>不能。异响通常是磁头或主轴故障，每次通电都可能让磁头划伤盘片、让可恢复变不可恢复。立即断电送检是唯一正确动作。</p></details>
-      <details><summary>手机忘记密码能恢复吗？</summary><p>加密机型（iPhone 及新款安卓）没有锁屏密码无法读取数据。如可通过人脸 / 指纹解锁，请先解锁再送检；完全无凭据的场景我们会如实告知不可行。</p></details>
-      <details><summary>我的数据会被泄露吗？</summary><p>不会。所有操作在本地完成，不联网、不上传任何文件；恢复完成后源盘按约定处理，交付时可现场监督擦除工作副本。</p></details>
-      <details><summary>可以加急吗？</summary><p>常规排队不收加急费；如需加急，会优先安排工位与检测设备，具体以实际检测后方案为准。</p></details>
-      <details><summary>外地怎么寄修？</summary><p>建议顺丰保价寄送，用防静电袋加缓冲材料包装；NAS 请保留原盘序整套寄出。寄出前先完成在线自检并把报告发给我们，签收次日开始检测。寄修不包邮，小红书点赞好评可免寄回运费。</p></details>
-      <p class="faq-empty hide" id="faqEmpty">没有匹配的问题，换个关键词试试，或直接电话 / 微信联系我们。</p>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <div class="contact">
-      <div data-reveal>
-        <span class="eyebrow">07 / 联系工作室</span>
-        <h2 style="margin-top:18px">
-          不确定下一步？<br/>
-          <span class="accent">把现场</span>交给我们。
-        </h2>
-        <p style="margin-top:24px;max-width:48ch">
-          描述设备、故障现象和你已经做过的操作，我们会先告诉你应该停止什么，再约时间。
-        </p>
-        <div class="hero-actions" style="margin-top:28px">
-          <a class="cta primary" href="#check">先做完自检</a>
-          <a class="cta" href="tel:18402718242">直接电话</a>
-        </div>
-      </div>
-
-      <div class="contact-card" data-reveal data-reveal-delay="2">
-        <div class="contact-row">
-          <div style="width:100%">
-            <small>电话</small>
-            <div class="phone-line"><small class="who">程</small><small class="wx-same">微信同号</small><b class="num">186 9612 8515</b><button class="copy-btn" data-copy="186 9612 8515" title="复制号码 186 9612 8515" aria-label="复制号码 186 9612 8515" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-            <div class="phone-line"><small class="who">程</small><small class="wx-same">微信同号</small><b class="num">130 0618 4912</b><button class="copy-btn" data-copy="130 0618 4912" title="复制号码 130 0618 4912" aria-label="复制号码 130 0618 4912" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-            <div class="phone-line"><small class="who">王</small><small class="wx-same">微信同号</small><b class="num">184 0271 8242</b><button class="copy-btn" data-copy="184 0271 8242" title="复制号码 184 0271 8242" aria-label="复制号码 184 0271 8242" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-            <div class="phone-line"><small class="who">甘</small><small class="wx-same">微信同号</small><b class="num">132 9414 6310</b><button class="copy-btn" data-copy="132 9414 6310" title="复制号码 132 9414 6310" aria-label="复制号码 132 9414 6310" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-          </div>
-        </div>
-        <div class="contact-row">
-          <div style="width:100%">
-            <small>微信号</small>
-            <div class="phone-line"><b>TianmaDataLab</b><button class="copy-btn" data-copy="TianmaDataLab" title="复制微信号" aria-label="复制微信号" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="copy-tip">已复制</span></div>
-          </div>
-        </div>
-        <div class="contact-row">
-          <div>
-            <small>到店地址</small>
-            <a class="addr-link" href="https://uri.amap.com/marker?position=114.273101,30.586024&name=%E5%A4%A9%E9%A9%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D%E4%B8%AD%E5%BF%83&src=%E5%A4%A9%E9%A9%AC%E5%AE%98%E7%BD%91" target="_blank" rel="noopener" aria-label="在地图中打开到店地址">
-              <b>湖北省武汉市江汉区民主一街 177 号<br/>新星电脑城二楼 206 室 · 天马专业数据恢复中心</b>
-              <span class="addr-hint" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 0 0-14 0c0 5.42 7 13 7 13z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/></svg>点击导航</span>
-            </a>
-          </div>
-          <div style="text-align:right"><small>营业时间</small><b>周一至周日<br/>10:00 — 18:00</b></div>
-        </div>
-        <div class="contact-row">
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <button class="qr-thumb" id="qrThumb" title="点击放大" aria-label="放大微信二维码">
-              <img src="wechat-qr.jpg" alt="微信好友码"/>
-            </button>
-            <div><small>预约加微信</small><b>扫码添加好友</b><span style="font-size:13.5px;color:var(--ink-3)">点击放大 · 长按保存到手机</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- FOOTER:START -->
 <footer class="wrap foot">
   <span style="display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 613.51 626.88" fill="currentColor" style="width:16px;height:16px;color:var(--accent)" aria-hidden="true"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>© 2026 天马一站式数据服务中心 · 武汉</span>
   <span class="muted">检测免费 · 恢复不成功不收费</span>
-  <span><a href="https://www.xiaohongshu.com/user/profile/6419c1c6000000000b0143d8" target="_blank" rel="noopener">小红书案例 ↗</a> · <a href="#top">回到顶部 ↑</a></span>
+  <span><a href="https://www.xiaohongshu.com/user/profile/6419c1c6000000000b0143d8" target="_blank" rel="noopener">小红书案例 ↗</a> · <a href="index.html">回到顶部 ↑</a></span>
   <span style="display:inline-flex;align-items:center;gap:14px;flex-wrap:wrap">
     <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px">
       <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Zm-1 6h2v2h-2V7Zm0 4h2v6h-2v-6Z"/></svg>
@@ -778,7 +237,6 @@
   </div>
 </div>
 
-<!-- 悬浮咨询 -->
 <div class="fab" id="fab" aria-label="快速咨询">
   <button class="fab-main" id="fabMain" aria-expanded="false" aria-controls="fabMenu" type="button">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -795,6 +253,7 @@
     </a>
   </div>
 </div>
+<!-- FOOTER:END -->
 
 <script src="assets/app.js"></script>
 </body>

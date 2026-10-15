@@ -528,3 +528,25 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
   .brand-strip>span b{font-size:15px}
   .brand-strip>span i{font-size:12.5px}
 }
+
+/* ===== 多页导航：6 项后在中等宽度收紧，避免挤压 ===== */
+@media (max-width:1080px) and (min-width:881px){
+  .nav-inner{gap:16px}
+  .nav-links{gap:16px;font-size:14px}
+  .nav .nav-inner .cta{padding:11px 18px;font-size:14px}
+}
+
+/* ===== 首页「频道入口」：多页站的导流网格 ===== */
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.hub-card{position:relative;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);padding:28px 26px 24px;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.hub-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(37,99,235,.35)}
+.hub-no{font-family:var(--tnum);font-size:12.5px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+.hub-card h3{font-size:19px;font-weight:500;letter-spacing:-.01em;margin:0;color:var(--ink)}
+.hub-card p{font-size:14px;color:var(--ink-3);line-height:1.6;margin:0}
+.hub-go{margin-top:auto;padding-top:12px;font-size:13.5px;font-weight:600;color:var(--accent)}
+.hub-card:hover .hub-go{text-decoration:underline}
+@media (max-width:980px){.hub-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){
+  .hub-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
+  .hub-card{padding:24px 22px}
+}

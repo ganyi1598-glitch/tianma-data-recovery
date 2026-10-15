@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#FAFBFC" />
+<title>免费故障自检 | 3 分钟判断硬盘出了什么问题 - 武汉天马</title>
+<meta name="description" content="免费在线故障自检：回答几个问题，3 分钟拿到初步判断与下一步动作。不收费、不上传文件、不调用 AI 预判。" />
+<link rel="canonical" href="https://tianmahuifu.cn/check.html" />
+<link rel="icon" type="image/svg+xml" href="logo.svg" />
+<!-- 添加到主屏幕（PWA） -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+<!-- 微信分享 / Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="中天数据处理服务中心" />
+<meta property="og:title" content="免费故障自检 | 3 分钟判断硬盘出了什么问题 - 武汉天马" />
+<meta property="og:description" content="免费在线故障自检：回答几个问题，3 分钟拿到初步判断与下一步动作。不收费、不上传文件、不调用 AI 预判。" />
+<meta property="og:image" content="og-cover.jpg" />
+<meta property="og:locale" content="zh_CN" />
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="免费故障自检 | 3 分钟判断硬盘出了什么问题 - 武汉天马" />
+<meta name="twitter:description" content="免费在线故障自检：回答几个问题，3 分钟拿到初步判断与下一步动作。不收费、不上传文件、不调用 AI 预判。" />
+<meta name="twitter:image" content="og-cover.jpg" />
+<!-- Safari / 添加到主屏幕 -->
+<meta name="apple-mobile-web-app-title" content="中天数据处理" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="format-detection" content="telephone=no" />
+<script>
+  // 把 og:image / og:url 修正为绝对地址，便于微信/Twitter 抓取
+  (function(){
+    ['og:image','twitter:image'].forEach(function(k){
+      var m=document.querySelector('meta[property="'+k+'"]')||document.querySelector('meta[name="'+k+'"]');
+      if(m && m.content && !/^https?:/.test(m.content)) m.content=location.origin+'/'+m.content;
+    });
+    var u=document.querySelector('meta[property="og:url"]');
+    if(!u){ u=document.createElement('meta'); u.setAttribute('property','og:url'); document.head.appendChild(u); }
+    u.content=location.origin+location.pathname;
+  })();
+</script>
+<script>
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  addEventListener('pageshow', function(){ if (!location.hash) window.scrollTo(0, 0); });
+</script>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- NAV:START -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="天马一站式数据服务中心">
+      <span class="brand-mark">
+        <svg viewBox="0 0 613.51 626.88" fill="currentColor"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>
+      </span>
+      <div>
+        <div>天马一站式数据服务中心</div>
+        <div class="brand-sub">Data Recovery Lab · 武汉</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="services.html">服务范围</a>
+      <a href="pricing.html">报价</a>
+      <a href="process.html">流程</a>
+      <a href="cases.html">案例</a>
+      <a href="faq.html">常见问题</a>
+      <a href="about.html">关于我们</a>
+    </div>
+    <a class="cta primary" href="check.html">
+      <span class="dot"></span>
+      开始故障自检
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html">服务范围</a>
+  <a href="pricing.html">服务</a>
+  <a href="process.html">流程</a>
+  <a href="cases.html">案例</a>
+  <a href="faq.html">常见问题</a>
+  <a href="contact.html">联系我们</a>
+  <a href="check.html" class="mm-cta">开始故障自检 →</a>
+</div>
+<!-- NAV:END -->
+
+<section id="check" style="padding-top:64px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-reveal>05 / 故障自检</span>
+        <h2 data-reveal data-reveal-delay="1" style="margin-top:18px">
+          先把现场，<br/><span class="muted">讲清楚。</span>
+        </h2>
+      </div>
+      <p data-reveal data-reveal-delay="2" style="max-width:46ch">
+        先选典型场景，再回答具体问题。<b style="color:var(--ink)">整个过程只在你的浏览器运行，不会上传任何文件。</b>
+        最后会生成结构化报告卡，可直接截图发给我们预判。
+      </p>
+    </div>
+
+    <div class="check" data-reveal>
+      <div class="check-head">
+        <span id="stepLabel">现场信息 · 第 1 步 / 共 5 步</span>
+        <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+        <button class="reset" id="resetBtn" title="从头开始">从头开始</button>
+      </div>
+
+      <div class="check-body">
+        <div class="check-main" id="stage">
+
+          <!-- STEP 0: Scenario -->
+          <div class="step-pane" data-pane="0">
+            <h3>先选个最像的场景</h3>
+            <p class="desc">不同场景下一步动作差别很大；选错了下一步可能让原本能救的故障变得更糟。</p>
+
+            <div class="field">
+              <span class="field-label">场景 <small>· 选 1 个最像的</small></span>
+              <div class="scenario-grid" id="scenarios">
+                <div class="scenario-card" data-val="deleted"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M7 7l1 13a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h6>误删 / 误格式化</h6><p>文件刚不见，没改过设备</p></div></div>
+                <div class="scenario-card" data-val="unrecog"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9 9.5c.5-1.5 1.6-2 3-2 1.7 0 3 1 3 2.5S13 12 13 13.5M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div><div><h6>不识别 / 打不开</h6><p>插上没反应 / 数据打不开</p></div></div>
+                <div class="scenario-card" data-val="physical"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l3 6-3 4-3-4 3-6zM5 14l4 2 1 5M19 14l-4 2-1 5M9 21h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h6>物理损伤 / 异响</h6><p>摔了 / 震动 / 咔哒声</p></div></div>
+                <div class="scenario-card" data-val="liquid"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3c2 4 5 7 5 11a5 5 0 1 1-10 0c0-4 3-7 5-11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div><h6>进水 / 液体</h6><p>咖啡、雨水、海水、汤汁</p></div></div>
+                <div class="scenario-card" data-val="nas"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/></svg></div><div><h6>NAS / RAID 异常</h6><p>降级 / 报警 / 多盘异常</p></div></div>
+                <div class="scenario-card" data-val="phone"><div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="17.5" r=".8" fill="currentColor"/></svg></div><div><h6>手机特殊问题</h6><p>进水 / 不开机 / 屏幕黑</p></div></div>
+              </div>
+            </div>
+
+            <div class="check-actions">
+              <div class="left muted" style="font-size:13.5px">⌘ 仅保存在本机</div>
+              <div class="right">
+                <button class="cta primary" id="nextBtn" disabled>下一步 · 关于这台设备 →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1: Device -->
+          <div class="step-pane hide" data-pane="1">
+            <h3>这台设备是什么</h3>
+            <p class="desc">先采集设备物理画像。错的下一步可能让原本能救的故障变得更糟。</p>
+
+            <div class="fields">
+              <div class="field">
+                <span class="field-label">设备类型 <span class="req">*</span></span>
+                <div class="options" data-key="deviceType">
+                  <label class="opt"><input type="radio" name="dt" value="机械硬盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg></div>机械硬盘<div><small>台式机 / 移动硬盘 / 监控盘</small></div></label>
+                  <label class="opt"><input type="radio" name="dt" value="固态硬盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>固态硬盘<div><small>SATA / NVMe / 笔记本内置</small></div></label>
+                  <label class="opt"><input type="radio" name="dt" value="SD卡存储卡"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5h14v14H5z" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8v8H8z" stroke="currentColor" stroke-width="1.4"/></svg></div>SD / 存储卡<div><small>相机 / 手机 / TF 卡</small></div></label>
+                  <label class="opt"><input type="radio" name="dt" value="U盘"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 4h10v4H7zM7 12h10v8H7z" stroke="currentColor" stroke-width="1.4"/></svg></div>U 盘<div><small>闪存盘 / 加密盘</small></div></label>
+                  <label class="opt"><input type="radio" name="dt" value="手机"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>手机 / 平板<div><small>iPhone 或安卓机</small></div></label>
+                  <label class="opt"><input type="radio" name="dt" value="NAS"/><div class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>NAS / 阵列<div><small>多盘位 / RAID</small></div></label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">容量 <small>· 选填</small></span>
+                <div class="options cols-2" data-key="capacity">
+                  <label class="opt"><input type="radio" name="cap" value="&lt; 128 GB"/><div class="ico"></div>< 128 GB</label>
+                  <label class="opt"><input type="radio" name="cap" value="128 GB — 500 GB"/><div class="ico"></div>128 GB — 500 GB</label>
+                  <label class="opt"><input type="radio" name="cap" value="500 GB — 2 TB"/><div class="ico"></div>500 GB — 2 TB</label>
+                  <label class="opt"><input type="radio" name="cap" value="&gt; 2 TB"/><div class="ico"></div>> 2 TB</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">品牌型号 <small>· 选填，能让我们更准</small></span>
+                <input class="text-input" id="brand" placeholder="例：三星 980 PRO 1TB / 西部数据 My Passport 4TB / iPhone 13" />
+              </div>
+
+              <div class="field">
+                <span class="field-label">现在接入的设备</span>
+                <div class="options cols-2" data-key="system">
+                  <label class="opt"><input type="radio" name="sys" value="Windows"/><div class="ico"></div>Windows</label>
+                  <label class="opt"><input type="radio" name="sys" value="macOS"/><div class="ico"></div>macOS</label>
+                  <label class="opt"><input type="radio" name="sys" value="Linux"/><div class="ico"></div>Linux</label>
+                  <label class="opt"><input type="radio" name="sys" value="相机/录像机"/><div class="ico"></div>相机 / 录像机</label>
+                  <label class="opt"><input type="radio" name="sys" value="无法连接"/><div class="ico"></div>还没接 / 无法连接</label>
+                  <label class="opt"><input type="radio" name="sys" value="不确定"/><div class="ico"></div>不确定</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="check-actions">
+              <div class="left"><button class="cta" data-back>← 上一步</button></div>
+              <div class="right"><button class="cta primary" id="nextBtn2">下一步 · 故障细节 →</button></div>
+            </div>
+          </div>
+
+          <!-- STEP 2: dynamic -->
+          <div class="step-pane hide" data-pane="2">
+            <h3>发生了什么</h3>
+            <p class="desc" id="dynamicDesc">请告诉我具体的故障表现。越具体越能给出准确区间。</p>
+
+            <div class="fields" id="dynamicFields"></div>
+
+            <div class="check-actions">
+              <div class="left"><button class="cta" data-back>← 上一步</button></div>
+              <div class="right"><button class="cta primary" id="nextBtn3">下一步 · 已经做过的 →</button></div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Actions + images -->
+          <div class="step-pane hide" data-pane="3">
+            <h3>已经做过的事</h3>
+            <p class="desc">这一步决定「下一步还能做什么」和「风险多高」。请如实打勾。</p>
+
+            <div class="fields">
+              <div class="field">
+                <span class="field-label">关于这台设备，你做过 <small>· 可多选</small></span>
+                <div class="options" data-key="actions" data-multi="true">
+                  <label class="opt"><input type="checkbox" name="act" value="继续通电使用过"/><div class="ico"></div>继续通电使用过</label>
+                  <label class="opt"><input type="checkbox" name="act" value="运行过恢复软件"/><div class="ico"></div>运行过恢复软件</label>
+                  <label class="opt"><input type="checkbox" name="act" value="重新格式化过"/><div class="ico"></div>重新格式化 / 重新分区</label>
+                  <label class="opt"><input type="checkbox" name="act" value="换过线/换过接口"/><div class="ico"></div>换过线 / 换过接口</label>
+                  <label class="opt"><input type="checkbox" name="act" value="自行更换过盘位"/><div class="ico"></div>自行更换过盘位（NAS）</label>
+                  <label class="opt"><input type="checkbox" name="act" value="触发过Resync"/><div class="ico"></div>触发过 resync（NAS）</label>
+                  <label class="opt"><input type="checkbox" name="act" value="拆开过设备"/><div class="ico"></div>拆开过设备</label>
+                  <label class="opt"><input type="checkbox" name="act" value="用吹风机烘过"/><div class="ico"></div>用吹风机 / 烘干机处理过</label>
+                  <label class="opt"><input type="checkbox" name="act" value="什么都没做过"/><div class="ico"></div>什么都没做过</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">目前供电状态</span>
+                <div class="options cols-2" data-key="power">
+                  <label class="opt"><input type="radio" name="pwr" value="已断电"/><div class="ico"></div>已经断电保存</label>
+                  <label class="opt"><input type="radio" name="pwr" value="仍在通电"/><div class="ico"></div>仍在通电</label>
+                  <label class="opt"><input type="radio" name="pwr" value="断电困难"/><div class="ico"></div>断电困难（如服务器）</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">附图 <small>· 选填，最多 5 张 · 仅保存在本机，不上传</small></span>
+                <div class="dropzone" id="dropzone">
+                  <input type="file" id="fileInput" accept="image/*" multiple hidden />
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  <p>点击或拖拽图片到此处</p>
+                  <p class="muted">设备外观 / 报错截图 / NAS 盘位照片</p>
+                </div>
+                <div class="thumbs" id="thumbs"></div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">补充情况 <small>· 选填</small></span>
+                <textarea class="textarea" id="notes" placeholder="例如：错误提示截图描述、你的处理顺序、最近备份情况……"></textarea>
+              </div>
+            </div>
+
+            <div class="check-actions">
+              <div class="left"><button class="cta" data-back>← 上一步</button></div>
+              <div class="right"><button class="cta primary" id="nextBtn4">下一步 · 数据重要性 →</button></div>
+            </div>
+          </div>
+
+          <!-- STEP 4: Data -->
+          <div class="step-pane hide" data-pane="4">
+            <h3>这些数据对你多重要</h3>
+            <p class="desc">重要的数据会影响我们的优先级与工位安排。</p>
+
+            <div class="fields">
+              <div class="field">
+                <span class="field-label">数据类型 <small>· 可多选</small></span>
+                <div class="options" data-key="dataType" data-multi="true">
+                  <label class="opt"><input type="checkbox" name="dt2" value="工作文档"/><div class="ico"></div>工作文档 / 合同</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="照片视频"/><div class="ico"></div>照片 / 视频</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="代码"/><div class="ico"></div>代码 / 工程文件</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="数据库"/><div class="ico"></div>数据库 / 业务数据</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="财务"/><div class="ico"></div>财务 / 票据</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="邮件"/><div class="ico"></div>邮件 / 联系人</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="设计素材"/><div class="ico"></div>设计 / 媒体素材</label>
+                  <label class="opt"><input type="checkbox" name="dt2" value="个人记忆"/><div class="ico"></div>个人记忆 / 家庭影像</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">数据量预估</span>
+                <div class="options cols-2" data-key="dataSize">
+                  <label class="opt"><input type="radio" name="dsz" value="< 10 GB"/><div class="ico"></div>< 10 GB</label>
+                  <label class="opt"><input type="radio" name="dsz" value="10 — 100 GB"/><div class="ico"></div>10 — 100 GB</label>
+                  <label class="opt"><input type="radio" name="dsz" value="100 GB — 1 TB"/><div class="ico"></div>100 GB — 1 TB</label>
+                  <label class="opt"><input type="radio" name="dsz" value="> 1 TB"/><div class="ico"></div>> 1 TB</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">备份情况</span>
+                <div class="options cols-2" data-key="backup">
+                  <label class="opt"><input type="radio" name="bk" value="从未备份"/><div class="ico"></div>从未备份</label>
+                  <label class="opt"><input type="radio" name="bk" value="有部分备份"/><div class="ico"></div>有部分备份</label>
+                  <label class="opt"><input type="radio" name="bk" value="已全部备份"/><div class="ico"></div>已全部备份</label>
+                  <label class="opt"><input type="radio" name="bk" value="备份损坏"/><div class="ico"></div>备份损坏 / 同步中</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">紧急程度</span>
+                <div class="range-row">
+                  <input type="range" min="0" max="3" value="1" id="urgency" />
+                  <span class="range-val" id="urgencyVal">3 天内</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="check-actions">
+              <div class="left"><button class="cta" data-back>← 上一步</button></div>
+              <div class="right"><button class="cta primary" id="generateBtn">生成自检报告 →</button></div>
+            </div>
+          </div>
+
+          <!-- STEP 5: REPORT -->
+          <div class="step-pane hide" data-pane="5"></div>
+
+        </div>
+
+        <aside class="check-side">
+          <h5><span>i</span> 现在为什么问这个</h5>
+          <p id="whyText">先选一个最像的场景，会决定我们下一步问你什么细节。</p>
+
+          <h5 style="margin-top:6px"><span>★</span> 现场保护提示</h5>
+          <div class="tip" id="protectTip">
+            <b>立刻能做：</b>先停止写入操作。拍照记录错误信息。
+          </div>
+
+          <h5 style="margin-top:6px"><span>?</span> 不确定？</h5>
+          <a class="cta ghost" href="#contact" style="font-size:14.5px;padding-left:0">直接联系工作室 →</a>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER:START -->
+<footer class="wrap foot">
+  <span style="display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 613.51 626.88" fill="currentColor" style="width:16px;height:16px;color:var(--accent)" aria-hidden="true"><path d="M473.36,81.74l-5.1,8.04c-1.84,4.71-3.77,9.52-4.65,14.54-8.65,49.39,40.37,77.26,35.35,125.97l49.79-37.27c7.5-3.91,15.35-4.25,22.93-.27,6.07,3.18,33.94,36.1,38.03,43,7.73,13.05,2.04,30.6-2.7,43.95-7.04,19.82-18.42,40.04-31.28,56.49-4.97-11.84-11.63-27.78-10.66-40.86,1.13-15.22,22.12-22.2,18.86-38.08-1.12-5.45-16.15-20.89-21.04-23.73-4.31-2.5-9.56-2.56-13.95-.52-5.17,2.41-16.45,17.72-21.19,22.88-25.26,27.5-51.98,53.94-83.59,74.2-35.21,22.58-74.5,37.02-115.79,44.14-9.41,23.38-20.35,46.48-35.97,66.38-28.06,35.71-59.07,47.8-95.19,71.84-31.99,21.3-36.25,34.07-56.9,63.93-16.29,23.55-38.28,44.15-67.1,50.52,4.17-12.1,5.71-28.09,12.5-39.03,4.41-7.1,12.11-8.44,18.41-13.58,19.98-16.29,22.16-43.04,31.1-64.85,6.14-14.96,22.67-24.23,33.22-36.44,33.64-38.92,16.31-74.47,34.24-116.45,21.59-50.56,75.57-74.51,125.55-88.02,2.48-11.71-3.33-25.75-10.86-34.69-25.45-30.22-88.79-39.98-126-50.98-54.35-16.06-111.07-38.18-145.03-85.97-15.92-22.4-26.23-49.49-28.56-76.99,36.9,26.43,78.9,43.58,122.25,56.5,65.64,19.57,149.04,27.46,193.3,85.32,16.32,21.34,22.95,47.69,40.9,67.84l-7.82-23.45c-13.66-45.74-1.62-95.71,30.21-130.77l-30.21,12.78c-.48.15-.49-.59-.34-1.05,1.88-5.73,19.29-23.47,24.49-28.11,22.86-20.37,51.73-31.96,82.31-34.26,8.54-8.82,16.68-18.11,27.18-24.71l-.72,39.09c5.55,3.68,11.62,6.64,16.72,11,7.97,6.83,11.84,15.74,19.52,23.13,11.96,11.5,25.84,21.67,37.64,33.43,1.46,2.47,2.65,4.44,2.59,7.42-.07,3.53-2.68,20.28-4.37,22.69-1.92,2.73-17.13,2.95-20.6,2.22-4.63-.97-8.04-6.62-11.81-9.51-13.38-10.27-23.37-7.17-37.91-10.42-17.46-3.91-27.99-19.78-27.72-37.32Z"/><path d="M314.86,257.29c-14.15-6.46-29.71-7.76-45.12-7.1-26.06,1.12-47.56,5.67-74.15.22-47.52-9.74-89.62-46.05-111.72-88.35,10.39,4.97,20.31,10.95,30.79,15.76,46.02,21.07,84.61,22.92,131.98,34.34,26.35,6.35,56.63,18.86,68.22,45.14Z"/><path d="M198.3,342.58c-35.92,16.19-48.79,56.05-81.8,76.36-35.56,21.88-80.23,17.55-116.5-.3-.06-1.05,2.54-1.25,3.28-1.33,50.7-5.76,60.6-19.95,97.31-49.82,25.22-20.52,52.44-32.87,85.88-28.35,3.6.49,9.16,1.12,11.83,3.44Z"/></svg>© 2026 天马一站式数据服务中心 · 武汉</span>
+  <span class="muted">检测免费 · 恢复不成功不收费</span>
+  <span><a href="https://www.xiaohongshu.com/user/profile/6419c1c6000000000b0143d8" target="_blank" rel="noopener">小红书案例 ↗</a> · <a href="index.html">回到顶部 ↑</a></span>
+  <span style="display:inline-flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Zm-1 6h2v2h-2V7Zm0 4h2v6h-2v-6Z"/></svg>
+      鄂ICP备2026048282号-1
+    </a>
+    <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42010302002996" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5.5v5.9c0 4.9 3.3 9.4 8 10.6 4.7-1.2 8-5.7 8-10.6V5.5L12 2Zm0 3.2 1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6L12 5.2Z"/></svg>
+      鄂公网安备42010302002996号
+    </a>
+  </span>
+</footer>
+
+<div class="qr-lightbox" id="qrLightbox" role="dialog" aria-label="微信二维码大图">
+  <div class="qr-lightbox-inner">
+    <img src="wechat-qr.jpg" alt="微信好友码大图"/>
+    <p class="qr-tip">长按二维码 · 在微信中「识别」即可发送好友申请</p>
+    <p class="qr-id">微信号：TianmaDataLab</p>
+    <a class="qr-deeplink" id="qrDeeplink" href="weixin://contacts/profile/TianmaDataLab">已安装微信？点此直接打开</a>
+    <button class="qr-close" type="button" id="qrClose">关闭</button>
+  </div>
+</div>
+
+<div class="fab" id="fab" aria-label="快速咨询">
+  <button class="fab-main" id="fabMain" aria-expanded="false" aria-controls="fabMenu" type="button">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    立即咨询
+  </button>
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-item" type="button" data-fab-addfriend data-weixin="weixin://contacts/profile/TianmaDataLab">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      微信加好友 · 立即聊
+    </button>
+    <a class="fab-item" href="tel:18402718242">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      电话 184 0271 8242
+    </a>
+  </div>
+</div>
+<!-- FOOTER:END -->
+
+<script src="assets/app.js"></script>
+</body>
+</html>
