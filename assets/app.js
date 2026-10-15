@@ -211,6 +211,26 @@ function calcRisk(s){
   return {score, level};
 }
 
+/**
+ * ★ 手机内容恢复的收费规则 —— 全站文案的唯一出处，改规则只改这几个常量。
+ * 受理时先收 ¥100 辛苦费，恢复成功从恢复费里全额抵扣；未受理或未能恢复则不退还。
+ * 背景：手机不拆机，但必须连设备读取并人工长时间分析才能出结论，占设备与人工的时间远长于硬盘，且常有人问完一圈就拿走结论。
+ */
+const PHONE_FEE = 100;
+const PHONE_FEE_NOTE  = '手机需连设备读取、人工长时间分析才能判断，受理时先收 ¥' + PHONE_FEE + ' 辛苦费，恢复成功后从恢复费中全额抵扣；未能恢复则不退还。';
+const PHONE_FEE_SHORT = '手机内容恢复受理时先收 ¥' + PHONE_FEE + ' 辛苦费，恢复成功可全额抵扣，未恢复则不退还。';
+
+/**
+ * 收费承诺的收尾句，**必须按设备区分**。
+ * 手机是「先收 100、不成功不退」，与全站那句「恢复不成功不收费」直接冲突；
+ * 若不分设备，自检报告就会一边承诺不成功不收费、一边写着先收 100 ——
+ * 客户拿着这份报告到店，必然起争执。
+ * 手机这里返回空串：辛苦费规则已由 estimatePrice 的 note 写明，不重复第二遍。
+ */
+function feePromise(s){
+  return (s && s.deviceType === '手机') ? '' : '检测免费，恢复不成功不收费。';
+}
+
 // 方案预判：设备基准 × 故障类型 + 容量 + 风险 + 操作复杂度
 function estimatePrice(s){
   const deviceBase = {'SD卡存储卡':350,'U盘':350,'机械硬盘':500,'固态硬盘':600,'手机':800,'NAS':2000};
@@ -248,6 +268,8 @@ function estimatePrice(s){
     if(/BitLocker|FileVault|LUKS/.test(v)) note = '加密盘需提供解锁凭据，缺凭据成功率显著下降。';
   });
   if(s.scenario === 'phone' && s.lockState === '不知道密码') note = '锁屏 / 加密且未知密码，成功率受限，需先评估。';
+  // 只要设备是手机就要说明辛苦费（误删 / 进水 / 不认机都要连设备读取，不限场景）
+  if(s.deviceType === '手机') note = (note ? note + ' ' : '') + PHONE_FEE_NOTE;
 
   const min = Math.max(200, Math.round(price * 0.85 / 50) * 50);
   const max = Math.round(price * 1.5 / 50) * 50;
@@ -297,6 +319,25 @@ const RECOMMEND = {
 };
 
 /**
+ * ★ RECOMMEND 原先也只按场景取，导致**手机报告里会推荐硬盘的做法**
+ * （"优先排查接口、供电、控制板，再用镜像工具做只读评估"）。
+ * 与之前修过的「手机被问敲盘异响」是同一类设备未适配问题。
+ */
+const RECOMMEND_PHONE = {
+  deleted: '内容恢复：优先对整机做只读导出，再按照片 / 视频 / 聊天记录分类重组。期间不要再使用这台手机，避免新数据覆盖掉旧数据。',
+  unrecog: '先排查接口与供电：换原装数据线、换另一台电脑各试 1 次，仍认不到就停手。之后走整机只读导出，不要刷机、不要恢复出厂设置。',
+  physical: '先做整机只读检测：不刷机、不恢复出厂设置，能正常读取后再做数据导出。我们不拆机、不做芯片级处理；屏幕不亮或完全不开机的机型，到店评估后再定能不能做。',
+  liquid: '先做整机只读检测，不刷机、不恢复出厂设置。不拆机、不做芯片级处理，进水机能否读取要到店评估后再定；不要烘烤、不要放米缸、不要反复开机试。',
+  phone: '内容恢复（照片 / 视频 / 聊天记录等）：优先做整机导出；提供锁屏密码可显著提升成功率，无凭据的加密机型会如实告知不可行。'
+};
+
+/** 推荐服务必须跟设备走：手机不能给硬盘的排查方式（换接口、主板、镜像工具那套） */
+function recommendFor(s){
+  if(s && s.deviceType === '手机' && RECOMMEND_PHONE[s.scenario]) return RECOMMEND_PHONE[s.scenario];
+  return RECOMMEND[s.scenario] || '';
+}
+
+/**
  * 「下一步」建议也必须跟设备走。
  * 原先手机也会被塞进「磁头划伤盘片」「洁净间开盘」这类只有机械盘才成立的话术。
  */
@@ -314,7 +355,7 @@ const NEXT_STEPS_DEV = {
     ],
     liquid: [
       '立刻断电，不要充电、不要用吹风机吹、不要放米缸。',
-      '不要擦拭内部，保持现状直接送检做板级清洗。',
+      '不要尝试打开机身清理，保持现状直接送检评估。',
       '进水后 48 小时内送检成功率最高。'
     ],
     phone: [
@@ -534,14 +575,14 @@ function buildReport(){
   };
   const r = riskMap[level];
   const steps = nextStepsFor(s).map(x => `<li>${x}</li>`).join('');
-  const rec = RECOMMEND[s.scenario] || '现场信息采集与检测，预约后由人工先做风险分级。';
+  const rec = recommendFor(s) || '现场信息采集与检测，预约后由人工先做风险分级。';
   const quoteHtml = `
     <div class="quote">
       <div class="q-top">
         <div class="q-service">服务类型<b>${price.service}</b></div>
         <div class="q-price">¥${price.min}–¥${price.max} <small>预估报价</small></div>
       </div>
-      <div class="q-note">${price.note ? price.note + ' ' : ''}以上为检测前预判，最终以无损检测后评估为准。检测免费，恢复不成功不收费。</div>
+      <div class="q-note">${price.note ? price.note + ' ' : ''}以上为检测前预判，最终以无损检测后评估为准。${feePromise(s)}</div>
     </div>
   `;
 
@@ -773,7 +814,7 @@ async function downloadReportImage(){
   if(s.images?.length) secFault.push(['附　　图', s.images.length+' 张（已合成进报告卡）']);
   const secData = [['数据类型', (s.dataType||['未填']).join('、')],['数 据 量', s.dataSize||'-'],['备　　份', s.backup||'-'],['紧急程度', s.urgency||'-']];
   const steps = nextStepsFor(s);
-  const rec = RECOMMEND[s.scenario]||'';
+  const rec = recommendFor(s)||'';
 
   /* load uploaded photos (for embedding in the report card) */
   const upImgs = [];
@@ -812,6 +853,9 @@ async function downloadReportImage(){
 
   /* ---- layout pass ---- */
   const L=[]; let y = 150 + 52;
+  // 手机的页脚要多排一行辛苦费说明。页脚高度本来是写死的 280，必须同步加高 ——
+  // 否则那行会落到画布底部之外被裁掉（fillText 传了 maxWidth 也只会被压扁，不会换行）。
+  const FOOT_EXTRA = (s.deviceType === '手机') ? 36 : 0;
   L.push({t:'risk', y, h:118}); y += 118 + 24;
   if(flags.length){
     const fl = wrap('⚑ '+flags.join('　⚑ '), `500 24px ${MONO}`, CW-44);
@@ -820,7 +864,7 @@ async function downloadReportImage(){
   {
     const p = estimatePrice(s);
     const priceLine = `¥${p.min} – ¥${p.max}`;
-    const descTxt = `${p.service}${p.note ? ' · ' + p.note : ''} · 以无损检测后评估为准。检测免费，恢复不成功不收费。`;
+    const descTxt = `${p.service}${p.note ? ' · ' + p.note : ''} · 以无损检测后评估为准。${feePromise(s)}`;
     const ql = wrap(descTxt, `400 22px ${SANS}`, CW-48);
     const h = 130 + ql.length*32 + 16;
     L.push({t:'quote', y, priceLine, lines:ql, h}); y += h + 20;
@@ -860,7 +904,7 @@ async function downloadReportImage(){
     ph -= gap;
     L.push({t:'photos', y, rows, cols, gap, boxW, h:ph}); y += ph + 24;
   }
-  L.push({t:'foot', y, h:280}); y += 280;
+  L.push({t:'foot', y, h:280 + FOOT_EXTRA}); y += 280 + FOOT_EXTRA;
   const H = y + 30;
 
   /* ---- paint ---- */
@@ -1003,7 +1047,13 @@ async function downloadReportImage(){
       x.fillText('地址：武汉市江汉区民主一街 177 号 · 新星电脑城二楼 · 天马专业数据恢复中心', PAD, op.y+206);
       x.fillText('营业时间：周一至周日 10:00 — 18:00', PAD, op.y+234);
       x.fillStyle = '#94A3B8'; x.font = `400 20px ${SANS}`;
-      x.fillText('本报告为自检初筛结果，最终方案以实际检测后评估为准；检测免费，不成功不收任何费用。', PAD, op.y+264, textMaxW);
+      if(s.deviceType === '手机'){
+        // 手机不能写「不成功不收任何费用」，改成本机适用的辛苦费规则
+        x.fillText('本报告为自检初筛结果，最终方案以实际检测后评估为准。', PAD, op.y+264, textMaxW);
+        x.fillText(PHONE_FEE_SHORT, PAD, op.y+292, textMaxW);
+      } else {
+        x.fillText('本报告为自检初筛结果，最终方案以实际检测后评估为准；检测免费，不成功不收任何费用。', PAD, op.y+264, textMaxW);
+      }
     }
   }
 
@@ -1327,7 +1377,7 @@ const FLOW = {
     sub: '案例里的故障都会落到具体价格档位；也建议先自检确认你属于哪一档。',
     cards: [
       { k:'推荐', t:'看这类故障怎么收费', d:'案例对应的容量与故障类型，在报价表里是明码标价的。', href:'pricing.html', primary:true },
-      { k:'了解过程', t:'看完整流程', d:'检测免费、报价确认后才开工，不成功不收费。', href:'process.html' },
+      { k:'了解过程', t:'看完整流程', d:'检测免费、报价确认后才开工，不成功不收费（手机内容恢复除外）。', href:'process.html' },
       { k:'或', t:'做一次免费自检', d:'把你的设备和故障填一遍，直接拿到区间。', href:'check.html' }
     ]
   },
@@ -1379,7 +1429,7 @@ const FLOW = {
   },
   visit: {
     head: '到了之后 / 还没到？',
-    sub: '带设备来就行，检测免费。不方便到店可以寄修：我们收到后先检测出方案，你确认了再做，寄回免运费。',
+    sub: '带设备来就行，检测免费（手机内容恢复受理时先收 ¥100 辛苦费）。不方便到店可以寄修：我们收到后先检测出方案，你确认了再做，寄回免运费。',
     cards: [
       { k:'找不到路 / 到了门口', t:'打电话 184 0271 8242', d:'王 · 微信同号。走岔了或找不到，我们下来接你。', href:'tel:+8618402718242', primary:true },
       { k:'还没做自检？', t:'先做一次免费自检', d:'5 步生成风险指数与报价区间，到店直接给工程师看。', href:'check.html' },
