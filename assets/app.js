@@ -9,6 +9,11 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  // ★ [data-stagger] 的显现机制挂在自身（CSS 规则是 [data-stagger].in>*），
+  //   所以它也必须被观察 —— 否则子元素会永久停在 opacity:0。
+  //   （踩过这个坑：只写 data-stagger 不写 data-reveal 的网格在线上整块不可见，
+  //    而 opacity 不影响布局，高度类检查发现不了。）
+  document.querySelectorAll('[data-stagger]').forEach(el => io.observe(el));
 })();
 
 const SC = { step: 0, data: { images: [], urgency: '一周内' } };

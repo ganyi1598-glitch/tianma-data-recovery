@@ -550,3 +550,45 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
   .hub-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
   .hub-card{padding:24px 22px}
 }
+
+/* ===== 关于我们：图文两栏 ===== */
+.lead-2col{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:center}
+.lead-2col.rev{grid-template-columns:.95fr 1.05fr}
+.lead-2col img{display:block;width:100%;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow-md)}
+@media (max-width:880px){
+  .lead-2col,.lead-2col.rev{grid-template-columns:1fr;gap:26px}
+  .lead-2col.rev > img{order:-1}
+}
+
+/* ===== 关于我们：实拍图网格 ===== */
+.photo-grid{display:grid;gap:16px;margin-top:36px}
+.photo-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.photo-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.photo-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+.photo-card{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--bg-2);box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.photo-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+/* ⚠️ height:auto 不可省略：<img> 上的 width/height 属性会作为「表现属性」生效，
+   不重置 height 的话它会压过 aspect-ratio，图片会按原始像素高度撑开（踩过这个坑） */
+.photo-card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:var(--bg)}
+.photo-card.tall img{aspect-ratio:3/4}
+.photo-card.square img{aspect-ratio:1/1}
+.photo-card.wide img{aspect-ratio:16/10}
+.photo-card figcaption{padding:14px 16px 16px;font-size:13.5px;line-height:1.55;color:var(--ink-3)}
+.photo-card figcaption b{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:4px}
+@media (max-width:880px){.photo-grid.cols-3,.photo-grid.cols-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.photo-grid{grid-template-columns:1fr !important;gap:14px}}
+
+/* ===== 关于我们：数据安全承诺 ===== */
+.pledge{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:34px}
+.pledge-item{display:flex;gap:14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-2);padding:22px;box-shadow:var(--shadow-sm)}
+.pi-ic{flex:0 0 auto;width:36px;height:36px;border-radius:10px;background:var(--good-soft);color:var(--good);display:flex;align-items:center;justify-content:center}
+.pledge-item h4{margin:0 0 6px;font-size:15.5px;font-weight:600;color:var(--ink)}
+.pledge-item p{margin:0;font-size:14px;color:var(--ink-3);line-height:1.62}
+@media (max-width:760px){.pledge{grid-template-columns:1fr}}
+
+/* ===== 关于我们：小红书卡片 ===== */
+.xhs-card{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(120deg,var(--accent-soft),#fff 62%);padding:30px 34px;box-shadow:var(--shadow-sm);margin-top:32px}
+.xhs-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:14px}
+.xhs-stat b{display:block;font-family:var(--tnum);font-size:22px;font-weight:600;color:var(--ink);line-height:1.2}
+.xhs-stat span{font-size:13px;color:var(--ink-3)}
+@media (max-width:640px){.xhs-card{padding:24px 22px;gap:18px}.xhs-stats{gap:22px}}
