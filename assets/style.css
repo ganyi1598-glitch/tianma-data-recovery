@@ -386,6 +386,13 @@ section{padding:80px 0;border-top:1px solid var(--line);position:relative}
 .quote .q-price .sep{color:rgba(255,255,255,.45);margin:0 4px;font-weight:400}
 .quote .q-note{margin-top:12px;font-size:14px;color:rgba(255,255,255,.6);line-height:1.5}
 @media (max-width:680px){.quote .q-price{font-size:24px}.quote .q-top{gap:10px;align-items:flex-start}.quote .q-service{flex:1 1 100%}}
+/* 手机「暂不受理」态：沿用深蓝报价卡等于给了一个我们做不了的服务的报价，改琥珀底警示卡 */
+.quote.is-blocked{background:var(--warn-soft);border-color:rgba(217,119,6,.35);color:var(--ink);box-shadow:none}
+.quote.is-blocked .q-service{color:rgba(217,119,6,.85)}
+.quote.is-blocked .q-service b{color:var(--ink)}
+.quote.is-blocked .q-price{color:var(--warn);font-size:26px}
+.quote.is-blocked .q-price small{color:rgba(217,119,6,.85)}
+.quote.is-blocked .q-note{color:var(--ink-2);line-height:1.6}
 
 .scenario-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2);cursor:pointer;transition:all .2s var(--ease)}
 .scenario-card:hover{border-color:var(--ink-3);background:var(--bg)}

@@ -36,6 +36,24 @@ const PROTECT = {
   phone: '<b>立刻能做：</b>不要接电、不要充电、不要尝试刷机。',
 };
 
+/**
+ * ★ 手机侧栏提示也不能沿用磁盘那套（「反复通电可能让磁头划伤盘片」）。
+ * 手机没有磁头、没有盘片，而且我们不拆机 —— 必须按设备分支。
+ */
+const PROTECT_PHONE = {
+  deleted: '<b>立刻能做：</b>别再使用这台手机：不要拍照、录视频、装 App，避免新数据覆盖掉要恢复的内容。',
+  unrecog: '<b>立刻能做：</b>换一根原装数据线和另一台电脑各试 1 次；仍认不到就停手，不要刷机、不要恢复出厂。',
+  physical: '<b>立刻能做：</b>不要再开机、不要充电。重摔 / 不开机的机型我们目前不受理，可到店先看一眼。',
+  liquid: '<b>立刻能做：</b>不要充电、不要用吹风机吹、不要放米缸。进水机我们不做板级清洗，尽快送来先看能不能读到。',
+  phone: '<b>立刻能做：</b>不要再使用这台手机，不要刷机、不要恢复出厂设置。',
+};
+
+/** 侧栏「立刻能做」按设备取：手机没有磁头 / 盘片，不能沿用磁盘话术 */
+function protectFor(s){
+  if (s && s.deviceType === '手机') return PROTECT_PHONE[s.scenario] || PROTECT_PHONE.phone;
+  return PROTECT[s.scenario] || '';
+}
+
 const DYNAMIC = {
   deleted: [
     { key:'when', label:'故障首次出现', options:[['< 1 小时','不到 1 小时'],['1 - 24 小时','1 — 24 小时'],['1 - 7 天','1 — 7 天'],['> 7 天','一周以上'],['不确定','不确定']]},
@@ -221,6 +239,31 @@ const PHONE_FEE_NOTE  = '手机需连设备读取、人工长时间分析才能�
 const PHONE_FEE_SHORT = '手机内容恢复受理时先收 ¥' + PHONE_FEE + ' 辛苦费，恢复成功可全额抵扣，未恢复则不退还。';
 
 /**
+ * ★ 手机按容量分档 —— 必须与 pricing.html 的手机表逐档一致（表改价时同步这里）。
+ * 原先手机走的是磁盘那套 capBump（<128 / 128-500 / 500-2T / >2T）：
+ * ① 128G 与 256G 分不出来；② 算出的下限 ¥700 比表上的「¥800 起」还低 → 报告与报价表打架。
+ */
+const PHONE_CAP_PRICE = { '64G 及以下':800, '128G':900, '256G':1100, '512G 及以上':1400 };
+
+/** 场景层面的手机不受理（供步骤 2 的说明用） */
+const PHONE_REJECT = { physical:'重摔 / 物理损伤', liquid:'进水 / 液体' };
+
+/**
+ * ★ 手机不受理的判定 —— 我们**不拆机、不做芯片级处理**，
+ * 与报价表「不开机的手机 暂不受理」保持同一条线：
+ *   ① 重摔 / 物理损伤  ② 进水 / 液体  ③ 完全不开机  ④ 屏幕完全不亮 / 碎裂
+ * 命中任一条 → 报告里给「暂不受理」，不给价格区间（否则等于给一个我们做不了的服务报价）。
+ */
+function phoneRejectReason(s){
+  if (!s || s.deviceType !== '手机') return '';
+  if (s.scenario === 'physical') return '重摔 / 物理损伤';
+  if (s.scenario === 'liquid')   return '进水 / 液体';
+  if (s.boot === '完全不开' || s.boot === '开机黑屏') return '完全不开机';
+  if (s.screenState === '完全不亮' || s.screenState === '碎裂/漏液') return '屏幕完全不亮';
+  return '';
+}
+
+/**
  * 收费承诺的收尾句，**必须按设备区分**。
  * 手机是「先收 100、不成功不退」，与全站那句「恢复不成功不收费」直接冲突；
  * 若不分设备，自检报告就会一边承诺不成功不收费、一边写着先收 100 ——
@@ -237,8 +280,22 @@ function estimatePrice(s){
   const sceneBase   = {deleted:350,unrecog:500,physical:600,liquid:800,nas:2000,phone:800};
   const mul = {deleted:1.0,unrecog:1.3,physical:1.8,liquid:1.6,nas:1.25,phone:1.0}[s.scenario] ?? 1.2;
   const capBump = {'< 128 GB':0,'128 GB — 500 GB':100,'500 GB — 2 TB':300,'> 2 TB':600}[s.capacity] ?? 0;
+
+  // ★ 手机重摔 / 进水 / 完全不开机 → 不给价格区间，只给「暂不受理」结论
+  const reject = phoneRejectReason(s);
+  if (reject){
+    return {
+      blocked: true,
+      level: calcRisk(s).level,
+      service: '手机 · 暂不受理',
+      reason: `${reject}：手机我们不拆机、不做芯片级处理，这类机器大多已经不开机，目前不受理。如果它其实还能正常开机，请改选「手机内容恢复」重做一次自检。`
+    };
+  }
   let base = deviceBase[s.deviceType] ?? sceneBase[s.scenario] ?? 500;
   let price = base * mul + capBump;
+  // ★ 手机按报价表的容量档取基准价，不再走磁盘的 capBump
+  const phoneCap = s.deviceType === '手机' ? (PHONE_CAP_PRICE[s.capacity] || 0) : 0;
+  if (phoneCap) price = phoneCap;
 
   const acts = s.actions || [];
   if(acts.includes('重新格式化过')) price += 150;
@@ -268,10 +325,14 @@ function estimatePrice(s){
     if(/BitLocker|FileVault|LUKS/.test(v)) note = '加密盘需提供解锁凭据，缺凭据成功率显著下降。';
   });
   if(s.scenario === 'phone' && s.lockState === '不知道密码') note = '锁屏 / 加密且未知密码，成功率受限，需先评估。';
-  // 只要设备是手机就要说明辛苦费（误删 / 进水 / 不认机都要连设备读取，不限场景）
-  if(s.deviceType === '手机') note = (note ? note + ' ' : '') + PHONE_FEE_NOTE;
+  // 只要设备是手机就说明辛苦费（重摔 / 进水已在上面直接返回不受理，走不到这里）
+  if(s.deviceType === '手机'){
+    if(!phoneCap) note = (note ? note + ' ' : '') + '未填容量，按最低档（64G 及以下）预判。';
+    note = (note ? note + ' ' : '') + PHONE_FEE_NOTE;
+  }
 
-  const min = Math.max(200, Math.round(price * 0.85 / 50) * 50);
+  // 手机：下限不得低于报价表该容量档的「起」价，否则报告比公开报价表还便宜 → 到店必起争执
+  const min = Math.max(s.deviceType === '手机' ? (phoneCap || 800) : 200, Math.round(price * 0.85 / 50) * 50);
   const max = Math.round(price * 1.5 / 50) * 50;
   return {min, max, service, note, level};
 }
@@ -315,7 +376,7 @@ const RECOMMEND = {
   physical: '洁净间开盘：更换匹配磁头 / 电机组，再做只读镜像与文件重组。立刻断电，勿反复通电。',
   liquid: '芯片级检测 / 主板修复：腐蚀清理与关键芯片飞线读取数据，禁烘、禁米缸。',
   nas: '阵列重组：盘位顺序 / 块大小 / 校验方向采集后做虚拟重组。需整机组送检。',
-  phone: '内容恢复（照片 / 视频 / 聊天记录等）：优先做整机导出；提供锁屏密码可显著提升成功率。'
+  phone: '内容恢复（照片 / 视频 / 聊天记录等）：先做整机只读导出；加密机型需要锁屏密码，没有凭据的会如实告知不可行。'
 };
 
 /**
@@ -326,13 +387,24 @@ const RECOMMEND = {
 const RECOMMEND_PHONE = {
   deleted: '内容恢复：优先对整机做只读导出，再按照片 / 视频 / 聊天记录分类重组。期间不要再使用这台手机，避免新数据覆盖掉旧数据。',
   unrecog: '先排查接口与供电：换原装数据线、换另一台电脑各试 1 次，仍认不到就停手。之后走整机只读导出，不要刷机、不要恢复出厂设置。',
-  physical: '先做整机只读检测：不刷机、不恢复出厂设置，能正常读取后再做数据导出。我们不拆机、不做芯片级处理；屏幕不亮或完全不开机的机型，到店评估后再定能不能做。',
-  liquid: '先做整机只读检测，不刷机、不恢复出厂设置。不拆机、不做芯片级处理，进水机能否读取要到店评估后再定；不要烘烤、不要放米缸、不要反复开机试。',
-  phone: '内容恢复（照片 / 视频 / 聊天记录等）：优先做整机导出；提供锁屏密码可显著提升成功率，无凭据的加密机型会如实告知不可行。'
+  physical: '手机重摔 / 物理损伤目前不受理：我们不拆机、不做芯片级处理。若手机还能正常开机，请改选「手机内容恢复」重新自检一次。',
+  liquid: '手机进水目前不受理：我们不拆机、不做板级清洗，这类机器大多已经不开机。若手机还能正常开机，请改选「手机内容恢复」重新自检一次。',
+  phone: '内容恢复（照片 / 视频 / 聊天记录等）：先做整机只读导出；加密机型需要锁屏密码，没有凭据的会如实告知不可行。'
 };
+
+/** 手机不受理机型专用的「下一步」——不能复用能开机那套 */
+const NEXT_STEPS_PHONE_REJECT = [
+  '不要充电、不要反复开机试，避免短路把存储芯片烧掉。',
+  '机身保持原样，不要自行拆机、不要按压屏幕。',
+  '这类机型我们目前不受理；如果它其实还能正常开机，请改选「手机内容恢复」重做一次自检。'
+];
+
+/** 手机不受理机型专用的推荐服务说明 */
+const RECOMMEND_PHONE_REJECT = '手机重摔 / 进水 / 完全不开机的机型目前不受理：我们不拆机、不做芯片级处理。还能正常开机的，改选「手机内容恢复」重新自检一次。'
 
 /** 推荐服务必须跟设备走：手机不能给硬盘的排查方式（换接口、主板、镜像工具那套） */
 function recommendFor(s){
+  if (phoneRejectReason(s)) return RECOMMEND_PHONE_REJECT;
   if(s && s.deviceType === '手机' && RECOMMEND_PHONE[s.scenario]) return RECOMMEND_PHONE[s.scenario];
   return RECOMMEND[s.scenario] || '';
 }
@@ -346,17 +418,17 @@ const NEXT_STEPS_DEV = {
     unrecog: [
       '不要再反复插拔数据线，更不要尝试刷机或恢复出厂设置。',
       '换一根原装数据线和另一台电脑再试 1 次；仍认不到就停手。',
-      '屏幕不亮但机身有震动 / 声音的，仍有较大概率取出数据，尽快送检。'
+      '屏幕不亮 / 完全不开机的机型我们目前不受理；能开机但读不到的，越早停手越好。'
     ],
     physical: [
       '不要充电、不要开机，避免短路烧毁存储芯片。',
       '机身保持原样，不要自行拆机或按压屏幕。',
-      '进水 / 重摔后的修复窗口期很短，越早送检越好。'
+      '重摔 / 不开机的机型我们目前不受理；还能正常开机的请改选「手机内容恢复」重做一次自检。'
     ],
     liquid: [
       '立刻断电，不要充电、不要用吹风机吹、不要放米缸。',
-      '不要尝试打开机身清理，保持现状直接送检评估。',
-      '进水后 48 小时内送检成功率最高。'
+      '不要尝试打开机身清理，保持现状；进水机我们不做板级清洗。',
+      '进水机越早看越好，但不要自己开机反复试。'
     ],
     phone: [
       '不要充电，不要尝试刷机或恢复出厂。',
@@ -388,6 +460,7 @@ const NEXT_STEPS_DEV = {
 };
 
 function nextStepsFor(s){
+  if (phoneRejectReason(s)) return NEXT_STEPS_PHONE_REJECT;
   const byDev = NEXT_STEPS_DEV[s.deviceType];
   return (byDev && byDev[s.scenario]) || NEXT_STEPS[s.scenario] || [];
 }
@@ -412,6 +485,7 @@ function gotoStep(n, scroll = true){
   $stepLabel.textContent = n===5 ? '现场信息 · 报告已生成' : `现场信息 · 第 ${n+1} 步 / 共 5 步`;
   $why.textContent = WHY[n] || '';
   $bar.style.width = (n===5 ? 100 : (n/4)*100) + '%';
+  if(n === 1) applyDeviceFields();
   if(scroll) $stage.parentElement.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
@@ -424,13 +498,18 @@ document.querySelectorAll('#scenarios .scenario-card').forEach(c => {
     SC.data.scenario = c.dataset.val;
     SC.data.scenarioText = c.querySelector('h6').textContent;
     document.getElementById('nextBtn').disabled = false;
-    $tip.innerHTML = PROTECT[SC.data.scenario] || '先选一个场景';
+    applyScenarioDeviceFilter();
+    $tip.innerHTML = protectFor(SC.data) || '先选一个场景';
   });
 });
 document.getElementById('nextBtn')?.addEventListener('click', () => {
   if(!SC.data.scenario) return;
   gotoStep(1);
-  $tip.innerHTML = '<b>提示：</b>机械硬盘与 SSD 是两条完全不同的处理路径，先确认设备类型。';
+  applyScenarioDeviceFilter();
+  applyDeviceFields();
+  $tip.innerHTML = SC.data.scenario === 'phone'
+    ? '<b>手机内容恢复：</b>只接能开机的手机；重摔 / 进水 / 完全不开机的目前不受理。'
+    : '<b>提示：</b>先确认设备类型 —— 机械硬盘与 SSD 是两条完全不同的处理路径。';
 });
 
 function bindOptions(){
@@ -463,6 +542,75 @@ function bindOptions(){
   });
 }
 bindOptions();
+
+/* ============================================================
+   ★ 设备类型 → 步骤 1 的字段、步骤 3 的动作项
+   ------------------------------------------------------------
+   原先「现在接入的设备」永远问 Windows / macOS / Linux / 相机，
+   选了手机也照问 —— 手机根本不是「接在哪台电脑上」。容量档也一样：
+   手机要的是 64G / 128G / 256G / 512G，和报价表的手机表逐档对应。
+   切走的那一组必须取消勾选并清空，否则隐藏字段的值仍会写进报告。
+   ============================================================ */
+const DEV_FIELD_SWAP = [['capPc','capPhone'], ['sysPc','sysPhone']];
+
+function clearHiddenGroup(host){
+  const opts = host.querySelector('.options[data-key]');
+  if(!opts) return;
+  let changed = false;
+  opts.querySelectorAll('input').forEach(i => { if(i.checked){ i.checked = false; changed = true; } });
+  opts.querySelectorAll('.opt.on').forEach(o => o.classList.remove('on'));
+  if(changed) SC.data[opts.dataset.key] = opts.dataset.multi === 'true' ? [] : undefined;
+}
+
+function applyDeviceFields(){
+  const isPhone = SC.data.deviceType === '手机';
+  const isNas = SC.data.deviceType === 'NAS';
+  DEV_FIELD_SWAP.forEach(([pcId, phId]) => {
+    [pcId, phId].forEach((id, idx) => {
+      const g = document.getElementById(id);
+      if(!g) return;
+      g.closest('.field').classList.toggle('hide', idx === 0 ? isPhone : !isPhone);
+      if(g.closest('.field').classList.contains('hide')) clearHiddenGroup(g);
+    });
+  });
+  document.querySelectorAll('#actGroup [data-only="nas"]').forEach(el => {
+    el.classList.toggle('hide', !isNas);
+    if(isNas) return;
+    const i = el.querySelector('input');
+    if(i && i.checked){
+      i.checked = false;
+      el.classList.remove('on');
+      SC.data.actions = [...document.querySelectorAll('#actGroup input:checked')].map(x => x.value);
+    }
+  });
+}
+
+/**
+ * ★ 场景决定设备：选了「手机内容恢复」却能把设备选成机械硬盘，是纯自相矛盾。
+ * 对应场景只保留匹配的设备，其余隐藏（若已选中则一并清掉）。
+ */
+const SCENARIO_DEVICE = { phone: ['手机'], nas: ['NAS'] };
+
+function applyScenarioDeviceFilter(){
+  const allow = SCENARIO_DEVICE[SC.data.scenario];
+  const group = document.getElementById('deviceGroup');
+  if(!group) return;
+  group.querySelectorAll('.opt').forEach(o => {
+    const inp = o.querySelector('input');
+    const ok = !allow || allow.indexOf(inp.value) >= 0;
+    o.classList.toggle('hide', !ok);
+    if(!ok && inp.checked){ inp.checked = false; o.classList.remove('on'); SC.data.deviceType = undefined; }
+  });
+  const note = document.getElementById('deviceFilterNote');
+  if(note) note.classList.toggle('hide', !allow);
+}
+
+document.querySelectorAll('input[name="dt"]').forEach(inp => {
+  inp.addEventListener('change', () => {
+    applyDeviceFields();
+    $tip.innerHTML = protectFor(SC.data) || '请如实回答，这会决定下一步建议';
+  });
+});
 
 document.getElementById('brand')?.addEventListener('input', e => SC.data.brand = e.target.value);
 document.getElementById('notes')?.addEventListener('input', e => SC.data.notes = e.target.value);
@@ -518,7 +666,7 @@ document.getElementById('urgency')?.addEventListener('input', e => {
 document.getElementById('nextBtn2')?.addEventListener('click', () => {
   if(!SC.data.deviceType){alert('请先选择设备类型'); return}
   buildDynamic(SC.data.scenario);
-  $tip.innerHTML = PROTECT[SC.data.scenario] || '请如实回答，这会决定下一步建议';
+  $tip.innerHTML = protectFor(SC.data) || '请如实回答，这会决定下一步建议';
   gotoStep(2);
 });
 
@@ -535,7 +683,9 @@ function buildDynamic(scenario){
   const dev = SC.data.deviceType;
   const dyn = dynamicFor(scenario, dev);
   document.getElementById('dynamicDesc').textContent =
-    (scenario === 'unrecog' && dev === '手机')
+    (dev === '手机' && PHONE_REJECT[scenario])
+      ? `手机${PHONE_REJECT[scenario]}这类我们目前不受理 —— 手机不拆机、不做芯片级处理，这类机器大多已经不开机。下面的题仍可填完，我们到店先看一眼能不能做。`
+      : (scenario === 'unrecog' && dev === '手机')
       ? '手机「不识别 / 打不开」要分两层看：电脑能不能认到，屏幕还亮不亮。'
       : (SCENE_DESC[scenario] || '请告诉我具体的故障表现。越具体越能给出准确区间。');
   const root = document.getElementById('dynamicFields');
@@ -576,7 +726,15 @@ function buildReport(){
   const r = riskMap[level];
   const steps = nextStepsFor(s).map(x => `<li>${x}</li>`).join('');
   const rec = recommendFor(s) || '现场信息采集与检测，预约后由人工先做风险分级。';
-  const quoteHtml = `
+  const quoteHtml = price.blocked ? `
+    <div class="quote is-blocked">
+      <div class="q-top">
+        <div class="q-service">评估结论<b>${price.service}</b></div>
+        <div class="q-price">暂不报价<small>目前不受理</small></div>
+      </div>
+      <div class="q-note">${price.reason}</div>
+    </div>
+  ` : `
     <div class="quote">
       <div class="q-top">
         <div class="q-service">服务类型<b>${price.service}</b></div>
@@ -731,6 +889,8 @@ function resetCheck(){
   const urg = document.getElementById('urgency');
   if(urg){ urg.value = 1; const u = document.getElementById('urgencyVal'); if(u) u.textContent = '一周内'; }
   const fi = document.getElementById('fileInput'); if(fi) fi.value = '';
+  applyScenarioDeviceFilter();
+  applyDeviceFields();
   gotoStep(0, true);
 }
 $resetBtn?.addEventListener('click', resetCheck);
@@ -773,8 +933,8 @@ function serializeReport(){
   lines.push('--- 服务预判 ---');
   {
     const p = estimatePrice(s);
-    lines.push(`服务：${p.service}`);
-    lines.push(`方式：以无损检测与风险分级后，再到店给出具体方案（检测前为预判）。`);
+    lines.push(p.blocked ? `服务：${p.service} —— ${p.reason}` : `服务：${p.service}`);
+    if(!p.blocked) lines.push(`方式：以无损检测与风险分级后，再到店给出具体方案（检测前为预判）。`);
     if(p.note) lines.push(`提示：${p.note}`);
   }
   lines.push('');
@@ -863,11 +1023,13 @@ async function downloadReportImage(){
   }
   {
     const p = estimatePrice(s);
-    const priceLine = `¥${p.min} – ¥${p.max}`;
-    const descTxt = `${p.service}${p.note ? ' · ' + p.note : ''} · 以无损检测后评估为准。${feePromise(s)}`;
+    const priceLine = p.blocked ? '暂不受理 · 不报价' : `¥${p.min} – ¥${p.max}`;
+    const descTxt = p.blocked
+      ? `${p.reason} · 以到店评估为准。`
+      : `${p.service}${p.note ? ' · ' + p.note : ''} · 以无损检测后评估为准。${feePromise(s)}`;
     const ql = wrap(descTxt, `400 22px ${SANS}`, CW-48);
     const h = 130 + ql.length*32 + 16;
-    L.push({t:'quote', y, priceLine, lines:ql, h}); y += h + 20;
+    L.push({t:'quote', y, priceLine, label: p.blocked ? '评 估 结 论' : '预 估 报 价', lines:ql, h, warn: !!p.blocked}); y += h + 20;
   }
   function secLayout(title, kvs){
     const rows = kvs.map(([k,v])=>{
@@ -949,10 +1111,10 @@ async function downloadReportImage(){
     }
     if(op.t==='quote'){
       const g = x.createLinearGradient(PAD, op.y, W-PAD, op.y);
-      g.addColorStop(0, '#0A1628'); g.addColorStop(1, '#13294B');
+      g.addColorStop(0, op.warn ? '#B45309' : '#0A1628'); g.addColorStop(1, op.warn ? '#D97706' : '#13294B');
       x.fillStyle = g; rr(PAD, op.y, CW, op.h, 18); x.fill();
       x.fillStyle = 'rgba(255,255,255,.72)'; x.font = `600 20px ${MONO}`;
-      x.fillText('预 估 报 价', PAD+24, op.y+38);
+      x.fillText(op.label || '预 估 报 价', PAD+24, op.y+38);
       x.fillStyle = '#FFFFFF'; x.font = `700 40px ${MONO}`;
       x.fillText(op.priceLine, PAD+24, op.y+86);
       x.fillStyle = 'rgba(255,255,255,.85)'; x.font = `400 21px ${SANS}`;
@@ -1050,7 +1212,7 @@ async function downloadReportImage(){
       if(s.deviceType === '手机'){
         // 手机不能写「不成功不收任何费用」，改成本机适用的辛苦费规则
         x.fillText('本报告为自检初筛结果，最终方案以实际检测后评估为准。', PAD, op.y+264, textMaxW);
-        x.fillText(PHONE_FEE_SHORT, PAD, op.y+292, textMaxW);
+        x.fillText(PHONE_REJECT[s.scenario] ? '手机重摔 / 进水 / 完全不开机的机型目前不受理。' : PHONE_FEE_SHORT, PAD, op.y+292, textMaxW);
       } else {
         x.fillText('本报告为自检初筛结果，最终方案以实际检测后评估为准；检测免费，不成功不收任何费用。', PAD, op.y+264, textMaxW);
       }
