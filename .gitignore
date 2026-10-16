@@ -24,3 +24,9 @@ index.polluted*
 # ★ 原因：本仓库开着 GitHub Pages，push 什么就公开什么 ——
 #   一旦提交 video/index.html，它会立刻变成可被任何人访问的公开页面。
 video/
+
+# 站点构建与开发文件（不上线；同样因为 GitHub Pages 会原样公开仓库内容）
+# 注意：tools/ 是开发脚本目录，站点页面 tools.html 不受影响（尾斜杠只匹配目录）
+chrome/
+tools/
+README.md
