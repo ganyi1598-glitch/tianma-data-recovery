@@ -19,3 +19,9 @@ docs/
 *.bak.*
 index.polluted*
 *.tmp.html
+
+# 宣传片工程生成物（代码保留版本管理，产物与缓存不入库、不上线）
+video/frames/
+video/out/
+video/assets/
+video/node_modules/
